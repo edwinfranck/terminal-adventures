@@ -1,0 +1,111 @@
+{
+  "title": "En cinq lignes",
+  "tagline": "Dix-huit cases à parcourir. Cinq lignes de code pour le dire.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Dix-huit cases. Cinq lignes. Trouve la différence.",
+    "progress": [
+      "Faille atteinte.",
+      "Et en cinq lignes ou moins. Rang C confirmé."
+    ],
+    "stuck": "Un déplacement peut valoir plusieurs cases. Relis ton arsenal.",
+    "nudge": [
+      "Combien de lignes écris-tu pour traverser sept cases ? Il y a plus court.",
+      "Un nombre entre les parenthèses vaut autant de pas : <code>moveRight(7)</code>.",
+      "Découpe le trajet en segments droits et donne le nombre de cases de chacun."
+    ],
+    "face": "assets/portraits/sl-jinwoo.webp"
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Le trajet est trivial : deux virages, aucun ennemi.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Mais on ne te note plus sur le fait d'arriver. On te note sur le nombre d'ordres.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Maximum : cinq lignes de code. Une ligne par case en demande dix-huit.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Rappelle-toi : moveRight(7) est UNE ligne, et sept pas.",
+      "choices": [
+        {
+          "label": "Je compresse."
+        }
+      ],
+      "face": "assets/portraits/sl-jinwoo.webp"
+    }
+  ],
+  "brief": "<p>Le chemin fait <b>dix-huit cases</b> et deux virages. Aucun danger.</p><p><b>Contrainte : cinq lignes de code maximum.</b> Une ligne par case n'y arrivera jamais.</p><p>Un nombre entre les parenthèses fait plusieurs pas d'un coup. À toi de découper le trajet en segments droits et de compter les cases de chacun.</p>",
+  "hint": [
+    "Découpe le trajet en segments droits : combien de segments, et combien de cases dans chacun ?",
+    "<code>moveRight(7)</code> vaut une seule ligne au lieu de sept.",
+    "Quatre segments suffisent : droite, bas, gauche, bas."
+  ],
+  "world": {
+    "map": [
+      "###########",
+      "#H.......##",
+      "########..#",
+      "#.........#",
+      "#.#########",
+      "#G#########",
+      "###########"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "moveRight(n)",
+        "desc": "n pas d'un coup — une seule instruction"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Cinq lignes de code maximum",
+      "check": "maxLines",
+      "args": [
+        5
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 240,
+    "title": "Programme compact",
+    "unlock": "moveRight(n)"
+  },
+  "solution": "moveRight(7)\nmoveDown(2)\nmoveLeft(7)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "moveRight(4)",
+      "txt": "un argument, et quatre lignes économisées"
+    },
+    {
+      "cmd": "La contrainte de lignes",
+      "txt": "elle force à écrire plus court, pas plus vite"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "compter la répétition avant de la taper"
+    }
+  ]
+}

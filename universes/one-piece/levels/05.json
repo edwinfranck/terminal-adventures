@@ -1,0 +1,135 @@
+{
+  "title": "La Marine monte à bord",
+  "tagline": "Le manifeste ne doit pas tomber entre leurs mains. Trouve-le avant eux.",
+  "mentor": {
+    "who": "Luffy",
+    "face": "assets/portraits/op-luffy.webp",
+    "start": "Kizaru fouille le pont. On a peut-être deux minutes.",
+    "progress": [
+      "Tu l'as trouvé ! Lis-le, vite.",
+      "La copie est en sécurité dans la cabine.",
+      "Et l'original a disparu. Ils ne trouveront rien."
+    ],
+    "stuck": "Pas de panique. Tu ne sais pas où il est ? Alors cherche partout d'un coup.",
+    "nudge": [
+      "Tu as lancé la recherche ? Un morceau du nom suffit.",
+      "Elle en trouve deux. Lequel des deux parle de coordonnées ?",
+      "Le chemin affiché commence par <code>./</code> — tu peux le garder tel quel."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Kizaru",
+      "face": "assets/portraits/op-kizaru.webp",
+      "text": "Amiral Borsalino. On m'appelle Kizaru. Ce navire est fouillé de la quille au nid-de-pie."
+    },
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/one-piece-anim.webp",
+      "text": "Le manifeste. Il est planqué quelque part dans la soute, je ne sais plus où."
+    },
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/one-piece-anim.webp",
+      "text": "Fouiller dossier par dossier, on n'a pas le temps.\n\nfind cherche dans TOUT le navire d'un seul coup. Donne-lui un bout du nom."
+    },
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/one-piece-anim.webp",
+      "text": "Trouve-le, lis-le, mets une copie dans ma cabine — puis efface l'original."
+    }
+  ],
+  "brief": "<p>Kizaru fouille le navire. Le manifeste est caché — <b>personne ne sait où</b>.</p><p>Une commande de ton arsenal fouille <b>tout le navire d'un coup</b> à partir d'un morceau de nom.</p><p>⚠ Plusieurs fichiers portent ce nom. Celui qui compte est celui qui contient les <b>coordonnées</b>. Mets-en une copie dans <code>~/cabine</code> et fais disparaître l'original. L'autre, laisse-le : il ne vaut rien.</p>",
+  "hint": [
+    "<code>find</code> suivi d'un bout de nom fouille tout, depuis là où tu es.",
+    "Il en trouve deux. Ouvre-les tous les deux avant de choisir.",
+    "Le vrai est dans <code>pont/soute/caisses/</code> : <code>cp</code> vers <code>~/cabine</code>, puis <code>rm</code> l'original."
+  ],
+  "world": {
+    "fs": {
+      "pont": {
+        "vigie.txt": "Ils sont deja a bord.",
+        "soute": {
+          "cordages.txt": "40 metres de chanvre",
+          "caisses": {
+            "manifeste.txt": "Cap sur Grand Line. Coordonnees : 12 N 42 E. Ne pas montrer a la Marine.",
+            "vivres.txt": "salaisons, biscuits, rhum"
+          }
+        }
+      },
+      "cale": {
+        "inventaire.txt": "2 tonneaux d'eau",
+        "vieux_manifeste.txt": "Manifeste perime -- cabotage en East Blue. Rien a cacher."
+      },
+      "cabine": {
+        "cartes.txt": "East Blue -- sortie au nord-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "cp",
+      "rm",
+      "find"
+    ],
+    "new": [
+      "find"
+    ],
+    "motd": "Des bottes martelent le pont au-dessus de ta tete."
+  },
+  "criteria": [
+    {
+      "label": "Tu as fouillé le navire (<code>find</code>)",
+      "check": "ranCommand",
+      "args": [
+        "find"
+      ]
+    },
+    {
+      "label": "La copie contient bien les coordonnées <code class=\"p\">~/cabine/manifeste.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/cabine/manifeste.txt",
+        "12 n 42 e"
+      ]
+    },
+    {
+      "label": "L'original a disparu de sa cachette",
+      "check": "pathMissing",
+      "args": [
+        "~/pont/soute/caisses/manifeste.txt"
+      ]
+    },
+    {
+      "label": "Le manifeste périmé, lui, n'a pas bougé",
+      "check": "fileExists",
+      "args": [
+        "~/cale/vieux_manifeste.txt"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 160,
+    "title": "Manifeste sauvé",
+    "unlock": "find"
+  },
+  "solution": [
+    "find manifeste",
+    "cat cale/vieux_manifeste.txt",
+    "cat pont/soute/caisses/manifeste.txt",
+    "cp pont/soute/caisses/manifeste.txt ~/cabine",
+    "rm pont/soute/caisses/manifeste.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "find <motif>",
+      "txt": "retrouve un fichier n'importe où dans l'arbre, par son nom"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "ne pas fouiller dossier par dossier quand une commande le fait"
+    }
+  ]
+}

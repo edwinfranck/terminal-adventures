@@ -1,0 +1,128 @@
+{
+  "title": "Le Système",
+  "emoji": "🗡",
+  "skill": "Logique · Algorithmique",
+  "pitch": "Tu ne contrôles pas ton chasseur. Tu écris ses ordres, puis tu regardes.",
+  "menu": {
+    "tag": "Système · Solo Leveling",
+    "kicker": "System alert_",
+    "title": [
+      "Dungeon",
+      "Quest"
+    ],
+    "cta": "S'éveiller"
+  },
+  "plugin": "algo",
+  "hero": {
+    "name": "Le Système",
+    "face": "◈"
+  },
+  "art": {
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "portrait": "assets/portraits/solo-leveling.webp",
+    "bg": "assets/bg/solo-leveling.jpg",
+    "anim": "assets/portraits/solo-leveling-anim.webp",
+    "video": "assets/bg/solo-leveling.mp4"
+  },
+  "ranks": [
+    {
+      "name": "E Rank",
+      "xp": 0
+    },
+    {
+      "name": "D Rank",
+      "xp": 300
+    },
+    {
+      "name": "C Rank",
+      "xp": 750
+    },
+    {
+      "name": "B Rank",
+      "xp": 1500
+    },
+    {
+      "name": "A Rank",
+      "xp": 2400
+    },
+    {
+      "name": "S Rank",
+      "xp": 3400
+    },
+    {
+      "name": "Monarque",
+      "xp": 4400
+    }
+  ],
+  "chapters": [
+    {
+      "id": "rang-e",
+      "title": "Portail de rang E",
+      "levels": [
+        "01",
+        "02",
+        "03"
+      ],
+      "difficulty": 1,
+      "outro": "Portail de rang E franchi. Les suivants ne t'attendront pas."
+    },
+    {
+      "id": "rang-d",
+      "title": "Portail de rang D",
+      "levels": [
+        "04",
+        "05"
+      ],
+      "difficulty": 2,
+      "outro": "Rang D franchi. À partir d'ici, on ne compte plus les cases : on écrit des programmes."
+    },
+    {
+      "id": "rang-c",
+      "title": "Portail de rang C",
+      "difficulty": 3,
+      "levels": [
+        "06",
+        "07",
+        "08",
+        "09"
+      ],
+      "outro": "Rang C franchi. Tu sais agir, tester, boucler, nommer. Il te manque encore de quoi RETENIR."
+    },
+    {
+      "id": "rang-b",
+      "title": "Portail de rang B",
+      "difficulty": 4,
+      "levels": [
+        "10",
+        "11",
+        "12"
+      ],
+      "outro": "Rang B franchi. Ton chasseur compte, mesure, se souvient."
+    },
+    {
+      "id": "rang-a",
+      "title": "Portail de rang A",
+      "difficulty": 5,
+      "levels": [
+        "13",
+        "14",
+        "15"
+      ],
+      "outro": "Rang A franchi. Les ombres que tu abats te suivent désormais."
+    },
+    {
+      "id": "rang-s",
+      "title": "Portail de rang S",
+      "difficulty": 6,
+      "levels": [
+        "16",
+        "17",
+        "18"
+      ]
+    }
+  ],
+  "ending": {
+    "title": "Monarque des Ombres",
+    "line": "Tu n'as jamais déplacé ton chasseur. Tu as écrit ce qu'il devait comprendre — agir, tester, boucler, nommer, retenir. C'est exactement ça, programmer."
+  }
+}

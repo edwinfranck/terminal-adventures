@@ -1,0 +1,115 @@
+{
+  "title": "La première ombre",
+  "tagline": "Ce que tu abats ne disparaît pas. Ça t'attend.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Une ombre abattue reste au sol. Elle peut encore servir.",
+    "progress": [
+      "L'ombre est tombée.",
+      "Et elle s'est relevée. À ton service.",
+      "Le sceau tient. La porte cède."
+    ],
+    "stuck": "Une dalle à poids ne reste enfoncée que si quelqu'un se tient dessus. Toi… ou quelqu'un d'autre.",
+    "nudge": [
+      "Que devient une ombre après <code>attack()</code> ? Regarde le sol.",
+      "<code>summon()</code> relève l'ombre tombée <b>devant toi</b>. Il faut donc lui faire face.",
+      "L'ombre relevée ne bouge plus jamais : elle tient la dalle à ta place."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Portail de rang A. Ton pouvoir change de nature."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Jusqu'ici tu abattais les ombres. Désormais, tu les relèves."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "attack() la fait tomber. summon() la relève : elle devient ton soldat, et reste où elle est."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Cette porte est scellée par une dalle à poids. Elle se relève dès qu'on la quitte.\n\nPoste une ombre dessus."
+    }
+  ],
+  "brief": "<p>La porte ▣ est scellée par une <b>dalle à poids</b> : elle ne reste enfoncée que si <b>quelqu'un se tient dessus</b>.</p><p>Une ombre 👁 est postée exactement sur cette dalle, dans le renfoncement.</p><p><code>attack()</code> l'abat · <code>summon()</code> la <b>relève</b> à l'endroit où elle est tombée. Elle ne bougera plus : elle tiendra la dalle pour toi.</p>",
+  "hint": [
+    "Descends dans le renfoncement : tu feras alors face à l'ombre.",
+    "<code>attack()</code> puis <code>summon()</code>, sans bouger entre les deux.",
+    "Remonte et file vers la faille : la porte a cédé."
+  ],
+  "world": {
+    "map": [
+      "############",
+      "#H......D.G#",
+      "#####.######",
+      "#####Q######",
+      "############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack",
+      "summon"
+    ],
+    "new": [
+      "summon"
+    ],
+    "syntax": [],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Une ombre est relevée",
+      "check": "armyIs",
+      "args": [
+        1
+      ]
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as utilisé <code>summon()</code>",
+      "check": "usedKeyword",
+      "args": [
+        "summon"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 340,
+    "title": "Première ombre",
+    "unlock": "summon()"
+  },
+  "solution": "moveRight(4)\nmoveDown()\nattack()\nsummon()\nmoveUp()\nmoveRight(5)\n",
+  "recap": [
+    {
+      "cmd": "summon()",
+      "txt": "relève l'ombre tombée devant toi : elle devient ton soldat"
+    },
+    {
+      "cmd": "attack() puis summon()",
+      "txt": "dans cet ordre, et sans bouger entre les deux"
+    },
+    {
+      "cmd": "dalle à poids",
+      "txt": "elle se relève dès qu'on la quitte — une ombre postée la tient pour toujours"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "un obstacle abattu peut devenir une ressource"
+    }
+  ]
+}

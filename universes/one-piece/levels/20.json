@@ -1,0 +1,182 @@
+{
+  "title": "Kaido",
+  "tagline": "Douze rapports. Onze coups pour rien. Trouve le douzième.",
+  "mentor": {
+    "who": "Luffy",
+    "face": "assets/portraits/op-luffy.webp",
+    "start": "Onze fois on l'a frappé sans rien faire. Une fois, ça a marché. Je veux savoir laquelle.",
+    "progress": [
+      "Tu as trouvé le rapport qui compte.",
+      "Et le nom du coup qui l'a entaillé.",
+      "Le compte des échecs est fait.",
+      "Le plan est emballé.",
+      "Tout l'équipage peut y accéder. On y va."
+    ],
+    "stuck": "Le rapport qui parle d'une entaille ne te donne pas le coup : il faut l'ouvrir en entier.",
+    "nudge": [
+      "Un seul rapport ne dit pas « aucun effet ». Cherche le mot qui décrit une vraie blessure.",
+      "<code>grep</code> te donne le <b>fichier</b>. C'est <code>cat</code> qui te donnera le <b>coup porté</b>.",
+      "Pour les échecs : compte les lignes qui disent que ça n'a rien fait — <code>grep … | wc -l</code>."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/op-luffy.webp",
+      "text": "Kaido. La créature la plus solide du monde, paraît-il."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Douze rapports de combat, écrits par ceux qui l'ont affronté. Onze finissent de la même façon."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Un seul décrit autre chose qu'un échec. C'est celui-là qui vaut la peine d'être lu en entier."
+    },
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/op-luffy.webp",
+      "text": "Prépare le plan, emballe-le, et accroche-le sur le pont pour que tout le monde l'ait sous les yeux."
+    },
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/op-luffy.webp",
+      "text": "Après ça, il n'y a plus rien à taper. On frappe.",
+      "choices": [
+        {
+          "label": "Dernière commande."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/rapports/</code> contient douze comptes rendus de combat contre Kaido. <b>Onze</b> se soldent par un échec, <b>un</b> décrit une vraie blessure.</p><p>Monte le plan d'attaque :</p><p>· <code>~/plan/attaque.txt</code> — le <b>coup porté</b> qui a marché (un seul mot)<br>· <code>~/plan/echecs.txt</code> — le <b>nombre</b> de coups qui n'ont rien fait<br>· <code>~/plan.tgz</code> — le dossier <code>plan</code> emballé<br>· <code>~/pont/plan</code> — un <b>raccourci</b> vers l'archive, sur le pont</p>",
+  "hint": [
+    "Ouvre un rapport pour voir à quoi ils ressemblent : deux lignes comptent, « coup porte » et « effet ».",
+    "<code>grep entaille rapports/*</code> te dit dans quel fichier chercher. Ouvre-le.",
+    "<code>grep aucun rapports/* | wc -l</code> compte les échecs. Puis <code>mkdir</code>, <code>tar -czf</code>, et <code>ln -s ~/plan.tgz pont/plan</code> (chemin depuis la racine)."
+  ],
+  "world": {
+    "fs": {
+      "rapports": {
+        "rapport_01.txt": "RAPPORT 01 -- Kiku\ncoup porte : lame simple\neffet : aucun, la peau n a pas cede",
+        "rapport_02.txt": "RAPPORT 02 -- Franky\ncoup porte : canon de quarante\neffet : aucun, il a ri",
+        "rapport_03.txt": "RAPPORT 03 -- Ashura\ncoup porte : charge de front\neffet : aucun, trois hommes au sol",
+        "rapport_04.txt": "RAPPORT 04 -- Usopp\ncoup porte : fleches incendiaires\neffet : aucun, la fumee seulement",
+        "rapport_05.txt": "RAPPORT 05 -- Sanji\ncoup porte : coup de pied retourne\neffet : aucun, jambe fracturee cote allie",
+        "rapport_06.txt": "RAPPORT 06 -- Inuarashi\ncoup porte : hache d abordage\neffet : aucun, manche brise",
+        "rapport_07.txt": "RAPPORT 07 -- Oden (archives)\ncoup porte : haki\neffet : entaille profonde a l epaule, la seule qu il porte encore",
+        "rapport_08.txt": "RAPPORT 08 -- Nekomamushi\ncoup porte : griffes\neffet : aucun, pas une trace",
+        "rapport_09.txt": "RAPPORT 09 -- Denjiro\ncoup porte : sabre a deux mains\neffet : aucun, lame ebrechee",
+        "rapport_10.txt": "RAPPORT 10 -- Kawamatsu\ncoup porte : lance de fond\neffet : aucun, hampe pliee",
+        "rapport_11.txt": "RAPPORT 11 -- Marins de Wano\ncoup porte : filet lourd\neffet : aucun, il a traverse le filet",
+        "rapport_12.txt": "RAPPORT 12 -- Brook\ncoup porte : bombes fumigenes\neffet : aucun, il voit dans le noir"
+      },
+      "pont": {
+        "consigne.txt": "Ne quitte pas le navire sans prevenir Nami."
+      },
+      "mot_de_passe.txt": "momo"
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "mkdir",
+      "cat",
+      "echo",
+      "grep",
+      "wc",
+      "head",
+      "tail",
+      "chmod",
+      "ln",
+      "tar"
+    ],
+    "new": [],
+    "motd": "Douze rapports posés en éventail. Onze commencent pareil."
+  },
+  "criteria": [
+    {
+      "label": "Le coup qui marche est nommé <code class=\"p\">~/plan/attaque.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/plan/attaque.txt",
+        "haki"
+      ]
+    },
+    {
+      "label": "Le nombre d'échecs est juste <code class=\"p\">~/plan/echecs.txt</code>",
+      "check": "fileEquals",
+      "args": [
+        "~/plan/echecs.txt",
+        "11"
+      ]
+    },
+    {
+      "label": "Le plan est emballé <code class=\"p\">~/plan.tgz</code>",
+      "check": "isArchive",
+      "args": [
+        "~/plan.tgz"
+      ]
+    },
+    {
+      "label": "L'attaque est bien dans l'archive",
+      "check": "archiveHas",
+      "args": [
+        "~/plan.tgz",
+        "attaque.txt"
+      ]
+    },
+    {
+      "label": "Le pont y accède par un raccourci <code class=\"p\">~/pont/plan</code>",
+      "check": "isLink",
+      "args": [
+        "~/pont/plan"
+      ]
+    },
+    {
+      "label": "…et le raccourci mène bien quelque part",
+      "check": "linkWorks",
+      "args": [
+        "~/pont/plan"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 520,
+    "title": "Roi du Terminal",
+    "unlock": "tout, ensemble"
+  },
+  "solution": [
+    "ls rapports",
+    "cat rapports/rapport_01.txt",
+    "grep entaille rapports/*",
+    "cat rapports/rapport_07.txt",
+    "mkdir plan",
+    "echo \"haki\" > plan/attaque.txt",
+    "grep aucun rapports/* | wc -l",
+    "echo \"11\" > plan/echecs.txt",
+    "tar -czf plan.tgz plan",
+    "tar -tzf plan.tgz",
+    "ln -s ~/plan.tgz pont/plan"
+  ],
+  "recap": [
+    {
+      "cmd": "grep puis cat",
+      "txt": "grep trouve le fichier, cat donne le détail qu'il contient"
+    },
+    {
+      "cmd": "grep … | wc -l",
+      "txt": "chiffrer un résultat au lieu de l'estimer"
+    },
+    {
+      "cmd": "tar -czf · ln -s",
+      "txt": "emballer le travail, puis le mettre à disposition"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "découper un gros problème en gestes que tu sais déjà faire"
+    }
+  ]
+}

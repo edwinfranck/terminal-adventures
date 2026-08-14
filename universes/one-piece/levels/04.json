@@ -1,0 +1,145 @@
+{
+  "title": "L'armurerie de Zoro",
+  "tagline": "Ranger n'est pas décorer. Ranger, c'est survivre au prochain abordage.",
+  "mentor": {
+    "who": "Zoro",
+    "face": "assets/portraits/op-zoro.webp",
+    "start": "Une arme qu'on ne trouve pas est une arme qu'on n'a pas.",
+    "progress": [
+      "Bien. L'armurerie existe. Maintenant remplis-la.",
+      "Les lames sont à leur place. Reste la rouille.",
+      "Propre. Tu commences à comprendre."
+    ],
+    "stuck": "Relis ce que le terminal te dit. Il ne ment jamais, lui.",
+    "nudge": [
+      "Tu as ouvert les trois caisses ? Une seule contient des lames.",
+      "On ne peut pas déplacer quelque chose dans un dossier qui n'existe pas encore.",
+      "Déplacer la mauvaise caisse ne comptera pas : vérifie avant."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Zoro",
+      "face": "assets/portraits/op-zoro.webp",
+      "text": "Toi. Le nouveau."
+    },
+    {
+      "who": "Zoro",
+      "face": "assets/portraits/op-zoro.webp",
+      "text": "La cale est un dépotoir. Mes lames traînent dans une caisse à côté d'une plaque de rouille."
+    },
+    {
+      "who": "Zoro",
+      "face": "assets/portraits/op-zoro.webp",
+      "text": "Monte une armurerie. Mets-y la caisse — mais renomme-la : « caisse », ça ne veut rien dire.\n\nmv déplace ET renomme. C'est la même commande."
+    },
+    {
+      "who": "Zoro",
+      "face": "assets/portraits/op-zoro.webp",
+      "text": "Et la rouille, tu la jettes. rm détruit. Définitivement.",
+      "choices": [
+        {
+          "label": "Compris."
+        },
+        {
+          "label": "Définitivement ?"
+        }
+      ]
+    }
+  ],
+  "brief": "<p>Trois caisses traînent dans la cale. <b>Une seule</b> contient les lames de Zoro — à toi de trouver laquelle.</p><p>Celle-là doit finir dans une <b>armurerie</b>, sous le nom <code>armes.txt</code>. La plaque de rouille, à la poubelle. <b>Les deux autres caisses ne bougent pas.</b></p><p>Une seule commande sait déplacer <b>et</b> renommer d'un coup — et elle ne copie pas : ce qu'elle déplace disparaît de son ancienne place.</p>",
+  "hint": [
+    "Ouvre les caisses avant de décider. <code>cat</code> te dit ce qu'il y a dedans.",
+    "<code>mv ancien nouveau</code> — et « nouveau » peut être un chemin dans un autre dossier.",
+    "Les sabres sont dans <code>caisse_2.txt</code>. Crée l'armurerie, puis déplace-la dedans sous son nouveau nom."
+  ],
+  "world": {
+    "fs": {
+      "pont": {
+        "vigie.txt": "Trois voiles. Pavillon de la Marine."
+      },
+      "cale": {
+        "caisse_1.txt": "40 metres de cordage, 2 poulies",
+        "caisse_2.txt": "3 sabres, 1 meule, 2 fourreaux",
+        "caisse_3.txt": "salaisons, biscuits de mer",
+        "rouille.txt": "plaque de tole rongee -- bonne a rien",
+        "inventaire.txt": "2 tonneaux d'eau\n1 caisse de viande"
+      },
+      "cabine": {
+        "cartes.txt": "East Blue -- sortie au nord-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "mkdir",
+      "mv",
+      "rm"
+    ],
+    "new": [
+      "mv",
+      "rm"
+    ],
+    "motd": "Ca sent le metal humide."
+  },
+  "criteria": [
+    {
+      "label": "L'armurerie existe <code class=\"p\">~/cale/armurerie</code>",
+      "check": "dirExists",
+      "args": [
+        "~/cale/armurerie"
+      ]
+    },
+    {
+      "label": "C'est bien la caisse aux lames qui est rangée dedans",
+      "check": "fileContains",
+      "args": [
+        "~/cale/armurerie/armes.txt",
+        "sabres"
+      ]
+    },
+    {
+      "label": "La rouille est jetée <code class=\"p\">~/cale/rouille.txt</code>",
+      "check": "pathMissing",
+      "args": [
+        "~/cale/rouille.txt"
+      ]
+    },
+    {
+      "label": "Tu n'as pas touché aux caisses qui ne contiennent pas d'armes",
+      "check": "fileExists",
+      "args": [
+        "~/cale/caisse_1.txt"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 140,
+    "title": "Armurerie tenue",
+    "unlock": "mv · rm"
+  },
+  "solution": [
+    "cd cale",
+    "cat caisse_1.txt",
+    "cat caisse_2.txt",
+    "mkdir armurerie",
+    "mv caisse_2.txt armurerie/armes.txt",
+    "rm rouille.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "mv <source> <dest>",
+      "txt": "déplace ou renomme : c'est la même commande"
+    },
+    {
+      "cmd": "rm <fichier> · rm -r <dossier>",
+      "txt": "détruit — il n'y a pas de corbeille"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "ouvrir les trois caisses avant d'en déplacer une"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "title": "Compte tes pas",
+  "tagline": "Va au bout. Reviens exactement au même endroit.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Tu vas avancer sans savoir jusqu'où. Il faudra revenir au pas près.",
+    "progress": [
+      "L'essence est à toi.",
+      "Et tu es revenu pile où il fallait."
+    ],
+    "stuck": "Tu ne peux pas revenir de « quelques » pas. Il te faut le nombre exact — donc il faut le retenir.",
+    "nudge": [
+      "Combien de pas as-tu faits à l'aller ? Si tu ne les comptes pas, tu ne peux pas les refaire à l'envers.",
+      "<code>var pas = 0</code> crée une mémoire. <code>pas = pas + 1</code> l'incrémente à chaque déplacement.",
+      "Puis <code>moveLeft(pas)</code> : le nombre retenu devient l'argument."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Nouveau portail. Rang B."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "À partir d'ici, tu ne te contenteras plus d'agir : tu vas devoir RETENIR."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Une variable, c'est une case de mémoire avec un nom. Tu y ranges un nombre, tu le relis plus tard.\n\nvar pas = 0"
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Avance jusqu'au fond du couloir en comptant. Ramasse l'essence. Puis reviens du même nombre de pas, et descends."
+    }
+  ],
+  "brief": "<p>Le couloir mène à une <b>essence</b> ◆. Prends-la, puis <b>reviens exactement</b> à ton point de départ pour descendre vers la faille ◎.</p><p>Tu ne dois pas écrire le nombre de pas toi-même : <b>compte-les pendant que tu avances</b>, dans une variable.</p><p><code>var pas = 0</code> la crée · <code>pas = pas + 1</code> l'augmente · <code>moveLeft(pas)</code> s'en sert.</p>",
+  "hint": [
+    "<code>while (clear)</code> avance tant que la voie est libre — tu ne connais pas la longueur d'avance.",
+    "Dans la boucle, ajoute <code>pas = pas + 1</code> juste après le déplacement.",
+    "Au retour : <code>moveLeft(pas)</code>, puis <code>moveDown(2)</code>."
+  ],
+  "world": {
+    "map": [
+      "#############",
+      "#H.........C#",
+      "#.###########",
+      "#G###########",
+      "#############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "pickup"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "var nom = 0",
+        "desc": "Retenir un nombre"
+      },
+      {
+        "cmd": "nom = nom + 1",
+        "desc": "Le modifier"
+      },
+      {
+        "cmd": "while (cond) { }",
+        "desc": "Tant que la condition tient"
+      }
+    ],
+    "starter": "var pas = 0\n"
+  },
+  "criteria": [
+    {
+      "label": "L'essence est récupérée",
+      "check": "allChests",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as créé une variable (<code>var</code>)",
+      "check": "usedVar",
+      "args": []
+    },
+    {
+      "label": "10 lignes de code maximum",
+      "check": "maxLines",
+      "args": [
+        10
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 260,
+    "title": "Première mémoire",
+    "unlock": "var"
+  },
+  "solution": "var pas = 0\nwhile (clear) {\n  moveRight()\n  pas = pas + 1\n}\npickup()\nmoveLeft(pas)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "var pas = 0",
+      "txt": "crée une case de mémoire et lui donne sa valeur de départ"
+    },
+    {
+      "cmd": "pas = pas + 1",
+      "txt": "la modifie : un de plus qu'avant"
+    },
+    {
+      "cmd": "moveLeft(pas)",
+      "txt": "le nombre retenu devient l'argument du déplacement"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "ce qu'on devra refaire à l'envers, on le compte à l'aller"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+/* terminal.css — présentation reprise de piscine.html : barre de fenêtre + corps où
+   l'invite est une ligne du flux. L'historique s'insère au-dessus, l'invite reste au bout. */
+
+.term {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--termbg);
+  cursor: text;
+}
+
+/* ---- barre de fenêtre ---- */
+.tbar {
+  display: flex; align-items: center; gap: 8px;
+  flex: none;
+  padding: 10px 14px;
+  background: var(--panel2);
+  border-bottom: 2px solid var(--ink);
+}
+/* les trois pastilles sont rondes : c'est un chrome de fenêtre, seule exception au 0-radius */
+.tbar i { width: 11px; height: 11px; border-radius: 50%; }
+.d1 { background: #ff5f57; } .d2 { background: #febc2e; } .d3 { background: #28c840; }
+.tbar .tt {
+  margin-left: 8px;
+  font-family: var(--mono); font-size: 12.5px;
+  color: var(--dim);
+}
+
+/* ---- corps ---- */
+.tbody {
+  flex: 1;
+  overflow: auto;
+  padding: 14px 18px 20px;
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.15vw, 14px);
+  line-height: 1.6;
+  color: var(--mut);
+  min-height: 0;
+}
+.tbody .l { white-space: pre-wrap; word-break: break-word; }
+
+/* couleurs de sortie */
+.tbody .cmd  { color: var(--ink); }
+.tbody .ps,
+.tbody .pr   { color: var(--acc); white-space: nowrap; }
+.tbody .d    { color: #7bb0ff; font-weight: 700; }   /* dossier */
+.tbody .f    { color: var(--mut); }                   /* fichier */
+.tbody .lnk  { color: #4fd6c0; font-style: italic; }  /* lien */
+.tbody .err  { color: var(--red); }
+.tbody .ok2  { color: var(--ok); }
+.tbody .dimc { color: var(--dim); }
+
+/* la ligne de saisie, dans le flux */
+.tbody .cur { display: flex; align-items: baseline; gap: 8px; }
+.tbody .cur input {
+  flex: 1; min-width: 0;
+  background: transparent; border: 0; outline: 0;
+  color: var(--ink);
+  font-family: var(--mono); font-size: inherit; line-height: 1.6;
+  caret-color: var(--acc);
+  padding: 0;
+}
+.tbody .cur input::placeholder { color: var(--dim); }

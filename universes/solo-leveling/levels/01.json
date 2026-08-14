@@ -1,0 +1,104 @@
+{
+  "title": "Premier ordre",
+  "tagline": "Tu ne bougeras pas ton chasseur. Tu lui diras quoi faire.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Écris. Exécute. Observe. Dans cet ordre.",
+    "progress": [
+      "Faille atteinte. Portail de rang E franchi."
+    ],
+    "stuck": "Ton chasseur a fait exactement ce que tu as écrit. Relis la ligne fautive.",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "nudge": [
+      "Combien de cases séparent ton chasseur de la faille ? Compte-les.",
+      "Une ligne = une case. Il t'en manque peut-être une.",
+      "Clique sur <b>Pas à pas</b> : tu verras exactement où il s'arrête."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Portail détecté. Rang E.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Une précision, joueur : tu n’as aucune touche pour te déplacer.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Tu écris des ordres. Tu appuies sur Exécuter. Ton chasseur obéit, un ordre après l’autre.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Si le programme est faux, tu le verras échouer sous tes yeux. Puis tu corrigeras.",
+      "choices": [
+        {
+          "label": "Compris."
+        }
+      ],
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Atteins la faille ◎.\n\nmoveRight() avance d’une case.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    }
+  ],
+  "brief": "<p>Ton chasseur 🗡 doit atteindre la <b>faille</b> ◎, de l'autre côté du pilier.</p><p><code>moveRight()</code> le fait avancer d'<b>une</b> case. Il ne traverse pas les murs : il faudra <b>contourner</b>.</p><p>Écris tes ordres, puis <b>Exécuter</b>. Essaie aussi <b>Pas à pas</b> : tu verras la ligne en cours s'allumer et le trajet se dessiner.</p>",
+  "hint": [
+    "Le pilier bloque la ligne droite. Par où peux-tu passer ?",
+    "Monte ou descends d'abord, longe le pilier, puis redescends de l'autre côté.",
+    "Depuis le départ : <code>moveUp(2)</code>, <code>moveRight(6)</code>, <code>moveDown(2)</code>."
+  ],
+  "world": {
+    "map": [
+      "#########",
+      "#.......#",
+      "#..###..#",
+      "#H.###.G#",
+      "#..###..#",
+      "#.......#",
+      "#########"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown"
+    ],
+    "new": [
+      "moveRight"
+    ],
+    "starter": "moveRight()\n"
+  },
+  "criteria": [
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 60,
+    "title": "Portail franchi",
+    "unlock": "move()"
+  },
+  "solution": "moveUp(2)\nmoveRight(6)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "moveRight() moveLeft() moveUp() moveDown()",
+      "txt": "une case à la fois"
+    },
+    {
+      "cmd": "À retenir",
+      "txt": "le programme s'exécute LIGNE PAR LIGNE, dans l'ordre où tu l'écris"
+    },
+    {
+      "cmd": "Pas à pas",
+      "txt": "voir la ligne en cours, c'est voir où ça casse"
+    }
+  ]
+}

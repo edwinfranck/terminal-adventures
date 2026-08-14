@@ -1,0 +1,140 @@
+{
+  "title": "Les dossiers du Germa",
+  "tagline": "Ferme la bonne porte. Mais lis avant de fermer.",
+  "mentor": {
+    "who": "Sanji",
+    "face": "assets/portraits/op-sanji.webp",
+    "start": "Ils vont fouiller ma cabine. Je veux qu'ils trouvent quelque chose — et que ce soit faux.",
+    "progress": [
+      "Le leurre est en place.",
+      "Le vrai plan est muet. Bien.",
+      "Et le signal peut partir."
+    ],
+    "stuck": "Tu as fermé quelque chose que tu n'avais pas encore lu ? chmod fonctionne dans les deux sens.",
+    "nudge": [
+      "Dans quel ordre faut-il faire les choses ? Une fois le plan illisible, tu ne pourras plus le consulter.",
+      "Le leurre doit parler d'un quai — mais pas de celui du vrai plan. Lis le vrai d'abord.",
+      "Trois droits, trois cibles : enlever <code>r</code> au plan, garder le leurre lisible, ajouter <code>x</code> au script."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Les hommes de Big Mom vont retourner la cabine du Germa cette nuit."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "S'ils ne trouvent rien, ils chercheront ailleurs. Et ailleurs, c'est nous."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Donc ils trouveront. Un plan d'évasion bien visible, avec un quai qui n'est pas le nôtre."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Le vrai, lui, doit devenir illisible. Pour eux comme pour toi.\n\nRéfléchis à l'ordre, cuistot.",
+      "choices": [
+        {
+          "label": "Lire d'abord, fermer ensuite."
+        }
+      ]
+    }
+  ],
+  "brief": "<p>Dans <code>~/germa</code>, trois fichiers et trois consignes :</p><p>· <code>plan_evasion.txt</code> — le vrai plan. Plus <b>personne</b> ne doit pouvoir le lire.<br>· <code>leurre.txt</code> — le faux. Il doit parler d'un <b>quai</b>, mais <b>pas du même</b> que le vrai.<br>· <code>sortie.sh</code> — le signal de départ. Il doit devenir <b>exécutable</b>.</p><p>Attention à l'ordre : ce que tu fermes, tu ne le liras plus.</p>",
+  "hint": [
+    "Commence par lire le vrai plan : tu as besoin de savoir quel quai éviter dans le leurre.",
+    "<code>echo \"…\" &gt; germa/leurre.txt</code> écrit ta fausse piste.",
+    "<code>chmod 000</code> retire tout à un fichier. <code>chmod +x</code> rend un script exécutable."
+  ],
+  "world": {
+    "fs": {
+      "germa": {
+        "plan_evasion.txt": "PLAN -- ne pas recopier\nsortie par le quai 3, a minuit\nsignal : trois coups de sifflet\nseul Sanji, Luffy et Nami sont au courant",
+        "leurre.txt": "",
+        "sortie.sh": {
+          "$file": "#!/bin/sh\nlarguer les amarres du Sunny",
+          "$mode": "600"
+        },
+        "photos.txt": "trois photos de famille, aucune souriante"
+      },
+      "cuisine": {
+        "menu.txt": "the party : 200 invites. aucun retard tolere."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "chmod"
+    ],
+    "new": [],
+    "motd": "Des pas lourds dans la coursive. Ils montent."
+  },
+  "criteria": [
+    {
+      "label": "Le vrai plan n'est plus lisible",
+      "check": "lacksRight",
+      "args": [
+        "~/germa/plan_evasion.txt",
+        "r"
+      ]
+    },
+    {
+      "label": "Le leurre parle bien d'un quai",
+      "check": "fileContains",
+      "args": [
+        "~/germa/leurre.txt",
+        "quai"
+      ]
+    },
+    {
+      "label": "…mais pas du bon",
+      "check": "fileLacks",
+      "args": [
+        "~/germa/leurre.txt",
+        "quai 3"
+      ]
+    },
+    {
+      "label": "Le signal de départ est exécutable",
+      "check": "hasRight",
+      "args": [
+        "~/germa/sortie.sh",
+        "x"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 300,
+    "title": "Fausse piste posée",
+    "unlock": "chmod 000 / -r"
+  },
+  "solution": [
+    "cat germa/plan_evasion.txt",
+    "echo \"sortie par le quai 7, au petit matin\" > germa/leurre.txt",
+    "chmod 000 germa/plan_evasion.txt",
+    "chmod +x germa/sortie.sh",
+    "ls -l germa"
+  ],
+  "recap": [
+    {
+      "cmd": "chmod 000 <fichier>",
+      "txt": "ferme tout — chmod -r n'enlève que la lecture"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "lire AVANT de fermer : un fichier verrouillé ne se relit pas"
+    },
+    {
+      "cmd": "À retenir",
+      "txt": "les droits te protègent des autres… et de toi"
+    }
+  ]
+}

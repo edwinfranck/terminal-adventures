@@ -1,0 +1,159 @@
+{
+  "title": "Trois raccourcis pour Nami",
+  "tagline": "Le bon fichier, au bon endroit, sans le déplacer.",
+  "mentor": {
+    "who": "Nami",
+    "face": "assets/portraits/op-nami.webp",
+    "start": "On perd trois minutes à chaque fois qu'il faut descendre en cale. Trois minutes, en pleine tempête, c'est le naufrage.",
+    "progress": [
+      "Le premier raccourci répond.",
+      "Deux. Continue.",
+      "Trois. Je gagne dix minutes par jour."
+    ],
+    "stuck": "Un raccourci n'est pas une copie : si je corrige la carte, ton raccourci doit changer aussi.",
+    "nudge": [
+      "Qui est le plus consulté ? <code>usage.txt</code> te donne les chiffres — ils ne sont pas rangés.",
+      "Tu connais les noms mais pas les chemins. <code>find</code> retrouve un fichier n'importe où.",
+      "<code>ln -s &lt;chemin du fichier&gt; top1</code> pose le raccourci. Pas <code>cp</code> : une copie vieillirait."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Le Sunny est bien rangé. Trop rangé : tout est enfoui à trois dossiers de profondeur."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "J'ai relevé combien de fois chaque fichier a été ouvert ce mois-ci. C'est dans usage.txt."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Je veux les trois plus consultés à portée de main, à la racine. Pas des copies : des <b>raccourcis</b>."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "ln -s pose un raccourci. Il ne contient rien : il désigne.\n\nSi je corrige l'original, le raccourci affiche la correction. Une copie, non.",
+      "choices": [
+        {
+          "label": "Compris. Je classe d'abord."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/usage.txt</code> donne le nombre de consultations de chaque fichier du mois. Les chiffres <b>ne sont pas rangés</b>.</p><p>Pose à la racine <code>~</code> trois raccourcis nommés <code>top1</code>, <code>top2</code>, <code>top3</code> — du plus consulté au moins consulté.</p><p>Les fichiers sont enterrés dans l'arbre : à toi de les retrouver. Et ce sont des <b>raccourcis</b>, pas des copies.</p>",
+  "hint": [
+    "<code>cat usage.txt</code>, puis classe les trois plus gros nombres à la main.",
+    "<code>find journal</code> te donne le chemin complet d'un fichier dont tu ne connais que le nom.",
+    "<code>ln -s pont/vigie/journal_de_bord.txt top1</code> — et pareil pour les deux autres."
+  ],
+  "world": {
+    "fs": {
+      "usage.txt": "consultations du mois\n\nboulons.txt ............ 3\njournal_de_bord.txt .... 41\nmenu.txt ............... 2\ncarte_wano.txt ......... 38\nreserve.txt ............ 1\nmanifeste.txt .......... 27\ncartes.txt ............. 9",
+      "cale": {
+        "outils": {
+          "manifeste.txt": "MANIFESTE DE CARGAISON\ncargaison scellee par Franky, ne pas ouvrir en mer",
+          "boulons.txt": "quatre caisses de boulons de 12"
+        },
+        "vivres": {
+          "reserve.txt": "trois tonneaux de viande sechee"
+        }
+      },
+      "pont": {
+        "vigie": {
+          "journal_de_bord.txt": "jour 61 -- tempete au nord-est, la mer se creuse\njour 62 -- accalmie, cap maintenu"
+        },
+        "cuisine": {
+          "menu.txt": "riz, poisson, et encore du riz"
+        }
+      },
+      "cabine": {
+        "cartes.txt": "Grand Line -- premiere ile au sud-est.",
+        "navigation": {
+          "carte_wano.txt": "WANO -- pays ferme.\nune seule entree : la cascade."
+        }
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "find",
+      "grep",
+      "ln"
+    ],
+    "new": [
+      "ln"
+    ],
+    "motd": "Nami pose son crayon sur le registre des consultations."
+  },
+  "criteria": [
+    {
+      "label": "<code class=\"p\">top1</code> mène au fichier le plus consulté",
+      "check": "fileContains",
+      "args": [
+        "~/top1",
+        "tempete au nord-est"
+      ]
+    },
+    {
+      "label": "<code class=\"p\">top2</code> mène au deuxième",
+      "check": "fileContains",
+      "args": [
+        "~/top2",
+        "une seule entree"
+      ]
+    },
+    {
+      "label": "<code class=\"p\">top3</code> mène au troisième",
+      "check": "fileContains",
+      "args": [
+        "~/top3",
+        "cargaison scellee"
+      ]
+    },
+    {
+      "label": "Ce sont des raccourcis, pas des copies",
+      "check": "allLinks",
+      "args": [
+        "~/top1",
+        "~/top2",
+        "~/top3"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 320,
+    "title": "Pont dégagé",
+    "unlock": "ln -s"
+  },
+  "solution": [
+    "cat usage.txt",
+    "find journal_de_bord",
+    "find carte_wano",
+    "find manifeste",
+    "ln -s pont/vigie/journal_de_bord.txt top1",
+    "ln -s cabine/navigation/carte_wano.txt top2",
+    "ln -s cale/outils/manifeste.txt top3",
+    "ls -l",
+    "cat top1"
+  ],
+  "recap": [
+    {
+      "cmd": "ln -s <cible> <nom>",
+      "txt": "pose un raccourci vers un fichier"
+    },
+    {
+      "cmd": "Un lien n'est pas une copie",
+      "txt": "corrige l'original, le raccourci affiche la correction"
+    },
+    {
+      "cmd": "find <nom>",
+      "txt": "retrouver le chemin d'un fichier dont tu ne connais que le nom"
+    }
+  ]
+}

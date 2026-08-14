@@ -1,0 +1,116 @@
+{
+  "title": "Le Monarque",
+  "tagline": "Des piques barrent la route directe. Et il garde la seule autre issue.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Piques en travers du chemin direct. Baran garde l'autre issue.",
+    "progress": [
+      "Le Monarque est tombé.",
+      "Faille atteinte. Rang C obtenu."
+    ],
+    "stuck": "Tu es mort sur les piques ou sur lui. Les deux se contournent — l'un par le bas, l'autre par l'épée.",
+    "nudge": [
+      "Quelle route ne passe PAS sur les piques ?",
+      "Descends d'abord, longe le bas de la salle, remonte sur lui par la gauche.",
+      "<code>while (boss)</code> reste vraie tant qu'il est debout devant toi."
+    ],
+    "face": "assets/portraits/sl-jinwoo.webp"
+  },
+  "dialogue": [
+    {
+      "who": "Baran",
+      "face": "assets/portraits/sl-baran.webp",
+      "text": "Un chasseur de rang C. Dans MA salle."
+    },
+    {
+      "who": "Le Système",
+      "text": "Monarque détecté. Trois points de vie. Et des piques sur la route directe.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Et si tu marches sur lui avant qu'il tombe, c'est terminé pour toi.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Tu peux compter les coups. Ou laisser la condition compter pour toi :\n\nwhile (boss) {\n  attack()\n}",
+      "choices": [
+        {
+          "label": "Je le frappe."
+        }
+      ],
+      "face": "assets/portraits/sl-jinwoo.webp"
+    }
+  ],
+  "brief": "<p>Le chemin le plus court est <b>hérissé de piques</b> — marcher dessus te tue.</p><p>Contourne, puis affronte le Monarque : il a <b>trois points de vie</b>, visibles au-dessus de lui.</p><p>Tu peux compter les coups. Ou laisser la condition compter : <code>boss</code> reste vraie <b>tant qu'il est debout devant toi</b>.</p><p>Derrière lui, la faille ◎.</p>",
+  "hint": [
+    "Regarde la carte avant d'écrire : la route du haut est piégée.",
+    "Descends d'abord, longe le bas, et arrive sur lui <b>par la gauche</b>.",
+    "<code>while (boss) { attack() }</code> frappe jusqu'à ce qu'il tombe. Puis avance et descends."
+  ],
+  "world": {
+    "map": [
+      "##########",
+      "#H..XX...#",
+      "#...XX...#",
+      "#......B.#",
+      "########.#",
+      "########G#",
+      "##########"
+    ],
+    "bossHp": 3,
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "while (boss) { }",
+        "desc": "Tant que le Monarque est debout devant toi"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Le Monarque est abattu",
+      "check": "bossDown",
+      "args": []
+    },
+    {
+      "label": "Ton chasseur est vivant",
+      "check": "survived",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 300,
+    "title": "Rang C · Monarque abattu",
+    "unlock": "while (boss)"
+  },
+  "solution": "moveDown(2)\nmoveRight(5)\nwhile (boss) {\n  attack()\n}\nmoveRight(2)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "while (boss) { attack() }",
+      "txt": "frapper tant qu'il tient debout"
+    },
+    {
+      "cmd": "À retenir",
+      "txt": "contourner un danger vaut mieux que le traverser"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "déplacement, test et boucle dans un même programme"
+    }
+  ]
+}

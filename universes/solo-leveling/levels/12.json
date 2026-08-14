@@ -1,0 +1,127 @@
+{
+  "title": "Deux compteurs",
+  "tagline": "Un couloir, un puits, et le chemin du retour dans la tête.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Deux directions, deux longueurs. Deux mémoires.",
+    "progress": [
+      "Le fond du couloir.",
+      "Le fond du puits.",
+      "Et le chemin du retour, exact."
+    ],
+    "stuck": "Une variable par direction. Si tu n'en gardes qu'une, tu perds l'autre.",
+    "nudge": [
+      "Tu vas parcourir deux distances différentes. Combien de mémoires te faut-il ?",
+      "Compte l'aller vers la droite dans une variable, la descente dans une autre.",
+      "Le retour, c'est l'inverse exact : <code>moveUp(bas)</code> puis <code>moveLeft(droite)</code>."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Portail de rang B. Le dernier."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Le couloir tourne. Tu iras à droite, puis tout en bas."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Rien ne t'indiquera les distances. Tu les mesureras en marchant."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Et tu reviendras au point de départ sans une erreur. Sinon, la faille reste fermée."
+    }
+  ],
+  "brief": "<p>Le couloir part à droite, puis plonge vers le bas jusqu'à une <b>essence</b> ◆.</p><p>Prends-la, puis <b>reviens exactement</b> au point de départ et descends vers la faille ◎.</p><p>Deux distances différentes à retenir : il te faut <b>deux variables</b>.</p>",
+  "hint": [
+    "<code>while (clear)</code> avance jusqu'au mur ; compte dans <code>droite</code>.",
+    "Pour descendre, il faut d'abord se tourner : un <code>moveDown()</code> avant la boucle — et compte-le aussi.",
+    "Retour : <code>moveUp(bas)</code>, <code>moveLeft(droite)</code>, puis <code>moveDown(2)</code>."
+  ],
+  "world": {
+    "map": [
+      "############",
+      "#H.........#",
+      "#.########.#",
+      "#G########.#",
+      "##########C#",
+      "############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "pickup"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "var nom = 0",
+        "desc": "Retenir un nombre"
+      },
+      {
+        "cmd": "nom = nom + 1",
+        "desc": "Le modifier"
+      },
+      {
+        "cmd": "while (cond) { }",
+        "desc": "Tant que la condition tient"
+      }
+    ],
+    "starter": "var droite = 0\n"
+  },
+  "criteria": [
+    {
+      "label": "L'essence est récupérée",
+      "check": "allChests",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as créé une variable (<code>var</code>)",
+      "check": "usedVar",
+      "args": []
+    },
+    {
+      "label": "Ton chasseur est vivant",
+      "check": "survived",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 320,
+    "title": "Rang B franchi",
+    "unlock": "deux variables"
+  },
+  "solution": "var droite = 0\nwhile (clear) {\n  moveRight()\n  droite = droite + 1\n}\nvar bas = 1\nmoveDown()\nwhile (clear) {\n  moveDown()\n  bas = bas + 1\n}\npickup()\nmoveUp(bas)\nmoveLeft(droite)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "var droite · var bas",
+      "txt": "une mémoire par chose à retenir — elles ne se mélangent pas"
+    },
+    {
+      "cmd": "while (clear)",
+      "txt": "avancer jusqu'au mur sans connaître la distance d'avance"
+    },
+    {
+      "cmd": "moveUp(bas)",
+      "txt": "refaire un trajet à l'envers, au pas près"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "mesurer pendant qu'on avance coûte une ligne et évite toutes les erreurs"
+    }
+  ]
+}

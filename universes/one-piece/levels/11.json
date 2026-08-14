@@ -1,0 +1,149 @@
+{
+  "title": "Le garde-manger de Big Mom",
+  "tagline": "La porte n'est pas fermée à clé. Il lui manque un droit.",
+  "mentor": {
+    "who": "Sanji",
+    "face": "assets/portraits/op-sanji.webp",
+    "start": "Un cuisinier qui ne peut pas entrer dans sa réserve, c'est un cuisinier mort.",
+    "progress": [
+      "La porte respire à nouveau.",
+      "Et la recette parle. Note ce qui compte."
+    ],
+    "stuck": "Regarde les droits avant de forcer quoi que ce soit. Trois lettres t'attendent : r, w, x.",
+    "nudge": [
+      "<code>ls -l</code> affiche les droits devant chaque nom. Que vois-tu qui manque ?",
+      "Un dossier se <b>traverse</b> avec le droit <code>x</code>. Un fichier se <b>lit</b> avec le droit <code>r</code>.",
+      "<code>chmod +x</code> ajoute le droit de traverser. <code>chmod +r</code> celui de lire."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Whole Cake Island. Le gâteau de mariage, c'est moi qui le fais. Pas le choix."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Sauf que le chef d'avant a tout verrouillé avant de disparaître. Le garde-manger refuse de s'ouvrir."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Ici, rien n'est fermé à clé. Chaque chose porte trois droits : <b>r</b> la lire, <b>w</b> la modifier, <b>x</b> la traverser."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "ls -l te les montre. chmod te les rend.\n\nCommence par regarder. On ne cuisine pas à l'aveugle.",
+      "choices": [
+        {
+          "label": "Je regarde d'abord."
+        }
+      ]
+    }
+  ],
+  "brief": "<p>Le <code>garde-manger</code> est dans <code>~/cuisine</code>. Deux choses coincent : on ne peut pas <b>y entrer</b>, et la <code>recette.txt</code> qu'il contient ne se <b>lit</b> pas.</p><p>Répare les deux. <code>ls -l</code> te dit exactement ce qui manque.</p><p>Puis ouvre la recette : elle nomme <b>un</b> ingrédient marqué <b>SECRET</b>. Écris ce mot — <b>ce seul mot</b> — dans <code>~/liste.txt</code>.</p>",
+  "hint": [
+    "<code>ls -l cuisine</code> puis <code>ls -l cuisine/garde-manger</code> : compare les lettres affichées devant chaque nom.",
+    "Il manque <code>x</code> au dossier et <code>r</code> au fichier.",
+    "<code>chmod +x cuisine/garde-manger</code>, puis <code>chmod +r</code> sur la recette, puis <code>cat</code>."
+  ],
+  "world": {
+    "fs": {
+      "cuisine": {
+        "$dir": {
+          "garde-manger": {
+            "$dir": {
+              "recette.txt": {
+                "$file": "GATEAU DE MARIAGE -- 3 etages\n\nfarine ......... 12 sacs\nbeurre ......... 40 mottes\nsucre .......... 60 kilos\ncreme .......... 20 bidons\nfraises ........ 8 cageots\n\nSECRET ......... kuri\n\n(le chef precedent a ferme la reserve avant de partir)",
+                "$mode": "000"
+              },
+              "casseroles.txt": "douze casseroles, toutes cabossees",
+              "inventaire.txt": "il manque des fraises. encore."
+            },
+            "$mode": "600"
+          },
+          "menu.txt": "the party : 200 invites. aucun retard tolere."
+        }
+      },
+      "pont": {
+        "consigne.txt": "Ne quitte pas le navire sans prevenir Nami."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "chmod"
+    ],
+    "new": [
+      "chmod"
+    ],
+    "motd": "La porte du garde-manger ne bouge pas d’un pouce."
+  },
+  "criteria": [
+    {
+      "label": "Le garde-manger se traverse à nouveau",
+      "check": "hasRight",
+      "args": [
+        "~/cuisine/garde-manger",
+        "x"
+      ]
+    },
+    {
+      "label": "La recette est redevenue lisible",
+      "check": "hasRight",
+      "args": [
+        "~/cuisine/garde-manger/recette.txt",
+        "r"
+      ]
+    },
+    {
+      "label": "L'ingrédient secret est noté <code class=\"p\">~/liste.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/liste.txt",
+        "kuri"
+      ]
+    },
+    {
+      "label": "Et rien d'autre : pas la liste entière",
+      "check": "fileLacks",
+      "args": [
+        "~/liste.txt",
+        "beurre"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 280,
+    "title": "Réserve rouverte",
+    "unlock": "chmod +r / +x"
+  },
+  "solution": [
+    "ls -l cuisine",
+    "chmod +x cuisine/garde-manger",
+    "ls -l cuisine/garde-manger",
+    "chmod +r cuisine/garde-manger/recette.txt",
+    "cat cuisine/garde-manger/recette.txt",
+    "echo \"kuri\" > ~/liste.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "ls -l",
+      "txt": "affiche les droits devant chaque nom : drwxr-xr-x"
+    },
+    {
+      "cmd": "chmod +r <fichier>",
+      "txt": "rend lisible — chmod +x <dossier> rend traversable"
+    },
+    {
+      "cmd": "r ≠ x",
+      "txt": "lister un dossier et y entrer sont DEUX droits différents"
+    }
+  ]
+}

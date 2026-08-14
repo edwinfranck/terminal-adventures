@@ -1,0 +1,129 @@
+{
+  "title": "L'atelier de Franky",
+  "tagline": "Franky n'est pas là. Le chantier, c'est toi.",
+  "mentor": {
+    "who": "Luffy",
+    "face": "assets/portraits/op-luffy.webp",
+    "start": "Un atelier. Dans la cale. Maintenant.",
+    "progress": [
+      "L'atelier tient debout ! Reste la liste.",
+      "Le plan est prêt. Franky va être jaloux."
+    ],
+    "stuck": "Vérifie où tu es avec `pwd` — on construit souvent au mauvais endroit.",
+    "nudge": [
+      "Tu as regardé ce qu'il y a dans la cale ? Franky y a laissé quelque chose.",
+      "Un fichier, ça se lit. Laquelle de tes commandes sait lire ?",
+      "La note donne deux noms exacts. Recopie-les tels quels, sans rien inventer."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Luffy",
+      "text": "Franky est parti chercher du bois sur l’île. Il ne rentrera pas avant demain.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "On ne peut pas attendre. La coque prend l’eau.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "Mais il a laissé une note dans la cale avant de partir. Tout est écrit dedans.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "Va la lire — moi je ne sais plus ce qu'il voulait exactement.\n\ncat affiche ce qu'il y a dans un fichier.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    }
+  ],
+  "brief": "<p>Franky est resté à terre, mais il a laissé une <b>note dans la cale</b>.</p><p>Elle dit comment doit s'appeler l'atelier et ce qu'il faut poser dedans. <b>Je ne te le dirai pas : lis-la.</b></p><p>Trois outils viennent d'apparaître dans ton arsenal. L'un lit, l'un construit un lieu, l'un pose un objet vide.</p>",
+  "hint": [
+    "Commence par descendre dans la cale et regarder ce qu'il y a dedans.",
+    "<code>cat</code> affiche le contenu d'un fichier. La note de Franky en est un.",
+    "Elle demande <code>ship_repairs</code> et, dedans, <code>plan.txt</code>."
+  ],
+  "world": {
+    "fs": {
+      "pont": {
+        "vigie.txt": "Une voile à l'horizon. Pavillon inconnu."
+      },
+      "cale": {
+        "note_de_franky.txt": "Si je ne suis pas rentre a temps :\n- monte l'atelier, appelle-le ship_repairs\n- pose dedans un fichier plan.txt, on y notera ce qui manque\n  -- Franky",
+        "inventaire.txt": "3 tonneaux d'eau\n1 caisse de viande\n0 planche de rechange"
+      },
+      "cuisine": {
+        "menu.txt": "Ce soir : viande."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "mkdir",
+      "touch"
+    ],
+    "new": [
+      "cat",
+      "mkdir",
+      "touch"
+    ],
+    "motd": "L'eau monte doucement dans la cale."
+  },
+  "criteria": [
+    {
+      "label": "Tu as lu la note de Franky (<code>cat</code>)",
+      "check": "ranCommand",
+      "args": [
+        "cat"
+      ]
+    },
+    {
+      "label": "L'atelier existe dans la cale, sous le nom demandé",
+      "check": "dirExists",
+      "args": [
+        "~/cale/ship_repairs"
+      ]
+    },
+    {
+      "label": "Le fichier demandé est dedans",
+      "check": "fileExists",
+      "args": [
+        "~/cale/ship_repairs/plan.txt"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 90,
+    "title": "Chantier ouvert",
+    "unlock": "mkdir · touch"
+  },
+  "solution": [
+    "cd cale",
+    "ls",
+    "cat note_de_franky.txt",
+    "mkdir ship_repairs",
+    "cd ship_repairs",
+    "touch plan.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "mkdir <nom>",
+      "txt": "crée un lieu"
+    },
+    {
+      "cmd": "touch <nom>",
+      "txt": "crée un fichier vide"
+    },
+    {
+      "cmd": "cat <fichier>",
+      "txt": "lit son contenu sans rien y changer"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "le monde te donne les noms exacts — la note les contenait"
+    }
+  ]
+}

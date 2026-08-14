@@ -1,0 +1,237 @@
+/* base.css — reset + tokens. Palette et noms de variables repris de piscine.html
+   (--acc / --ink / --mut / --nb …) pour rester dans la même charte.
+
+   NÉO-BRUTALISME, règles non négociables :
+   · bordures franches 2px var(--ink), jamais de border-radius
+   · ombres DURES et décalées : Npx Npx 0 var(--nb) — aucune ombre floue, nulle part
+   · survol = l'élément se soulève (translate négatif + ombre plus grande)
+   · clic = il s'enfonce (translate positif + ombre plus petite) */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --anton: 'Anton', 'Haettenschweiler', 'Arial Narrow', sans-serif;
+  --ui:    'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  /* couleurs de fond / texte (dark) */
+  --bg: #0c1621;  --bg2: #0f1e2b;  --panel: #122335;  --panel2: #0d1a27;
+  --ink: #f3ede0; --mut: #9fb0c2;  --dim: #5f7185;    --line: rgba(255,255,255,.10);
+  --termbg: #08111a;
+  --nb: #04070d;                       /* la couleur des ombres dures */
+  /* Bordure des GRANDES surfaces. En clair c'est l'encre (vrai néo-brutalisme) ; en
+     sombre, un cadre encre = un cadre BLANC, et l'ombre dure noire ne se voit pas :
+     la carte se détacherait par un liseré au lieu de sa matière. */
+  --edge: rgba(255, 255, 255, .14);
+  /* Ombre portée des GROS TITRES. En sombre elle est noire sous un texte crème : net.
+     En clair, texte encre + ombre encre = deux fois la même couleur, donc un pâté
+     illisible — l'ombre passe à l'accent, qui détache les lettres au lieu de les noyer. */
+  --title-nb: var(--nb);
+
+  /* accents */
+  --op: #ff3344;                       /* One Piece */
+  --sl: #8b5cf6;                       /* Solo Leveling */
+  --gold: #f6c945; --ok: #2fbf71; --red: #e63946;
+  --acc: var(--gold);                  /* accent par défaut (menu) */
+  --acc-ink: #10131a;                  /* texte lisible SUR l'accent */
+
+  --gap: 14px;
+  --pad: 18px;
+}
+
+/* ---------------- MODE CLAIR ----------------
+   Mêmes valeurs que piscine.html : blanc propre, encre sombre, ombres dures noires. */
+:root[data-mode="light"] {
+  --bg: #ffffff;  --bg2: #f4f5f7;  --panel: #ffffff;  --panel2: #f2f3f6;
+  --ink: #141821; --mut: #586072;  --dim: #9aa3b2;    --line: rgba(0,0,0,.12);
+  --termbg: #ffffff;
+  --nb: #141821;
+  --edge: var(--ink);
+  --title-nb: var(--acc);
+  --veil-top: rgba(255,255,255,.72); --veil-bot: rgba(255,255,255,.93);
+  --art-op: .85;
+}
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: 15px;
+  line-height: 1.55;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .anton {
+  font-family: var(--anton);
+  font-weight: 400;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  line-height: .95;
+}
+
+code, kbd, pre, .mono { font-family: var(--mono); }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* ---------------- la brique brutaliste ---------------- */
+.nb {
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--nb);
+  background: var(--panel);
+  transition: transform .12s, box-shadow .12s, background .12s, color .12s;
+}
+.nb:hover  { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--nb); }
+.nb:active { transform: translate(3px, 3px);   box-shadow: 2px 2px 0 var(--nb); }
+
+/* ---------------- boutons ---------------- */
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  font-family: var(--anton);
+  font-size: 18px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--nb);
+  background: var(--panel);
+  transition: transform .12s, box-shadow .12s, background .12s, color .12s;
+}
+.btn:hover  { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--nb); }
+.btn:active { transform: translate(3px, 3px);   box-shadow: 2px 2px 0 var(--nb); }
+.btn-primary { background: var(--acc); color: var(--acc-ink); }
+.btn[disabled] { opacity: .4; cursor: not-allowed; transform: none; box-shadow: 5px 5px 0 var(--nb); }
+
+/* petit bouton technique (mono, discret mais toujours franc) */
+.btn-s {
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--nb);
+  background: var(--panel);
+  transition: transform .12s, box-shadow .12s, background .12s, color .12s;
+}
+.btn-s:hover  { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--nb); }
+.btn-s:active { transform: translate(2px, 2px);   box-shadow: 1px 1px 0 var(--nb); }
+
+/* étiquette technique en capitales espacées */
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ---------------- barre du haut ---------------- */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  pointer-events: none;
+}
+#topbar .tag { color: var(--acc); }
+.top-ctrls { margin-left: auto; display: flex; gap: 8px; pointer-events: auto; }
+.top-ctrls .btn-s {
+  width: 36px; height: 36px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+/* sur l'écran de jeu, la barre gênerait le HUD */
+:root[data-scene="play"] #topbar { display: none; }
+
+/* ---------------- scènes ----------------
+   Une scène occupe l'écran. Celles qui LISTENT (menu, parcours, fin) peuvent être plus
+   hautes que la fenêtre : elles défilent. Celle du JEU ne défile jamais — ses trois
+   panneaux gèrent leur propre hauteur, et un défilement global casserait le HUD. */
+.scene {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.scene[data-scene="play"] { overflow: hidden; }
+
+/* barre de défilement carrée, aux couleurs du thème : la barre système, claire et
+   arrondie, jure avec tout le reste en mode sombre */
+.scene::-webkit-scrollbar        { width: 12px; }
+.scene::-webkit-scrollbar-track  { background: var(--bg2); }
+.scene::-webkit-scrollbar-thumb  { background: var(--dim); border: 3px solid var(--bg2); }
+.scene::-webkit-scrollbar-thumb:hover { background: var(--mut); }
+.scene { scrollbar-width: thin; scrollbar-color: var(--dim) var(--bg2); }
+.scene.on { display: flex; animation: sceneIn .22s ease both; }
+@keyframes sceneIn { from { opacity: 0 } to { opacity: 1 } }
+
+/* ---------------- fond d'univers, animé ----------------
+   L'illustration dérive lentement derrière un voile et des scanlines : ça vit sans
+   demander de vidéo. (Les mp4 d'origine sont en H.265 — Chrome ne sait pas les lire.)
+   Jamais de flou : ce n'est pas dans la charte. */
+:root { --veil-top: rgba(12, 22, 33, .82); --veil-bot: rgba(12, 22, 33, .95); }
+
+#bg {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+  background: var(--bg);
+}
+.bg-art {
+  position: absolute; inset: -5%;
+  /* comme le #bgvid de piscine.html : l'illustration reste une ambiance, pas un sujet */
+  opacity: var(--art-op, .45);
+  background-image: var(--art, none);
+  background-size: cover; background-position: center;
+  animation: drift 46s ease-in-out infinite alternate;
+}
+.bg-vid {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: var(--art-op, .45);
+}
+.bg-vid[hidden] { display: none; }
+/* Une seule couche visible à la fois : quand la vidéo joue, l'illustration s'efface.
+   Sinon les deux se superposent en semi-transparence et l'image bave sous la vidéo. */
+#bg.has-video .bg-art { display: none; }
+@media (prefers-reduced-motion: reduce) { .bg-vid { display: none; } }
+
+.bg-veil { position: absolute; inset: 0; background: linear-gradient(to bottom, var(--veil-top), var(--veil-bot)); }
+.bg-scan {
+  position: absolute; inset: 0; opacity: .45;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.30) 2px 4px);
+}
+@keyframes drift {
+  from { transform: scale(1.06) translate(-1.6%, -1%); }
+  to   { transform: scale(1.15) translate(1.6%, 1.2%); }
+}
+
+/* les scènes narratives laissent voir le fond ; l'écran de jeu reste opaque */
+.scene { z-index: 1; background: transparent; }
+.scene[data-scene="play"] { background: var(--bg); }
+
+/* ---------------- bascule d'univers : un flash franc, pas un fondu ---------------- */
+#glitch {
+  position: fixed; inset: 0; z-index: 90;
+  pointer-events: none; opacity: 0;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(to bottom,
+    var(--acc) 0 3px, transparent 3px 9px);
+}
+#glitch.on { animation: glitch .42s steps(3) 1; }
+@keyframes glitch {
+  0%   { opacity: 0;  transform: none; }
+  20%  { opacity: .8; transform: translateX(-9px) scaleY(1.02); }
+  50%  { opacity: .5; transform: translateX(7px); }
+  80%  { opacity: .7; transform: translateX(-3px); }
+  100% { opacity: 0;  transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene.on { animation: none; }
+  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

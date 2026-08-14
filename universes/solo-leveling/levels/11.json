@@ -1,0 +1,121 @@
+{
+  "title": "Autant d'essences",
+  "tagline": "Le jeu compte pour toi. Encore faut-il lire son compteur.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Certains nombres, tu n'as pas à les tenir : je les tiens déjà.",
+    "progress": [
+      "Quatre essences.",
+      "Et tu es monté d'autant. Bien lu."
+    ],
+    "stuck": "Le nombre d'étages à monter n'est écrit nulle part. Il est égal à quelque chose que tu viens de faire.",
+    "nudge": [
+      "Combien d'essences y a-t-il dans cette salle ? Et combien d'étages te séparent de la faille ?",
+      "<code>essences</code> est un compteur du jeu : il vaut le nombre d'essences déjà ramassées.",
+      "<code>moveUp(essences)</code> monte d'autant d'étages que tu en as pris."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Rang B, deuxième portail."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Tu n'as pas toujours besoin de créer une variable : certaines existent déjà."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "essences, kills, army — je les tiens à jour pendant que tu joues. Tu peux les lire comme des variables."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Ramasse tout, puis monte d'autant d'étages que d'essences ramassées."
+    }
+  ],
+  "brief": "<p>Quatre <b>essences</b> ◆ sur la même rangée. Ramasse-les toutes.</p><p>La faille ◎ est en hauteur — <b>exactement autant d'étages qu'il y a d'essences</b>.</p><p>Tu n'as pas à écrire ce nombre : <code>essences</code> est un compteur que le jeu tient pour toi.</p>",
+  "hint": [
+    "Monte d'abord sur la rangée des essences, puis avance de deux en deux.",
+    "<code>repeat (3) { moveRight(2) &nbsp; pickup() }</code> ramasse les trois suivantes.",
+    "Pour finir : <code>moveUp(essences)</code>."
+  ],
+  "world": {
+    "map": [
+      "###########",
+      "#........G#",
+      "#.........#",
+      "#.........#",
+      "#.........#",
+      "#..C.C.C.C#",
+      "#..H......#",
+      "###########"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "pickup"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "repeat (n) { }",
+        "desc": "Répète n fois le bloc"
+      },
+      {
+        "cmd": "var nom = 0",
+        "desc": "Retenir un nombre"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les quatre essences sont récupérées",
+      "check": "allChests",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as lu le compteur <code>essences</code>",
+      "check": "usedKeyword",
+      "args": [
+        "essences"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 280,
+    "title": "Compteur lu",
+    "unlock": "essences"
+  },
+  "solution": "moveUp()\npickup()\nrepeat (3) {\n  moveRight(2)\n  pickup()\n}\nmoveUp(essences)\n",
+  "recap": [
+    {
+      "cmd": "essences",
+      "txt": "compteur tenu par le jeu : le nombre d'essences ramassées"
+    },
+    {
+      "cmd": "moveUp(essences)",
+      "txt": "un compteur peut servir d'argument, comme un nombre"
+    },
+    {
+      "cmd": "army · kills",
+      "txt": "deux autres compteurs existent — tu les utiliseras bientôt"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "avant de compter à la main, vérifie si quelqu'un compte déjà pour toi"
+    }
+  ]
+}

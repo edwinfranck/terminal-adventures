@@ -1,0 +1,123 @@
+{
+  "title": "La routine",
+  "tagline": "Trois paliers identiques, en escalier. La même manœuvre à chaque fois.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Trois couloirs. Exactement le même schéma dans chacun.",
+    "progress": [
+      "Les trois ombres sont tombées.",
+      "Faille atteinte — avec un seul bloc écrit une fois."
+    ],
+    "stuck": "Écris la manœuvre UNE fois. Donne-lui un nom. Appelle-la.",
+    "nudge": [
+      "Qu'est-ce qui se répète, exactement, dans les trois couloirs ?",
+      "Tu peux nommer une suite d'ordres : <code>function nom() { … }</code>.",
+      "Définis-la une fois, puis écris <code>nom()</code> autant de fois que nécessaire."
+    ],
+    "face": "assets/portraits/sl-jinwoo.webp"
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Rang C. Trois couloirs, et dans chacun la même manœuvre : une ombre à frapper, puis on avance.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Tu pourrais recopier ta séquence trois fois. Elle marcherait. Et si tu te trompes, tu te trompes trois fois.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Un chasseur nomme sa manœuvre.\n\nfunction nettoyer() {\n  attack()\n  moveRight()\n}\n\nÉcrite une fois. Corrigée une fois. Appelée autant de fois que tu veux.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Ensuite tu l'appelles : nettoyer(). Ou tu la mets dans une boucle.",
+      "choices": [
+        {
+          "label": "Compris."
+        }
+      ],
+      "face": "assets/portraits/sl-jinwoo.webp"
+    }
+  ],
+  "brief": "<p>Le donjon descend en <b>escalier</b>. À chaque palier : une ombre 👁 devant toi, deux cases à franchir, deux cases à descendre, et on recommence.</p><p><b>Trois paliers, exactement la même manœuvre.</b></p><p>Une fonction te permet de <b>nommer</b> cette manœuvre :</p><p><code>function nom() { … }</code> la définit · <code>nom()</code> l'exécute</p><p>Écris-la une seule fois, puis appelle-la trois fois.</p>",
+  "hint": [
+    "Fais un palier à la main d'abord, et note les ordres. Le suivant est identique.",
+    "Un palier : frapper, avancer de 2, descendre de 2, puis avancer de 1 pour se remettre face à droite.",
+    "<code>function palier() { attack() moveRight(2) moveDown(2) moveRight() }</code> puis <code>repeat (3) { palier() }</code>."
+  ],
+  "world": {
+    "map": [
+      "############",
+      "#HM.########",
+      "###.########",
+      "###..M.#####",
+      "######.#####",
+      "######..M.##",
+      "#########.##",
+      "#########.G#",
+      "############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "function nom() { }",
+        "desc": "Nomme une suite d'ordres, réutilisable"
+      },
+      {
+        "cmd": "repeat (n) { }",
+        "desc": "Répète n fois le bloc entre accolades"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les trois ombres sont dissipées",
+      "check": "allMonsters",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as défini une fonction (<code>function</code>)",
+      "check": "usedKeyword",
+      "args": [
+        "function"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 220,
+    "title": "Ta première fonction",
+    "unlock": "function"
+  },
+  "solution": "function palier() {\n  attack()\n  moveRight(2)\n  moveDown(2)\n  moveRight()\n}\nrepeat (3) {\n  palier()\n}\n",
+  "recap": [
+    {
+      "cmd": "function nom() { … }",
+      "txt": "donne un nom à une manœuvre, puis appelle-la"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "le même geste trois fois de suite → une fonction"
+    },
+    {
+      "cmd": "À retenir",
+      "txt": "une manœuvre répétable doit finir dans la direction où elle commence"
+    }
+  ]
+}

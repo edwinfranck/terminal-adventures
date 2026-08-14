@@ -1,0 +1,140 @@
+{
+  "title": "Les armes dans les cercueils",
+  "tagline": "Tout doit tenir dans un seul paquet. Et rien ne doit rester dehors.",
+  "mentor": {
+    "who": "Franky",
+    "face": "assets/portraits/op-franky.webp",
+    "start": "On ne fait pas entrer une armurerie à Onigashima en la portant sur l'épaule. On l'emballe.",
+    "progress": [
+      "L'inventaire est lu. Tu sais ce qui part et ce qui reste.",
+      "Le paquet est scellé.",
+      "Et le quai est vide. Superbe."
+    ],
+    "stuck": "Emballer ne fait pas disparaître l'original : c'est à toi de nettoyer derrière.",
+    "nudge": [
+      "L'inventaire signale une arme inutilisable. Elle n'a rien à faire dans le paquet.",
+      "<code>tar -czf &lt;archive&gt; &lt;dossier&gt;</code> emballe. <code>tar -tzf &lt;archive&gt;</code> vérifie sans ouvrir.",
+      "Une fois le paquet scellé, l'armurerie doit disparaître du quai : <code>rm -r</code>."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Wano. Les armes passent la douane dans des cercueils — c'est la coutume locale, on va s'en servir."
+    },
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Un dossier entier peut se replier dans un seul fichier. Ça s'appelle une archive."
+    },
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "tar -czf pour emballer, tar -tzf pour regarder ce qu'il y a dedans sans l'ouvrir, tar -xzf pour déballer."
+    },
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Le contrôle de la douane est à l'aube. Si une seule caisse traîne sur le quai, on est morts.",
+      "choices": [
+        {
+          "label": "J'emballe."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/armurerie</code> contient l'arsenal. <code>~/inventaire.txt</code> dit ce qui est en état — et ce qui ne l'est pas.</p><p>Emballe l'armurerie dans <code>~/cercueil.tgz</code>. L'arme <b>hors service</b> ne doit <b>pas</b> s'y trouver : elle prendrait la place d'une bonne.</p><p>Et à l'aube, il ne doit plus rien rester sur le quai : <code>~/armurerie</code> doit avoir disparu.</p>",
+  "hint": [
+    "<code>cat inventaire.txt</code> : une seule ligne porte la mention HORS SERVICE.",
+    "Sors-la de l'armurerie <b>avant</b> d'emballer — une archive fige ce qu'elle contient.",
+    "<code>tar -czf cercueil.tgz armurerie</code>, puis vérifie avec <code>tar -tzf cercueil.tgz</code>, puis <code>rm -r armurerie</code>."
+  ],
+  "world": {
+    "fs": {
+      "inventaire.txt": "CONTROLE AVANT EMBARQUEMENT -- Franky\n\nkatanas ........ bon etat, 12 lames\nkunai .......... bon etat\narquebuse ...... HORS SERVICE (canon fendu, explose au tir)\npoudre ......... bon etat, 6 barils",
+      "armurerie": {
+        "katanas.txt": "douze katanas forges par Tenguyama, tranchant intact",
+        "kunai.txt": "trois cents kunai, empennage refait",
+        "arquebuse.txt": "une arquebuse, canon fendu sur dix centimetres",
+        "poudre.txt": "six barils de poudre noire, au sec"
+      },
+      "quai": {
+        "douane.txt": "controle a l aube. tout ce qui traine est saisi."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "rm",
+      "tar"
+    ],
+    "new": [
+      "tar"
+    ],
+    "motd": "Un cercueil vide attend, couvercle ouvert, au bout du quai."
+  },
+  "criteria": [
+    {
+      "label": "L'arsenal est emballé <code class=\"p\">~/cercueil.tgz</code>",
+      "check": "isArchive",
+      "args": [
+        "~/cercueil.tgz"
+      ]
+    },
+    {
+      "label": "Les katanas sont dedans",
+      "check": "archiveHas",
+      "args": [
+        "~/cercueil.tgz",
+        "katanas"
+      ]
+    },
+    {
+      "label": "L'arme hors service n'y est pas",
+      "check": "archiveLacks",
+      "args": [
+        "~/cercueil.tgz",
+        "arquebuse"
+      ]
+    },
+    {
+      "label": "Le quai est vide avant l'aube",
+      "check": "pathMissing",
+      "args": [
+        "~/armurerie"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 380,
+    "title": "Contrebande réussie",
+    "unlock": "tar -czf"
+  },
+  "solution": [
+    "cat inventaire.txt",
+    "ls armurerie",
+    "rm armurerie/arquebuse.txt",
+    "tar -czf cercueil.tgz armurerie",
+    "tar -tzf cercueil.tgz",
+    "rm -r armurerie"
+  ],
+  "recap": [
+    {
+      "cmd": "tar -czf <archive> <dossier>",
+      "txt": "replie tout un dossier dans un seul fichier"
+    },
+    {
+      "cmd": "tar -tzf <archive>",
+      "txt": "vérifie le contenu sans ouvrir"
+    },
+    {
+      "cmd": "À retenir",
+      "txt": "emballer ne supprime pas l'original — rm -r derrière"
+    }
+  ]
+}

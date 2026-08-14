@@ -1,0 +1,128 @@
+{
+  "title": "Le dernier sceau",
+  "tagline": "Trois ombres tiennent trois dalles. La quatrième, c'est toi.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Quatre dalles. Tu n'as que trois ombres à relever.",
+    "progress": [
+      "Une dalle tenue.",
+      "Deux.",
+      "Trois. Il en manque une.",
+      "Le Monarque tombe.",
+      "La faille est à toi."
+    ],
+    "stuck": "Compte les dalles, puis compte les ombres. La différence, c'est toi qui la combles.",
+    "nudge": [
+      "Combien de dalles ? Combien d'ombres postées dessus ?",
+      "Une dalle n'a pas besoin d'une ombre : n'importe quel poids fait l'affaire. Le tien aussi.",
+      "Une fois le sceau réuni, la porte reste ouverte — même quand tu quittes la dalle."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Dernier portail de rang A."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Quatre dalles à poids. Trois ombres. Fais le compte."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Une dalle ne demande pas une ombre : elle demande un poids."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Et derrière la porte, quelque chose t'attend qui ne tombera pas d'un seul coup."
+    }
+  ],
+  "brief": "<p><b>Quatre dalles à poids</b> — mais seulement <b>trois ombres</b> postées dessus.</p><p>La porte ▣ ne cède que si les quatre sont tenues <b>en même temps</b>. À toi de trouver qui tient la quatrième.</p><p>Derrière : un Monarque à <b>quatre points de vie</b>, puis la faille ◎.</p>",
+  "hint": [
+    "Relève les trois ombres des renfoncements, comme au sceau précédent.",
+    "La quatrième dalle est sur ton chemin, dans le couloir : monte simplement dessus.",
+    "Le Monarque : <code>while (boss) { attack() }</code>."
+  ],
+  "world": {
+    "map": [
+      "###################",
+      "#H..........P.DB.G#",
+      "###.###.###.#######",
+      "###Q###Q###Q#######",
+      "###################"
+    ],
+    "bossHp": 4,
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack",
+      "summon"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "function nom() { }",
+        "desc": "Nomme une suite d'ordres"
+      },
+      {
+        "cmd": "while (cond) { }",
+        "desc": "Tant que la condition tient"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les trois ombres sont relevées",
+      "check": "armyIs",
+      "args": [
+        3
+      ]
+    },
+    {
+      "label": "Le Monarque est abattu",
+      "check": "bossDown",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Ton chasseur est vivant",
+      "check": "survived",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 420,
+    "title": "Rang A franchi",
+    "unlock": "sceau à quatre"
+  },
+  "solution": "function sceau() {\n  moveDown()\n  attack()\n  summon()\n  moveUp()\n}\nmoveRight(2)\nsceau()\nmoveRight(4)\nsceau()\nmoveRight(4)\nsceau()\nmoveRight(1)\nmoveRight(2)\nwhile (boss) {\n  attack()\n}\nmoveRight(3)\n",
+  "recap": [
+    {
+      "cmd": "sceau à quatre",
+      "txt": "trois ombres postées, et ton propre poids sur la dernière dalle"
+    },
+    {
+      "cmd": "une fois réuni",
+      "txt": "le sceau reste rompu : la porte ne se referme pas derrière toi"
+    },
+    {
+      "cmd": "while (boss)",
+      "txt": "frapper tant qu'il tient debout, sans compter ses points de vie"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "quand il manque une ressource, regarde ce que tu as déjà sous la main"
+    }
+  ]
+}

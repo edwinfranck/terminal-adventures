@@ -1,0 +1,114 @@
+{
+  "title": "Le poneglyphe",
+  "tagline": "Quarante lignes de poésie ancienne. Deux contiennent une position.",
+  "mentor": {
+    "who": "Robin",
+    "face": "assets/portraits/op-robin.webp",
+    "start": "Je peux te le lire. Mais c'est à toi d'en extraire ce qui nous sert.",
+    "progress": [
+      "Tu as gardé les bonnes lignes.",
+      "Et laissé la poésie derrière. Élégant."
+    ],
+    "stuck": "Ne recopie pas la pierre entière. Filtre-la.",
+    "nudge": [
+      "Qu'est-ce que tu cherches, exactement, dans ces quarante lignes ? Un mot précis.",
+      "<code>grep</code> ne garde que les lignes qui contiennent ce mot.",
+      "Et <code>&gt;</code> écrit le résultat du filtre dans un fichier."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "C'est un poneglyphe. J'en ai relevé la transcription complète."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Quarante lignes. Presque tout est de la poésie funéraire — magnifique, et inutile pour naviguer."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Deux lignes seulement parlent d'une position. Garde celles-là, jette le reste.\n\ngrep filtre les lignes. > écrit le résultat dans un fichier."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Nami veut un fichier propre, avec les positions et rien d'autre."
+    }
+  ],
+  "brief": "<p><code>~/poneglyphe.txt</code> : quarante lignes, dont <b>deux seulement</b> parlent d'une position.</p><p>Mets <b>ces lignes-là et rien d'autre</b> dans <code>~/coordonnees.txt</code>.</p><p><code>grep</code> ne garde que les lignes contenant un mot. La flèche <code>&gt;</code> écrit le résultat dans un fichier au lieu de l'afficher.</p>",
+  "hint": [
+    "Ouvre la transcription et repère le mot que les deux lignes utiles ont en commun.",
+    "<code>grep coordonnee poneglyphe.txt</code> ne garde que ces deux lignes.",
+    "Ajoute <code>&gt; ~/coordonnees.txt</code> à la fin."
+  ],
+  "world": {
+    "fs": {
+      "poneglyphe.txt": "le siecle oublie n'a pas de nom (1)\nles rois se sont tus (2)\nla pierre garde ce que la mer efface (3)\nnul ne lit ceci sans payer (4)\nl'arme dort sous l'ile (5)\nle vent connait la route (6)\nle siecle oublie n'a pas de nom (7)\nles rois se sont tus (8)\nla pierre garde ce que la mer efface (9)\nnul ne lit ceci sans payer (10)\nl'arme dort sous l'ile (11)\ncoordonnee : 27 S 118 E\nle vent connait la route (12)\nle siecle oublie n'a pas de nom (13)\nles rois se sont tus (14)\nla pierre garde ce que la mer efface (15)\nnul ne lit ceci sans payer (16)\nl'arme dort sous l'ile (17)\nle vent connait la route (18)\nle siecle oublie n'a pas de nom (19)\nles rois se sont tus (20)\nla pierre garde ce que la mer efface (21)\nnul ne lit ceci sans payer (22)\nl'arme dort sous l'ile (23)\nle vent connait la route (24)\nle siecle oublie n'a pas de nom (25)\nles rois se sont tus (26)\nla pierre garde ce que la mer efface (27)\nnul ne lit ceci sans payer (28)\ncoordonnee : verifier au second poneglyphe\nl'arme dort sous l'ile (29)\nle vent connait la route (30)\nle siecle oublie n'a pas de nom (31)\nles rois se sont tus (32)\nla pierre garde ce que la mer efface (33)\nnul ne lit ceci sans payer (34)\nl'arme dort sous l'ile (35)\nle vent connait la route (36)\nle siecle oublie n'a pas de nom (37)\nles rois se sont tus (38)",
+      "cabine": {
+        "cartes.txt": "Grand Line -- premiere ile au sud-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "wc",
+      "head",
+      "tail"
+    ],
+    "new": [],
+    "motd": "Robin deroule la transcription sur la table."
+  },
+  "criteria": [
+    {
+      "label": "La position y est <code class=\"p\">~/coordonnees.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/coordonnees.txt",
+        "27 s 118 e"
+      ]
+    },
+    {
+      "label": "Les deux lignes utiles sont là",
+      "check": "fileContains",
+      "args": [
+        "~/coordonnees.txt",
+        "second poneglyphe"
+      ]
+    },
+    {
+      "label": "Et pas la poésie",
+      "check": "fileLacks",
+      "args": [
+        "~/coordonnees.txt",
+        "siecle oublie"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 210,
+    "title": "Poneglyphe déchiffré",
+    "unlock": "grep > fichier"
+  },
+  "solution": [
+    "cat poneglyphe.txt",
+    "grep coordonnee poneglyphe.txt",
+    "grep coordonnee poneglyphe.txt > ~/coordonnees.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "grep <motif> <fichier> > <sortie>",
+      "txt": "filtrer, puis écrire le résultat dans un fichier"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "garder les deux lignes qui servent, jeter les trente-huit autres"
+    }
+  ]
+}

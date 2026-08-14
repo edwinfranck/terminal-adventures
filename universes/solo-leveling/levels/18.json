@@ -1,0 +1,139 @@
+{
+  "title": "Le Monarque des Ombres",
+  "tagline": "Un chasseur à sauver, deux sceaux à tenir, et lui.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Tout ce que tu sais faire, dans le même programme. Dans le bon ordre.",
+    "progress": [
+      "Une ombre écartée du chasseur.",
+      "L'autre aussi : il vivra.",
+      "Premier sceau tenu.",
+      "Second sceau. La porte cède.",
+      "Le Monarque tombe.",
+      "Tu sors. Debout."
+    ],
+    "stuck": "Ne cherche pas la solution entière. Fais-la dans l'ordre : sauver, sceller, abattre, sortir.",
+    "nudge": [
+      "Quatre problèmes, un seul programme. Lequel doit être réglé en premier ?",
+      "Le chasseur d'abord : une ombre encore debout à côté de lui, et tout le reste n'aura servi à rien.",
+      "Ensuite les deux renfoncements : abattre, relever. Le Monarque en dernier."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Dernier portail. Il n'y a pas de rang au-dessus."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Un chasseur à terre, entouré. Deux dalles scellées. Et le Monarque, cinq points de vie."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Je ne t'apprendrai plus rien : tu as tout. Il ne te reste qu'à mettre les choses dans l'ordre."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Écris. Exécute. Observe. Comme au premier jour."
+    }
+  ],
+  "brief": "<p>La salle du Monarque. Tout y est en même temps :</p><p>· un <b>chasseur</b> à terre, encadré par deux ombres 👁 — dégage-le<br>· deux <b>dalles à poids</b> occupées, dans les renfoncements — poste-y tes ombres<br>· la porte ▣ cède quand les deux sont tenues<br>· le <b>Monarque</b> ▲ a <b>cinq points de vie</b>, puis la faille ◎</p><p>Aucune instruction nouvelle. Rien que l'ordre des choses.</p>",
+  "hint": [
+    "Commence par les deux ombres qui touchent le chasseur — la seconde s'attaque par la droite.",
+    "Puis les deux renfoncements : <code>moveDown()</code>, <code>attack()</code>, <code>summon()</code>, <code>moveUp()</code>.",
+    "Enfin <code>while (boss) { attack() }</code>, et la faille est juste derrière."
+  ],
+  "world": {
+    "map": [
+      "###################",
+      "#H...MNM.....D.B.G#",
+      "#.................#",
+      "###########QQ######",
+      "###################"
+    ],
+    "bossHp": 5,
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack",
+      "summon",
+      "pickup"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "function nom() { }",
+        "desc": "Nomme une suite d'ordres"
+      },
+      {
+        "cmd": "while (cond) { }",
+        "desc": "Tant que la condition tient"
+      },
+      {
+        "cmd": "var nom = 0",
+        "desc": "Retenir un nombre"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Le chasseur est sauf",
+      "check": "npcSafe",
+      "args": []
+    },
+    {
+      "label": "Deux ombres sont relevées",
+      "check": "armyIs",
+      "args": [
+        2
+      ]
+    },
+    {
+      "label": "Le Monarque est abattu",
+      "check": "bossDown",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Ton chasseur est vivant",
+      "check": "survived",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 620,
+    "title": "Monarque des Ombres",
+    "unlock": "tout, ensemble"
+  },
+  "solution": "moveRight(3)\nattack()\nmoveDown()\nmoveRight(6)\nmoveUp()\nmoveLeft(2)\nattack()\nmoveRight(3)\nmoveDown()\nattack()\nsummon()\nmoveUp()\nmoveRight()\nmoveDown()\nattack()\nsummon()\nmoveUp()\nmoveRight(2)\nwhile (boss) {\n  attack()\n}\nmoveRight(3)\n",
+  "recap": [
+    {
+      "cmd": "l'ordre",
+      "txt": "sauver d'abord, sceller ensuite, frapper en dernier — l'inverse ne marche pas"
+    },
+    {
+      "cmd": "attack() · summon()",
+      "txt": "abattre puis relever : ton armée tient les sceaux à ta place"
+    },
+    {
+      "cmd": "while (boss)",
+      "txt": "frapper tant qu'il tient, sans compter"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "un gros problème n'est qu'une suite de petits, mis dans le bon ordre"
+    }
+  ]
+}

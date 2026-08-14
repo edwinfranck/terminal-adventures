@@ -1,0 +1,153 @@
+{
+  "title": "L'heure du départ",
+  "tagline": "Ouvrir, prendre, refermer. Dans cet ordre, et sans traîner.",
+  "mentor": {
+    "who": "Luffy",
+    "face": "assets/portraits/op-luffy.webp",
+    "start": "Sanji embarque avec nous. Reste à savoir quand on part.",
+    "progress": [
+      "Le carnet s'ouvre.",
+      "L'ordre est sur le pont.",
+      "Tout le monde peut le lire d'un coup d'œil.",
+      "Et le carnet est refermé. On lève l'ancre."
+    ],
+    "stuck": "Tu dois passer par trois états : fermé, ouvert, refermé. Le milieu est le seul moment où tu peux lire.",
+    "nudge": [
+      "Le carnet est fermé. Quel droit lui manque pour être lu ?",
+      "Trente lignes de notes de cuisine, deux qui parlent du départ. <code>grep</code> les isole, <code>&gt;</code> les écrit sur le pont.",
+      "Un raccourci <code>ordre</code> à la racine, puis <code>chmod 000</code> sur le carnet : personne d'autre ne le lira."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/op-luffy.webp",
+      "text": "Le carnet du chef note tout. Les cuissons, les livraisons… et l'heure du départ des bateaux."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "Il est verrouillé. Et il doit le rester après notre passage — sinon ils sauront ce qu'on a lu."
+    },
+    {
+      "who": "Sanji",
+      "face": "assets/portraits/op-sanji.webp",
+      "text": "L'équipage n'aura pas le temps de descendre en cuisine. L'ordre doit être <b>sur le pont</b>, et à portée de main depuis la racine."
+    },
+    {
+      "who": "Luffy",
+      "face": "assets/portraits/op-luffy.webp",
+      "text": "Ouvre. Prends. Referme. On part.",
+      "choices": [
+        {
+          "label": "Trois gestes. Go."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/cuisine/carnet_du_chef.txt</code> est verrouillé. Il contient beaucoup de notes de cuisine, et <b>deux lignes</b> qui parlent du <b>départ</b>.</p><p>Quatre choses :</p><p>· ces deux lignes — et <b>rien d'autre</b> — dans <code>~/pont/ordre.txt</code><br>· un <b>raccourci</b> nommé <code>ordre</code> à la racine, qui y mène<br>· le carnet <b>refermé</b> derrière toi : ni lecture, ni écriture</p><p>Tu ne pourras plus le relire une fois refermé. Réfléchis à l'ordre des gestes.</p>",
+  "hint": [
+    "<code>ls -l cuisine</code> : le carnet n'a plus aucun droit. Rends-lui la lecture.",
+    "<code>grep depart cuisine/carnet_du_chef.txt &gt; pont/ordre.txt</code> ne garde que ce qui te sert.",
+    "Puis <code>ln -s pont/ordre.txt ordre</code>, et enfin <code>chmod 000</code> sur le carnet."
+  ],
+  "world": {
+    "fs": {
+      "cuisine": {
+        "carnet_du_chef.txt": {
+          "$file": "CARNET DU CHEF -- Whole Cake\n\nlundi : monter les blancs, four a 180\nlundi : la meringue retombe si on ouvre le four\nmardi : commander 40 mottes de beurre\nmardi : la meringue de la piece montee doit secher 6 h\nmercredi : gouter le sirop avant de napper\nmercredi : le colorant rose vire au gris s il chauffe\njeudi : depart des navires marchands a 3 h, quai nord\njeudi : ne jamais laisser la creme dehors\nvendredi : confirmer le depart aupres du capitaine\nvendredi : polir les moules\nsamedi : la meringue, encore la meringue\nsamedi : compter 200 parts\ndimanche : repos, personne en cuisine\ndimanche : verifier les reserves de kuri\nlundi : recommencer",
+          "$mode": "000"
+        },
+        "menu.txt": "the party : 200 invites. aucun retard tolere."
+      },
+      "pont": {
+        "consigne.txt": "Ne quitte pas le navire sans prevenir Nami."
+      },
+      "germa": {
+        "leurre.txt": "sortie par le quai 7, au petit matin"
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "wc",
+      "chmod",
+      "ln"
+    ],
+    "new": [],
+    "motd": "Le carnet du chef est posé là, fermé comme un poing."
+  },
+  "criteria": [
+    {
+      "label": "L'heure du départ est sur le pont <code class=\"p\">~/pont/ordre.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/pont/ordre.txt",
+        "3 h"
+      ]
+    },
+    {
+      "label": "Rien que le départ : pas les notes de cuisine",
+      "check": "fileLacks",
+      "args": [
+        "~/pont/ordre.txt",
+        "meringue"
+      ]
+    },
+    {
+      "label": "Un raccourci <code class=\"p\">~/ordre</code> à la racine",
+      "check": "isLink",
+      "args": [
+        "~/ordre"
+      ]
+    },
+    {
+      "label": "…et il mène bien à l'ordre",
+      "check": "fileContains",
+      "args": [
+        "~/ordre",
+        "3 h"
+      ]
+    },
+    {
+      "label": "Le carnet est refermé derrière toi",
+      "check": "lacksRight",
+      "args": [
+        "~/cuisine/carnet_du_chef.txt",
+        "rw"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 360,
+    "title": "Whole Cake franchi",
+    "unlock": "ouvrir · extraire · refermer"
+  },
+  "solution": [
+    "ls -l cuisine",
+    "chmod +r cuisine/carnet_du_chef.txt",
+    "grep depart cuisine/carnet_du_chef.txt",
+    "grep depart cuisine/carnet_du_chef.txt > pont/ordre.txt",
+    "ln -s pont/ordre.txt ordre",
+    "cat ordre",
+    "chmod 000 cuisine/carnet_du_chef.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "ouvrir → extraire → refermer",
+      "txt": "chmod +r, puis grep > fichier, puis chmod 000"
+    },
+    {
+      "cmd": "ln -s",
+      "txt": "mettre l'information à portée de main sans la déplacer"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "l'ORDRE des gestes fait partie de la solution"
+    }
+  ]
+}

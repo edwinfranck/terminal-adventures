@@ -1,0 +1,136 @@
+{
+  "title": "Réveil dans la cale",
+  "tagline": "Tu ne sais pas où tu es. Commence par regarder autour de toi.",
+  "mentor": {
+    "who": "Luffy",
+    "face": "assets/portraits/op-luffy.webp",
+    "start": "Regarde d'abord. On agit après.",
+    "progress": [
+      "Voilà. Tu sais où tu es.",
+      "Tu vois le navire, maintenant.",
+      "Parfait, tu es dans la cale. J'arrive."
+    ],
+    "stuck": "Tape `help` si tu ne sais plus quoi essayer. C'est fait pour.",
+    "nudge": [
+      "Tu as tapé <b>help</b> ? La liste de ce que tu sais faire est là.",
+      "Où es-tu, là, maintenant ? Une de tes trois commandes répond exactement à ça.",
+      "Pour entrer dans un lieu il faut son nom. Tu as regardé la liste des lieux ?"
+    ]
+  },
+  "dialogue": [
+    {
+      "text": "Le sol tangue. Une odeur de bois humide et de viande grillée.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "Oi ! T’es réveillé !",
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "Le Sunny a pris une sale tempête. On a besoin de tout le monde.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "Mais d’abord… tu sais te repérer sur un navire, toi ?",
+      "choices": [
+        {
+          "label": "Évidemment."
+        },
+        {
+          "label": "Pas du tout."
+        }
+      ],
+      "face": "assets/portraits/one-piece-anim.webp"
+    },
+    {
+      "who": "Luffy",
+      "text": "Trois mots suffisent.\n\npwd — où suis-je ?\nls — qu’est-ce qu’il y a autour ?\ncd — j’y vais.\n\nDescends à la cale, je t’y rejoins.",
+      "face": "assets/portraits/one-piece-anim.webp"
+    }
+  ],
+  "brief": "<p>Tu ouvres les yeux quelque part sur le <b>Thousand Sunny</b>. Tu ne sais ni où tu es, ni ce qu'il y a autour de toi.</p><p>Situe-toi, regarde ce qui t'entoure, puis <b>descends dans la cale</b> — Luffy t'y attend.</p><p>Tes trois outils sont listés dans l'<b>arsenal</b>, à droite. À toi de trouver lequel répond à quelle question.</p>",
+  "hint": [
+    "Trois commandes, trois questions : « où suis-je ? », « qu'est-ce qu'il y a ici ? », « comment j'y vais ? ».",
+    "<code>pwd</code> répond à la première, <code>ls</code> à la deuxième.",
+    "<code>cd cale</code> pour descendre. <code>cd ..</code> pour remonter d'un cran."
+  ],
+  "world": {
+    "fs": {
+      "pont": {
+        "vigie.txt": "Rien à l'horizon. Pour l'instant."
+      },
+      "cale": {
+        "inventaire.txt": "3 tonneaux d'eau\n1 caisse de viande\n0 planche de rechange"
+      },
+      "cuisine": {
+        "menu.txt": "Ce soir : viande."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "help"
+    ],
+    "new": [
+      "pwd",
+      "ls",
+      "cd"
+    ],
+    "motd": "Tu ouvres les yeux. Le navire craque de partout."
+  },
+  "criteria": [
+    {
+      "label": "Tu sais où tu es (<code>pwd</code>)",
+      "check": "ranCommand",
+      "args": [
+        "pwd"
+      ]
+    },
+    {
+      "label": "Tu as regardé autour de toi (<code>ls</code>)",
+      "check": "ranCommand",
+      "args": [
+        "ls"
+      ]
+    },
+    {
+      "label": "Tu te trouves dans <code>~/cale</code>",
+      "check": "cwdIs",
+      "args": [
+        "~/cale"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 60,
+    "title": "Tu tiens debout",
+    "unlock": "cd · ls · pwd"
+  },
+  "solution": [
+    "pwd",
+    "ls",
+    "cd cale"
+  ],
+  "recap": [
+    {
+      "cmd": "pwd",
+      "txt": "dit où tu te trouves, quand tu ne sais plus"
+    },
+    {
+      "cmd": "ls",
+      "txt": "montre ce qu'il y a autour de toi"
+    },
+    {
+      "cmd": "cd <dossier>",
+      "txt": "entre dedans — et cd .. remonte d'un cran"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "regarder avant d'agir : on ne se déplace pas à l'aveugle"
+    }
+  ]
+}

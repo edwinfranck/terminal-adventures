@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr" data-theme="neutral">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TERMINAL ADVENTURES</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/ui.css">
+<link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+<!-- Couche de fond : la vidéo de l'univers si le navigateur sait la décoder (les fichiers sont
+     en H.265 : ça passe avec le décodage matériel, pas en headless), sinon l'illustration
+     fixe qui dérive lentement. Le repli est automatique. -->
+<div id="bg">
+  <div class="bg-art"></div>
+  <video id="bgVid" class="bg-vid" muted loop playsinline preload="auto" hidden></video>
+  <div class="bg-veil"></div><div class="bg-scan"></div>
+</div>
+<div id="glitch"></div>
+<!-- Barre permanente : identité de l'univers courant, clair/sombre, plein écran -->
+<header id="topbar">
+  <span class="tag" id="topTag">Terminal Adventures</span>
+  <div class="top-ctrls">
+    <button class="btn-s" id="btnMode" title="Clair / sombre">☾</button>
+    <button class="btn-s" id="btnFull" title="Plein écran">⛶</button>
+  </div>
+</header>
+
+<!-- ============ SCENE : MENU — tout change selon l'univers sélectionné ============ -->
+<section class="scene" data-scene="menu">
+  <div class="menu-wrap">
+    <p class="tag menu-kicker" id="menuKicker">Une aventure où le code est ton arme</p>
+    <h1 class="logo" id="menuTitle"><span>TERMINAL</span> ADVENTURES</h1>
+    <div class="universes" id="universeList"></div>
+    <button class="btn btn-primary menu-cta" id="menuGo">Commencer</button>
+  </div>
+</section>
+
+<!-- ============ SCENE : PARCOURS (on voit d'où on vient et ce qui reste) ============ -->
+<section class="scene" data-scene="map">
+  <div class="map-wrap">
+    <header class="map-head">
+      <button class="btn-s" id="mapBack">← Univers</button>
+      <div class="map-id">
+        <p class="tag" id="mapSkill"></p>
+        <h2 id="mapTitle"></h2>
+      </div>
+      <div class="map-rank">
+        <span class="hud-rank" id="mapRank"></span>
+        <span class="hud-xp"><i id="mapXpBar"></i></span>
+        <span class="tag" id="mapNext"></span>
+      </div>
+    </header>
+    <div class="chapters" id="chapterList"></div>
+  </div>
+</section>
+
+<!-- ============ SCENE : CARTE DE NIVEAU ============ -->
+<section class="scene" data-scene="card">
+  <div class="card-wrap">
+    <p class="tag card-chapter" id="cardChapter"></p>
+    <h2 class="card-title" id="cardTitle"></h2>
+    <p class="card-brief" id="cardBrief"></p>
+    <button class="btn btn-primary" id="cardGo">Commencer</button>
+  </div>
+</section>
+
+<!-- ============ SCENE : DIALOGUE ============ -->
+<section class="scene" data-scene="dialogue">
+  <div class="vn">
+    <div class="vn-row">
+      <div class="vn-portrait" id="vnPortrait"></div>
+      <div class="vn-box" id="vnBox">
+        <div class="vn-name" id="vnName"></div>
+        <p class="vn-text" id="vnText"></p>
+        <div class="vn-choices" id="vnChoices"></div>
+        <div class="vn-next" id="vnNext">▼</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENE : JEU ============ -->
+<section class="scene" data-scene="play">
+  <header class="hud">
+    <button class="btn-s" id="btnBack">← Quitter</button>
+    <div class="hud-level"><span class="tag" id="hudChapter"></span><strong id="hudTitle"></strong></div>
+    <div class="hud-right">
+      <button class="btn-s" id="btnHelp">? Aide</button>
+      <span class="hud-rank" id="hudRank"></span>
+      <span class="hud-xp"><i id="hudXpBar"></i></span>
+    </div>
+  </header>
+
+  <div class="play-grid">
+    <aside class="panel panel-brief">
+      <div class="mentor" id="mentor">
+        <img id="mentorFace" alt="">
+        <div><b id="mentorWho"></b><p id="mentorLine"></p></div>
+      </div>
+
+      <h3 class="panel-h"><b>01</b> Mission</h3>
+      <div class="brief" id="playBrief"></div>
+
+      <h3 class="panel-h"><b>02</b> Objectifs <em id="critCount"></em></h3>
+      <ul class="criteria" id="criteriaList"></ul>
+
+      <div class="hint-wrap" id="hintWrap">
+        <button class="btn-s" id="btnHint"><span>Indice</span><span class="cost"></span></button>
+        <div id="hintList"></div>
+        <p class="tag hint-spent" id="hintSpent" hidden></p>
+      </div>
+    </aside>
+
+    <main class="panel panel-stage" id="pluginHost"></main>
+
+    <aside class="panel panel-help">
+      <h3 class="panel-h"><b>03</b> Arsenal</h3>
+      <ul class="arsenal" id="arsenalList"></ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ SCENE : VICTOIRE ============ -->
+<section class="scene" data-scene="win">
+  <div class="win-wrap">
+    <p class="tag win-kicker">Mission accomplie</p>
+    <h2 class="win-title" id="winTitle"></h2>
+    <div class="win-stats" id="winStats"></div>
+    <div class="win-recap" id="winRecap" hidden></div>
+    <div class="win-actions">
+      <button class="btn btn-primary" id="winNext">Continuer</button>
+      <button class="btn" id="winMenu">Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENE : FIN DE CHAPITRE / FIN D'UNIVERS ============ -->
+<section class="scene" data-scene="end">
+  <div class="end-wrap">
+    <p class="tag" id="endKicker"></p>
+    <h2 class="end-title" id="endTitle"></h2>
+    <p class="end-line" id="endLine"></p>
+    <div class="win-stats" id="endStats"></div>
+    <div class="win-actions">
+      <button class="btn btn-primary" id="endNext"></button>
+      <button class="btn" id="endMap">Parcours</button>
+    </div>
+  </div>
+</section>
+
+<div class="toasts" id="toasts"></div>
+
+<!-- ============ COUP DE MAIN (arrive tout seul quand on bloque) ============ -->
+<div class="coach" id="coach" hidden>
+  <img id="coachFace" alt="">
+  <div class="coach-body">
+    <b id="coachWho">Coup de main</b>
+    <p id="coachText"></p>
+    <div class="coach-act">
+      <button class="btn-s" id="coachOk">Ça va aller</button>
+      <button class="btn-s" id="coachHint" hidden>Voir un indice · −15 XP</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AIDE ============ -->
+<div class="ov" id="helpOv">
+  <div class="ov-card">
+    <div class="ov-head">
+      <h2 id="helpTitle">Aide</h2>
+      <button class="ov-x" id="helpX">✕</button>
+    </div>
+    <div id="helpBody"></div>
+  </div>
+</div>
+
+<!-- Script classique (pas un module) : c'est le SEUL qui s'exécute en file://.
+     Sans lui, ouvrir index.html par double-clic donne une page blanche sans aucun message. -->
+<script>
+if (location.protocol === 'file:' && !window.__STANDALONE) {
+  document.body.innerHTML =
+    '<div style="margin:auto;max-width:640px;padding:40px;text-align:center;font:15px/1.6 system-ui;color:#f3ede0">' +
+    '<h1 style="font-size:34px;margin-bottom:20px">Il faut un serveur</h1>' +
+    '<p>Ce fichier est ouvert en <code>file://</code>. Le navigateur y bloque les ES modules et <code>fetch</code> : ' +
+    'le jeu ne peut pas démarrer.</p>' +
+    '<p style="margin-top:20px">Dans le dossier <code>quest/</code> :</p>' +
+    '<pre style="margin-top:12px;padding:14px;background:#122335;border:2px solid #f3ede0;text-align:left">./lancer.sh</pre>' +
+    '<p style="margin-top:20px;color:#9fb0c2">Ou <code>./build.py</code> pour fabriquer <b>terminal-adventures.html</b>, ' +
+    'un fichier unique qui, lui, marche au double-clic.</p></div>';
+}
+</script>
+<script type="module" src="engine/app.js"></script>
+</body>
+</html>

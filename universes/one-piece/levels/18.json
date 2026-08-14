@@ -1,0 +1,155 @@
+{
+  "title": "L'appel aux alliés",
+  "tagline": "Neuf réponses. Combien montent à bord ?",
+  "mentor": {
+    "who": "Usopp",
+    "face": "assets/portraits/op-usopp.webp",
+    "start": "Neuf clans ont répondu. Certains viennent. D'autres… ont des excuses très détaillées.",
+    "progress": [
+      "La liste se remplit.",
+      "Le compte est fait.",
+      "Et personne ne pourra la modifier dans notre dos."
+    ],
+    "stuck": "Chaque réponse tient en un mot : ACCORD ou REFUS. Tu n'as pas à lire les excuses.",
+    "nudge": [
+      "Ouvre une réponse au hasard : chaque lettre contient une ligne de décision très reconnaissable.",
+      "<code>cat reponses/* | grep ACCORD</code> ne garde que ceux qui viennent. <code>&gt;</code> écrit le résultat.",
+      "Pour le nombre : <code>wc -l</code>. Pour verrouiller la liste : retire-lui le droit <code>w</code>."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "On a envoyé neuf messages aux clans de Wano. Les neuf ont répondu."
+    },
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "Le problème, c'est que chaque lettre fait trois paragraphes de politesse avant de dire oui ou non."
+    },
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "Une seule ligne compte dans chacune. Le reste, c'est du décor."
+    },
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "Et quand la liste sera prête… il faut que plus personne ne puisse y ajouter un nom. Y compris nous.",
+      "choices": [
+        {
+          "label": "Je filtre, je compte, je verrouille."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/reponses/</code> contient les neuf lettres des clans. Chacune porte <b>une ligne de décision</b>.</p><p>Trois choses :</p><p>· <code>~/allies.txt</code> — <b>uniquement</b> les lignes de ceux qui viennent<br>· <code>~/compte.txt</code> — <b>le nombre</b> d'alliés, seul<br>· <code>~/allies.txt</code> doit ensuite devenir <b>non modifiable</b></p><p>Attention à l'ordre : une liste verrouillée ne s'écrit plus.</p>",
+  "hint": [
+    "<code>cat reponses/lettre_1.txt</code> : repère le mot qui tranche entre venir et refuser.",
+    "<code>cat reponses/* | grep ACCORD &gt; allies.txt</code> assemble la liste d'un coup.",
+    "<code>wc -l allies.txt</code> donne le nombre. Puis <code>chmod -w allies.txt</code> la fige."
+  ],
+  "world": {
+    "fs": {
+      "reponses": {
+        "lettre_1.txt": "Au capitaine au chapeau de paille,\nnos remerciements pour votre message.\nREPONSE : ACCORD -- kawamatsu, 200 hommes\nnous serons au port avant la nuit du festival.",
+        "lettre_2.txt": "Vos mots nous honorent.\nLa saison des recoltes ne nous laisse aucun homme disponible.\nREPONSE : REFUS -- clan des rizieres\nqu il en soit autrement l an prochain.",
+        "lettre_3.txt": "Le chien et le chat se sont enfin mis d accord.\nREPONSE : ACCORD -- inuarashi, 340 hommes\nnous marcherons de nuit.",
+        "lettre_4.txt": "Nous avons lu votre appel deux fois.\nREPONSE : REFUS -- village de kuri\nnos forgerons ne savent pas se battre.",
+        "lettre_5.txt": "Depuis vingt ans nous attendions ce message.\nREPONSE : ACCORD -- nekomamushi, 310 hommes\nla lune sera pleine, tant mieux.",
+        "lettre_6.txt": "Votre messager a ete suivi. Prudence.\nREPONSE : REFUS -- port de tokage\nnous sommes surveilles jour et nuit.",
+        "lettre_7.txt": "Rien a ajouter.\nREPONSE : ACCORD -- ashura doji, 120 hommes\nnous arrivons par la montagne.",
+        "lettre_8.txt": "Nous prions pour vous.\nREPONSE : REFUS -- temple du nord\nles moines ne portent pas les armes.",
+        "lettre_9.txt": "J ai garde le sabre de mon maitre pendant vingt ans.\nREPONSE : ACCORD -- denjiro, 90 hommes\nil servira une derniere fois."
+      },
+      "quai": {
+        "douane.txt": "controle a l aube. tout ce qui traine est saisi."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "wc",
+      "head",
+      "tail",
+      "chmod"
+    ],
+    "new": [],
+    "motd": "Neuf lettres pliées, chacune scellée d’une cire différente."
+  },
+  "criteria": [
+    {
+      "label": "Les alliés sont listés <code class=\"p\">~/allies.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/allies.txt",
+        "kawamatsu"
+      ]
+    },
+    {
+      "label": "…tous les cinq",
+      "check": "fileContains",
+      "args": [
+        "~/allies.txt",
+        "denjiro"
+      ]
+    },
+    {
+      "label": "Aucun refus dans la liste",
+      "check": "fileLacks",
+      "args": [
+        "~/allies.txt",
+        "refus"
+      ]
+    },
+    {
+      "label": "Le compte est juste <code class=\"p\">~/compte.txt</code>",
+      "check": "fileEquals",
+      "args": [
+        "~/compte.txt",
+        "5"
+      ]
+    },
+    {
+      "label": "La liste ne peut plus être modifiée",
+      "check": "lacksRight",
+      "args": [
+        "~/allies.txt",
+        "w"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 420,
+    "title": "Alliance scellée",
+    "unlock": "filtrer · compter · verrouiller"
+  },
+  "solution": [
+    "ls reponses",
+    "cat reponses/lettre_1.txt",
+    "cat reponses/* | grep ACCORD > allies.txt",
+    "cat allies.txt",
+    "wc -l allies.txt",
+    "echo \"5\" > compte.txt",
+    "chmod -w allies.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "cat dossier/* | grep <mot> > <fichier>",
+      "txt": "assembler une liste propre en une ligne"
+    },
+    {
+      "cmd": "wc -l",
+      "txt": "la chiffrer"
+    },
+    {
+      "cmd": "chmod -w <fichier>",
+      "txt": "la figer : plus personne ne la modifie, toi compris"
+    }
+  ]
+}

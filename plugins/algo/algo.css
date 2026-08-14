@@ -1,0 +1,334 @@
+/* algo.css — donjon en grille, sprites pixel-art du tileset (2D Pixel Dungeon, 16×16).
+   Les personnages sont des feuilles de 4 images côte à côte : on les anime en 4 étapes. */
+
+.algo {
+  flex: 1;
+  display: grid;
+  grid-template-rows: minmax(180px, 1fr) minmax(250px, 46%);
+  min-height: 0;
+  background: var(--bg2);
+}
+
+/* ---------------- plateau ---------------- */
+.algo-stage {
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; overflow: hidden; min-height: 0;
+}
+.algo-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile));
+  grid-template-rows: repeat(var(--rows), var(--tile));
+  border: 2px solid var(--ink);
+  box-shadow: 7px 7px 0 var(--nb);
+  image-rendering: pixelated;
+}
+.cell {
+  position: relative;
+  width: var(--tile); height: var(--tile);
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+}
+/* sol : quatre variantes, réparties par une empreinte de la position */
+.cell.floor.v0 { background-image: url(../../assets/rpg/tiles/floor_a.png); }
+.cell.floor.v1 { background-image: url(../../assets/rpg/tiles/floor_b.png); }
+.cell.floor.v2 { background-image: url(../../assets/rpg/tiles/floor_c.png); }
+.cell.floor.v3 { background-image: url(../../assets/rpg/tiles/floor_d.png); }
+
+/* Murs ORIENTÉS. Le tileset d'origine dessine une pièce complète : mur du haut vu par
+   sa face inférieure, murs latéraux en bandes VERTICALES, mur du bas par sa face avant.
+   N'utiliser que deux tuiles pour tout — un dessus et une face — plaquait des bandes
+   horizontales sur les côtés : c'est ce qui rendait les bords si laids.
+   La classe est choisie par le voisinage (quels côtés donnent sur du sol). */
+.cell.wall.w-solid { background-image: url(../../assets/rpg/tiles/wall_solid.png); }
+.cell.wall.w-n     { background-image: url(../../assets/rpg/tiles/wall_n.png); }
+.cell.wall.w-s     { background-image: url(../../assets/rpg/tiles/wall_s.png); }
+.cell.wall.w-w     { background-image: url(../../assets/rpg/tiles/wall_w.png); }
+.cell.wall.w-e     { background-image: url(../../assets/rpg/tiles/wall_e.png); }
+.cell.wall.w-sw    { background-image: url(../../assets/rpg/tiles/wall_sw.png); }
+.cell.wall.w-se    { background-image: url(../../assets/rpg/tiles/wall_se.png); }
+
+/* conservées : d'anciens niveaux ou l'éditeur peuvent encore les demander */
+.cell.wall.top  { background-image: url(../../assets/rpg/tiles/wall_top.png); }
+.cell.wall.face { background-image: url(../../assets/rpg/tiles/wall_face.png); }
+
+/* matériaux : l'auteur du niveau pose une image précise sur une case. Ces tuiles
+   sont des OBJETS à fond transparent (un pilier n'est opaque qu'à 36 %) — on les
+   superpose donc au sol ou au mur normal au lieu de le remplacer, sinon la case
+   se creuse d'un trou noir. Tables des glyphes : world.js (WALL_MATS/FLOOR_MATS). */
+.mat {
+  position: absolute; inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  /* Bords exposés : une ombre vers l'intérieur sur les côtés où le matériau
+     s'arrête — l'effet d'une berge ou d'un creux, au lieu d'un rectangle collé sur
+     le sol. Chaque classe e-* ne règle QUE sa variable et l'unique box-shadow les
+     compose : une règle par combinaison demanderait seize sélecteurs, dont seul le
+     dernier s'appliquerait. */
+  --et: 0px; --er: 0px; --eb: 0px; --el: 0px;
+  box-shadow: inset 0 var(--et) 0 rgba(0, 0, 0, .50),
+              inset calc(-1 * var(--er)) 0 0 rgba(0, 0, 0, .38),
+              inset 0 calc(-1 * var(--eb)) 0 rgba(0, 0, 0, .28),
+              inset var(--el) 0 0 rgba(0, 0, 0, .38);
+}
+.mat.e-t { --et: 3px; }
+.mat.e-r { --er: 3px; }
+.mat.e-b { --eb: 3px; }
+.mat.e-l { --el: 3px; }
+
+.mat.m-pillar { background-image: url(../../assets/rpg/tiles/pillar.png); }
+.mat.m-rock   { background-image: url(../../assets/rpg/tiles/rock.png); }
+.mat.m-dark   { background-image: url(../../assets/rpg/tiles/wall_dark.png); }
+.mat.m-bones  { background-image: url(../../assets/rpg/tiles/planks.png); }
+.mat.m-ladder { background-image: url(../../assets/rpg/tiles/ladder.png); }
+
+/* décor accroché aux murs visibles : purement visuel, aucun effet de jeu */
+.decor {
+  position: absolute; inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.decor.banner { background-image: url(../../assets/rpg/tiles/banner.png); }
+.decor.shield { background-image: url(../../assets/rpg/tiles/shield.png); }
+.decor.skull  { background-image: url(../../assets/rpg/tiles/skull.png); }
+.decor.shelf  { background-image: url(../../assets/rpg/tiles/shelf.png); }
+.decor.crate  { background-image: url(../../assets/rpg/tiles/crate.png); }
+.decor.barrel { background-image: url(../../assets/rpg/tiles/barrel.png); }
+.decor.torch {
+  background-image: url(../../assets/rpg/torch.png);
+  background-size: calc(var(--tile) * 4) var(--tile);
+  animation: frames 520ms steps(4) infinite;
+}
+
+/* La position passe par `translate` (pas `transform`) : rotate/scale peuvent alors
+   s'appliquer autour du sprite sans le déplacer. */
+.sprite {
+  position: absolute; top: 0; left: 0;
+  width: var(--tile); height: var(--tile);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+  transition: translate .18s linear, opacity .2s, scale .2s, rotate .3s;
+}
+.sprite.gone { opacity: 0; scale: 1.7; }
+
+/* personnages : feuille de 4 images -> largeur ×4, décalée par pas */
+.hero, .monster {
+  background-size: calc(var(--tile) * 4) var(--tile);
+  animation: frames 700ms steps(4) infinite;
+}
+@keyframes frames { to { background-position-x: calc(var(--tile) * -4); } }
+
+.hero    { background-image: url(../../assets/rpg/hero.png);   z-index: 3; }
+.monster { background-image: url(../../assets/rpg/shadow.png); z-index: 2; }
+.chest   { background-image: url(../../assets/rpg/essence.png); }
+.key     { background-image: url(../../assets/rpg/key.png); }
+.goal    { background-image: url(../../assets/rpg/stairs.png); z-index: 1; }
+.door    { background: var(--dim); border: 2px solid var(--nb); }
+.plate   { background-image: url(../../assets/rpg/coin.png); opacity: .8; }
+/* Les piques tuent en permanence : elles sont donc toujours SORTIES, et signalées
+   en rouge. Le sprite d'origine s'animait en se rétractant — ça mentait sur le danger. */
+.spikes {
+  background-image: url(../../assets/rpg/spikes.png);
+  filter: drop-shadow(0 0 3px var(--red)) saturate(1.2);
+  animation: danger 1.4s ease-in-out infinite;
+}
+@keyframes danger { 0%, 100% { opacity: .9 } 50% { opacity: 1 } }
+/* Ombre relevée. ⚠ Surtout PAS la feuille du héros (materials.json donne déjà le
+   chevalier noir au joueur) : une ombre relevée EST l'ennemi abattu, on garde donc sa
+   silhouette et on la marque comme sienne — violette, lumineuse, cerclée au sol. */
+.ally {
+  background-image: url(../../assets/rpg/shadow.png);
+  background-size: calc(var(--tile) * 4) var(--tile);
+  animation: frames 900ms steps(4) infinite;
+  /* grayscale → sepia → hue-rotate : la seule chaîne qui donne une teinte PRÉVISIBLE.
+     Un hue-rotate seul dépend de la couleur d'origine du sprite (ici bleu-gris → vert). */
+  filter: grayscale(1) sepia(1) hue-rotate(228deg) saturate(4) brightness(1.05)
+          drop-shadow(0 0 5px var(--sl));
+  z-index: 2;
+}
+/* l'anneau au sol : on distingue d'un coup d'œil une ombre à soi d'une ombre hostile */
+.ally::after {
+  content: '';
+  position: absolute; left: 18%; right: 18%; bottom: 1px; height: 3px;
+  background: var(--sl);
+  box-shadow: 0 0 5px var(--sl);
+}
+/* Ombre abattue mais pas encore relevée : au sol, éteinte, en attente. */
+.corpse {
+  background-image: url(../../assets/rpg/shadow.png);
+  background-size: calc(var(--tile) * 4) var(--tile);
+  filter: grayscale(1) brightness(.5);
+  rotate: 90deg;
+  opacity: .75;
+  z-index: 1;
+}
+/* Dalle à poids : elle se relève dès qu'on la quitte — d'où le halo qui pulse. */
+.weight {
+  background-image: url(../../assets/rpg/coin.png);
+  filter: hue-rotate(140deg) drop-shadow(0 0 3px var(--ok));
+  animation: danger 1.6s ease-in-out infinite;
+}
+/* Le chasseur à protéger : le même corps que toi, une autre couleur — et un halo
+   pour qu'on ne le confonde jamais avec le héros qu'on pilote. */
+.npc {
+  background-image: url(../../assets/rpg/hero.png);
+  background-size: calc(var(--tile) * 4) var(--tile);
+  filter: hue-rotate(155deg) saturate(1.5) drop-shadow(0 0 4px var(--ok));
+  animation: frames 1100ms steps(4) infinite;
+  z-index: 2;
+}
+
+.boss {
+  background-image: url(../../assets/rpg/boss.png);
+  background-size: calc(var(--tile) * 4) var(--tile);
+  animation: frames 620ms steps(4) infinite;
+  /* pas de hue-rotate ici : un filter teinte aussi les enfants, donc les barres de vie */
+  filter: saturate(1.35) brightness(1.12);
+  z-index: 2;
+}
+/* points de vie du boss, juste au-dessus de lui */
+.boss .hp { position: absolute; left: 8%; right: 8%; top: -7px; display: flex; gap: 2px; }
+.boss .hp i {
+  flex: 1; height: 5px;
+  background: var(--panel2);
+  box-shadow: inset 0 0 0 1px var(--nb);
+}
+.boss .hp i.on { background: var(--red); }
+
+/* fil du parcours : on voit d'où vient le héros */
+.trail {
+  position: absolute; top: 0; left: 0;
+  width: var(--tile); height: var(--tile);
+  pointer-events: none;
+}
+.trail::after {
+  content: '';
+  position: absolute; left: 50%; top: 50%;
+  width: 8px; height: 8px; margin: -4px 0 0 -4px;
+  background: var(--acc);
+  /* liseré sombre : la pastille reste lisible sur n'importe quelle tuile */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .55);
+}
+
+/* l'instruction en cours, au-dessus du héros */
+.say {
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 3px 8px;
+  background: var(--ink); color: var(--bg);
+  border: 2px solid var(--nb);
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+}
+.say.on { animation: sayPop 900ms ease both; }
+@keyframes sayPop {
+  0%   { opacity: 0; transform: translate(-50%, 4px); }
+  15%  { opacity: 1; transform: translate(-50%, 0); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.hero.striking { animation: frames 160ms steps(4) infinite; }
+.hero.dead     { filter: grayscale(1) brightness(.45); animation: none; rotate: 90deg; }
+
+/* ---------------- éditeur ---------------- */
+.algo-side {
+  display: flex; flex-direction: column; min-height: 0;
+  border-top: 2px solid var(--ink);
+  background: var(--panel);
+}
+
+.algo-bar {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--panel2);
+}
+.algo-spacer { flex: 1; }
+.algo-btn {
+  padding: 8px 15px;
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--nb);
+  transition: transform .12s, box-shadow .12s, background .12s, color .12s;
+}
+.algo-btn:hover  { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--nb); }
+.algo-btn:active { transform: translate(2px, 2px);   box-shadow: 1px 1px 0 var(--nb); }
+.algo-btn-run { background: var(--acc); color: var(--acc-ink); }
+
+.algo-speeds { display: flex; }
+.algo-speed {
+  padding: 7px 11px;
+  font-family: var(--mono); font-size: 11px;
+  border: 2px solid var(--ink); border-left-width: 0;
+  background: var(--panel);
+  color: var(--mut);
+}
+.algo-speed:first-child { border-left-width: 2px; }
+.algo-speed.on { background: var(--acc); color: var(--acc-ink); }
+
+.algo-editor { flex: 1; display: flex; min-height: 0; }
+.algo-gutter {
+  flex: none; width: 44px; overflow: hidden;
+  padding: 12px 0;
+  background: var(--panel2);
+  border-right: 2px solid var(--ink);
+  font-family: var(--mono); font-size: 13px; line-height: 1.6;
+  text-align: right; color: var(--dim);
+  user-select: none;
+}
+.gl { padding-right: 11px; }
+.gl.on { background: var(--acc); color: var(--acc-ink); font-weight: 700; }
+
+.algo-codewrap { position: relative; flex: 1; min-width: 0; display: flex; }
+.algo-code {
+  flex: 1; min-width: 0;
+  padding: 12px 14px;
+  background: var(--termbg);
+  border: 0; outline: 0; resize: none;
+  color: var(--ink);
+  font-family: var(--mono); font-size: 13.5px; line-height: 1.6;
+  caret-color: var(--acc);
+  tab-size: 2;
+}
+
+/* ---- autocomplétion ---- */
+.ac {
+  position: absolute; z-index: 20;
+  min-width: 230px; max-height: 190px; overflow: auto;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--nb);
+}
+.ac-i {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 6px 10px;
+  font-family: var(--mono); font-size: 12.5px;
+  cursor: pointer;
+}
+.ac-i code { color: var(--acc); font-weight: 700; }
+.ac-i span { color: var(--dim); font-size: 11.5px; }
+.ac-i.on { background: var(--acc); }
+.ac-i.on code, .ac-i.on span { color: var(--acc-ink); }
+
+.algo-log {
+  flex: none; max-height: 32%; overflow: auto;
+  padding: 10px 14px;
+  border-top: 2px solid var(--ink);
+  background: var(--panel2);
+  font-family: var(--mono); font-size: 12px;
+  color: var(--mut);
+}
+.algo-log:empty { display: none; }
+.algo-l + .algo-l { margin-top: 3px; }
+.algo-l.err  { color: var(--red); font-weight: 700; }
+.algo-l.warn { color: var(--gold); }
+.algo-l.ok   { color: var(--ok); }

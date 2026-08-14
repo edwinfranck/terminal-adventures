@@ -1,0 +1,105 @@
+{
+  "title": "Les quatre dalles",
+  "tagline": "La porte n'a pas de serrure. Elle a quatre dalles, et elles sont dispersées.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Quatre dalles. La porte ne cède qu'à la dernière.",
+    "progress": [
+      "Toutes les dalles sont enfoncées, la porte a cédé.",
+      "Faille atteinte."
+    ],
+    "stuck": "Une dalle s'enfonce en marchant dessus. Il faut passer sur les quatre.",
+    "nudge": [
+      "Comment enfonce-t-on une dalle ? Il n'y a pas d'ordre pour ça.",
+      "Il suffit de <b>marcher dessus</b>. Le vrai problème est l'itinéraire.",
+      "Planifie le trajet qui passe sur les quatre, puis revient vers la porte."
+    ],
+    "face": "assets/portraits/sl-jinwoo.webp"
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Porte scellée. Aucune serrure, aucune clé.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Quatre dalles de pression dans la salle. Elles s'enfoncent sous ton poids — aucun ordre à écrire pour ça.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "La porte ne cède que lorsque les quatre sont enfoncées. Pas trois.",
+      "face": "assets/portraits/sl-jinwoo.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Le problème n'est pas la syntaxe. C'est l'itinéraire.",
+      "choices": [
+        {
+          "label": "Je réfléchis."
+        }
+      ],
+      "face": "assets/portraits/sl-jinwoo.webp"
+    }
+  ],
+  "brief": "<p>Quatre <b>dalles</b> dans la salle. Elles s'enfoncent quand ton chasseur <b>marche dessus</b> — il n'y a aucun ordre à écrire pour ça.</p><p>La porte ▣ ne cède que quand <b>les quatre</b> sont enfoncées. Ensuite, la faille ◎.</p><p>Ici la difficulté n'est pas le code : c'est le <b>chemin</b>.</p>",
+  "hint": [
+    "Repère les quatre dalles sur le plateau avant d'écrire une seule ligne.",
+    "Ton chasseur commence en haut à gauche : descends et remonte pour les balayer toutes.",
+    "Passe sur les deux du haut, descends, passe sur les deux du bas, puis va à la porte."
+  ],
+  "world": {
+    "map": [
+      "##########",
+      "#HS..S...#",
+      "#........#",
+      "#.S..S...#",
+      "########D#",
+      "########G#",
+      "##########"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "repeat (n) { }",
+        "desc": "Répète n fois le bloc entre accolades"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les quatre dalles sont enfoncées",
+      "check": "allPlates",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 230,
+    "title": "Salle des dalles",
+    "unlock": "dalles de pression"
+  },
+  "solution": "moveRight()\nmoveRight(3)\nmoveDown(2)\nmoveLeft(3)\nmoveRight(6)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "Les dalles",
+      "txt": "s'enfoncent en marchant dessus : aucun ordre à écrire pour ça"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "lire les règles du monde avant d'écrire la première ligne"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "title": "Combien sont-ils",
+  "tagline": "Usopp voit la flotte. Il ne sait pas la compter. Toi, si.",
+  "mentor": {
+    "who": "Usopp",
+    "face": "assets/portraits/op-usopp.webp",
+    "start": "Il y en a… beaucoup. Compte-les, moi je tremble trop.",
+    "progress": [
+      "Tu as compté sans compter. J'aime ça.",
+      "Le rapport est prêt. On sait à quoi on s'attaque."
+    ],
+    "stuck": "Ne compte pas à la main. Fais compter la machine.",
+    "nudge": [
+      "Combien de fichiers dans <code>flotte/</code> ? Ne les compte pas des yeux.",
+      "Une commande liste. Une autre compte des lignes. Tu peux brancher la première dans la seconde.",
+      "Le tube <code>|</code> envoie le résultat de gauche dans la commande de droite."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "LÀ ! À l'horizon ! Des navires ! Beaucoup de navires !"
+    },
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "J'ai relevé chaque coque dans un fichier. Un fichier par navire, dans le dossier flotte."
+    },
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "Mais je n'arrive pas à les compter, mes mains tremblent.\n\nls liste. wc -l compte les lignes. Le tube | branche l'un dans l'autre.\n\nls flotte | wc -l"
+    },
+    {
+      "who": "Usopp",
+      "face": "assets/portraits/op-usopp.webp",
+      "text": "Écris le nombre dans le rapport. Nami veut savoir contre quoi on part."
+    }
+  ],
+  "brief": "<p>Usopp a relevé un fichier par navire dans <code>~/flotte</code>. Il faut le <b>nombre exact</b>.</p><p>Écris-le, seul, dans <code>~/rapport.txt</code>.</p><p>Ne les compte pas à l'œil. <code>wc -l</code> compte des lignes — et le tube <code>|</code> envoie le résultat d'une commande dans la suivante.</p>",
+  "hint": [
+    "<code>ls flotte</code> les liste. Il te faut maintenant les compter.",
+    "<code>ls flotte | wc -l</code> — le tube passe la liste à <code>wc</code>.",
+    "Ils sont <code>23</code>. Écris ce nombre dans <code>~/rapport.txt</code>."
+  ],
+  "world": {
+    "fs": {
+      "flotte": {
+        "navire_01.txt": "fregate de classe B\npavillon de la Marine",
+        "navire_02.txt": "fregate de classe C\npavillon de la Marine",
+        "navire_03.txt": "fregate de classe D\npavillon de la Marine",
+        "navire_04.txt": "fregate de classe E\npavillon de la Marine",
+        "navire_05.txt": "fregate de classe A\npavillon de la Marine",
+        "navire_06.txt": "fregate de classe B\npavillon de la Marine",
+        "navire_07.txt": "fregate de classe C\npavillon de la Marine",
+        "navire_08.txt": "fregate de classe D\npavillon de la Marine",
+        "navire_09.txt": "fregate de classe E\npavillon de la Marine",
+        "navire_10.txt": "fregate de classe A\npavillon de la Marine",
+        "navire_11.txt": "fregate de classe B\npavillon de la Marine",
+        "navire_12.txt": "fregate de classe C\npavillon de la Marine",
+        "navire_13.txt": "fregate de classe D\npavillon de la Marine",
+        "navire_14.txt": "fregate de classe E\npavillon de la Marine",
+        "navire_15.txt": "fregate de classe A\npavillon de la Marine",
+        "navire_16.txt": "fregate de classe B\npavillon de la Marine",
+        "navire_17.txt": "fregate de classe C\npavillon de la Marine",
+        "navire_18.txt": "fregate de classe D\npavillon de la Marine",
+        "navire_19.txt": "fregate de classe E\npavillon de la Marine",
+        "navire_20.txt": "fregate de classe A\npavillon de la Marine",
+        "navire_21.txt": "fregate de classe B\npavillon de la Marine",
+        "navire_22.txt": "fregate de classe C\npavillon de la Marine",
+        "navire_23.txt": "fregate de classe D\npavillon de la Marine"
+      },
+      "cabine": {
+        "cartes.txt": "Grand Line -- premiere ile au sud-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "wc"
+    ],
+    "new": [
+      "wc"
+    ],
+    "syntax": [],
+    "motd": "Le pont vibre. Usopp montre l'horizon en tremblant."
+  },
+  "criteria": [
+    {
+      "label": "Tu as fait compter la machine (<code>wc</code>)",
+      "check": "ranCommand",
+      "args": [
+        "wc"
+      ]
+    },
+    {
+      "label": "Le rapport donne le bon nombre <code class=\"p\">~/rapport.txt</code>",
+      "check": "fileEquals",
+      "args": [
+        "~/rapport.txt",
+        "23"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 190,
+    "title": "Flotte comptée",
+    "unlock": "wc · |"
+  },
+  "solution": [
+    "ls flotte | wc -l",
+    "echo \"23\" > ~/rapport.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "wc -l <fichier>",
+      "txt": "compte les lignes ( -w les mots )"
+    },
+    {
+      "cmd": "commande | commande",
+      "txt": "le tube envoie le résultat de gauche dans celle de droite"
+    },
+    {
+      "cmd": "ls flotte | wc -l",
+      "txt": "compter des fichiers sans les compter à l'œil"
+    }
+  ]
+}

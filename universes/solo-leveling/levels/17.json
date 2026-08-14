@@ -1,0 +1,131 @@
+{
+  "title": "Jusqu'à trois",
+  "tagline": "Ramasse jusqu'à en avoir trois. Pas quatre.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Les essences ne sont pas rangées régulièrement. Ta boucle devra s'en moquer.",
+    "progress": [
+      "Une.",
+      "Deux.",
+      "Trois — la boucle s'arrête d'elle-même.",
+      "Faille atteinte."
+    ],
+    "stuck": "Ta boucle ne doit pas compter des cases : elle doit s'arrêter sur un RÉSULTAT.",
+    "nudge": [
+      "Sur quoi ta boucle doit-elle s'arrêter ? Pas sur une distance : sur un nombre d'essences.",
+      "<code>while (essences &lt; 3) { … }</code> tourne tant que tu n'en as pas trois.",
+      "À l'intérieur : ramasse <b>si</b> il y a quelque chose, puis avance dans tous les cas."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Trois essences suffisent à ouvrir la faille. Il y en a exactement trois sur ce couloir."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Mais elles ne sont pas espacées régulièrement. Une boucle qui compte des pas te trahira."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Fais une boucle qui s'arrête sur ce que tu as OBTENU, pas sur ce que tu as parcouru."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "while (essences < 3) { … }"
+    }
+  ],
+  "brief": "<p>Des <b>essences</b> ◆ sont posées le long du couloir, <b>à intervalles irréguliers</b>.</p><p>Il t'en faut <b>trois</b>. Écris une boucle qui s'arrête toute seule quand tu les as — sans compter les cases.</p><p>Puis descends vers la faille ◎ : elle est juste sous la case où ta boucle t'aura laissé.</p>",
+  "hint": [
+    "La condition d'arrêt n'est pas une distance : <code>while (essences &lt; 3)</code>.",
+    "Dans la boucle, <code>if (chest) { pickup() }</code> — il n'y a pas une essence sur chaque case.",
+    "Et un <code>moveRight()</code> à chaque tour, essence ou pas."
+  ],
+  "world": {
+    "map": [
+      "##############",
+      "#H.C..C...C..#",
+      "###########.##",
+      "###########G##",
+      "##############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "pickup"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "while (cond) { }",
+        "desc": "Tant que la condition tient"
+      },
+      {
+        "cmd": "if (cond) { }",
+        "desc": "Seulement si la condition est vraie"
+      },
+      {
+        "cmd": "var nom = 0",
+        "desc": "Retenir un nombre"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les trois essences sont récupérées",
+      "check": "allChests",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as utilisé une boucle (<code>while</code>)",
+      "check": "usedKeyword",
+      "args": [
+        "while"
+      ]
+    },
+    {
+      "label": "9 lignes de code maximum",
+      "check": "maxLines",
+      "args": [
+        9
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 500,
+    "title": "Boucle conditionnelle",
+    "unlock": "while (compteur < n)"
+  },
+  "solution": "while (essences < 3) {\n  if (chest) {\n    pickup()\n  }\n  moveRight()\n}\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "while (essences < 3)",
+      "txt": "une boucle qui s'arrête sur un RÉSULTAT, pas sur une distance"
+    },
+    {
+      "cmd": "if (chest)",
+      "txt": "à l'intérieur d'une boucle : agir seulement quand il y a lieu"
+    },
+    {
+      "cmd": "irrégulier",
+      "txt": "quand les données ne sont pas rangées, la boucle doit s'en moquer"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "chercher la vraie condition d'arrêt avant d'écrire la boucle"
+    }
+  ]
+}

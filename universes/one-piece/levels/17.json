@@ -1,0 +1,149 @@
+{
+  "title": "Le colis de Kin'emon",
+  "tagline": "Compte les pièces avant d'ouvrir. Il y en a une de trop.",
+  "mentor": {
+    "who": "Robin",
+    "face": "assets/portraits/op-robin.webp",
+    "start": "Un colis qui arrive en territoire ennemi se regarde avant de s'ouvrir.",
+    "progress": [
+      "Tu as regardé sans ouvrir. C'est le bon réflexe.",
+      "L'intrus est identifié.",
+      "Le colis est ouvert, et propre.",
+      "Et tu as le lieu du rendez-vous."
+    ],
+    "stuck": "Combien de feuillets Kin'emon annonce-t-il ? Combien l'archive en contient-elle ?",
+    "nudge": [
+      "<code>tar -tzf</code> liste le contenu <b>sans</b> déballer. Fais-le d'abord.",
+      "Relis la consigne : elle dit exactement combien de pièces Kin'emon envoie, et lesquelles.",
+      "Une fois l'intrus nommé, déballe (<code>tar -xzf</code>), supprime-le, puis lis la lettre."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Un colis de Kin'emon. Il a voyagé trois jours, de main en main."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Trois jours pendant lesquels n'importe qui a pu y ajouter quelque chose."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Kin'emon nous a fait passer sa consigne par un autre chemin. Elle dit ce que le colis doit contenir. Exactement."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Regarde d'abord. Ouvre ensuite.",
+      "choices": [
+        {
+          "label": "Je liste sans ouvrir."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/colis.tgz</code> vient de Kin'emon. <code>~/consigne.txt</code> dit ce qu'il doit contenir.</p><p>Quatre gestes :</p><p>· regarder le contenu <b>sans</b> déballer, et écrire le nom du <b>feuillet en trop</b> dans <code>~/rapport.txt</code><br>· déballer le colis<br>· <b>détruire</b> l'intrus<br>· lire la lettre et noter le <b>lieu</b> du rendez-vous dans <code>~/rdv.txt</code> — un seul mot</p>",
+  "hint": [
+    "<code>tar -tzf colis.tgz</code> affiche le contenu sans rien ouvrir.",
+    "La consigne annonce trois feuillets. L'archive en compte quatre.",
+    "<code>tar -xzf colis.tgz</code> crée le dossier. Ensuite <code>rm</code>, puis <code>cat</code> la lettre."
+  ],
+  "world": {
+    "fs": {
+      "consigne.txt": "De Kin'emon, par le passeur.\n\nJe joins toujours trois feuillets, jamais un de plus :\n  la lettre, le sceau, le plan.\nSi tu en comptes davantage, ne fais confiance a rien.",
+      "colis.tgz": {
+        "$tar": {
+          "message": {
+            "lettre.txt": "Frere,\nle festival du feu couvre tous les bruits.\nrendez-vous au port de habu, a la nuit du festival.\nviens par la mer, jamais par la route du sud.",
+            "sceau.txt": "empreinte de la famille Kozuki, cire rouge",
+            "plan.txt": "trois quais, une jetee, un phare eteint",
+            "oiseau.txt": "propriete des Pirates aux Cent Betes.\nsuit le colis. ne pas deplacer."
+          }
+        }
+      },
+      "quai": {
+        "douane.txt": "controle a l aube. tout ce qui traine est saisi."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "rm",
+      "tar"
+    ],
+    "new": [],
+    "motd": "Le colis est posé sur la table. Ficelé, encore chaud du voyage."
+  },
+  "criteria": [
+    {
+      "label": "Le feuillet en trop est nommé <code class=\"p\">~/rapport.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/rapport.txt",
+        "oiseau"
+      ]
+    },
+    {
+      "label": "Tu n'as pas accusé la lettre",
+      "check": "fileLacks",
+      "args": [
+        "~/rapport.txt",
+        "lettre"
+      ]
+    },
+    {
+      "label": "Le colis est déballé",
+      "check": "dirExists",
+      "args": [
+        "~/message"
+      ]
+    },
+    {
+      "label": "L'intrus est détruit",
+      "check": "pathMissing",
+      "args": [
+        "~/message/oiseau.txt"
+      ]
+    },
+    {
+      "label": "Le lieu du rendez-vous est noté <code class=\"p\">~/rdv.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/rdv.txt",
+        "habu"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 400,
+    "title": "Colis désamorcé",
+    "unlock": "tar -tzf · tar -xzf"
+  },
+  "solution": [
+    "cat consigne.txt",
+    "tar -tzf colis.tgz",
+    "echo \"oiseau.txt\" > rapport.txt",
+    "tar -xzf colis.tgz",
+    "ls message",
+    "rm message/oiseau.txt",
+    "cat message/lettre.txt",
+    "echo \"habu\" > rdv.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "tar -tzf",
+      "txt": "lister d'abord — tar -xzf déballer ensuite"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "compter les pièces avant d'ouvrir un colis qui vient de loin"
+    }
+  ]
+}

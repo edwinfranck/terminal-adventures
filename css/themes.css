@@ -1,0 +1,88 @@
+/* themes.css — l'identité de chaque univers, et RIEN d'autre.
+   Ajouter un univers = un bloc ici. Zéro JS à toucher.
+   Les accents (--op / --sl) viennent de la charte piscine.html. */
+
+/* accent des vignettes du menu, où plusieurs univers coexistent */
+.uni-card[data-uni="one-piece"]     { --acc: var(--op); }
+.uni-card[data-uni="solo-leveling"] { --acc: var(--sl); }
+
+/* ================= ONE PIECE — rouge pirate, papier & or ================= */
+[data-theme="one-piece"] {
+  --acc: var(--op);
+  --acc-ink: #ffffff;
+  --bg: #120b0c;  --bg2: #1a1011;  --panel: #1f1416;  --panel2: #160d0f;
+  --ink: #f6ece0; --mut: #c2a89a;  --dim: #8a6b62;
+  --termbg: #12090a;
+  --nb: #000000;
+  --ok: var(--gold);
+  /* illustration claire et très chargée : elle doit exister, pas concurrencer le texte */
+  --veil-top: rgba(18, 11, 12, .80);
+  --veil-bot: rgba(18, 11, 12, .96);
+  --art-op: .34;
+}
+[data-theme="one-piece"] .criteria li.done { color: var(--gold); }
+
+/* ================= SOLO LEVELING — violet système, froid ================= */
+[data-theme="solo-leveling"] {
+  --acc: var(--sl);
+  --acc-ink: #ffffff;
+  --bg: #08060f;  --bg2: #0c0a18;  --panel: #100d20;  --panel2: #0a0814;
+  --ink: #eae8ff; --mut: #a9a4c8;  --dim: #6c6690;
+  --termbg: #07050d;
+  --nb: #000000;
+  --ok: #22d3ee;
+  /* celle-ci est déjà très sombre : voile léger, sinon on ne voit plus rien */
+  --veil-top: rgba(8, 6, 15, .58);
+  --veil-bot: rgba(8, 6, 15, .93);
+  --art-op: .70;
+}
+
+/* ================= VARIANTES CLAIRES ================= 
+   L'accent de l'univers ne change pas : c'est son identité. Ce sont les fonds qui
+   basculent, et le voile devient clair pour que l'illustration reste lisible. */
+[data-theme="one-piece"][data-mode="light"] {
+  --bg: #fffdfb;  --bg2: #f7f1ec;  --panel: #ffffff;  --panel2: #f7f0ec;
+  --ink: #1a1113; --mut: #6b5750;  --dim: #a89189;    --line: rgba(0,0,0,.12);
+  --termbg: #ffffff;
+  --nb: #1a1113;
+  --edge: var(--ink);
+  --title-nb: var(--acc);
+  --ok: #b07d0a;
+  --veil-top: rgba(255,251,248,.74); --veil-bot: rgba(255,251,248,.94);
+  --art-op: .9;
+}
+[data-theme="solo-leveling"][data-mode="light"] {
+  --bg: #fbfaff;  --bg2: #f2f0fb;  --panel: #ffffff;  --panel2: #f3f1fc;
+  --ink: #14121f; --mut: #5b5674;  --dim: #9a94b5;    --line: rgba(0,0,0,.12);
+  --termbg: #ffffff;
+  --nb: #14121f;
+  --edge: var(--ink);
+  --title-nb: var(--acc);
+  --ok: #0f8f8f;
+  --veil-top: rgba(250,249,255,.70); --veil-bot: rgba(250,249,255,.93);
+  --art-op: .95;
+}
+
+/* Terminal en clair : les couleurs de sortie doivent rester lisibles sur blanc
+   (valeurs reprises de piscine.html). */
+:root[data-mode="light"] .tbody       { color: #1e2530; }
+:root[data-mode="light"] .tbody .cmd  { color: #0a0d12; }
+:root[data-mode="light"] .tbody .f    { color: #1e2530; }
+:root[data-mode="light"] .tbody .d    { color: #2158d0; }
+:root[data-mode="light"] .tbody .lnk  { color: #0f9488; }
+:root[data-mode="light"] .tbody .err  { color: #c0264a; }
+:root[data-mode="light"] .tbody .ok2  { color: #0f8f4d; }
+:root[data-mode="light"] .tbody .dimc { color: #6a7686; }
+:root[data-mode="light"] .tbar .tt    { color: #6a7686; }
+
+/* Le donjon reste sombre même en mode clair : c'est un donjon. */
+:root[data-mode="light"] .algo-stage { background: #14121f; }
+
+/* Réglages qui n'ont de sens qu'en sombre :
+   · les scanlines noires deviennent un moiré sale sur du blanc
+   · un flash en « screen » est invisible sur du clair : il faut assombrir */
+:root[data-mode="light"] .bg-scan {
+  opacity: .2;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.07) 2px 4px);
+}
+:root[data-mode="light"] #glitch { mix-blend-mode: multiply; }

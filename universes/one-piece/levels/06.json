@@ -1,0 +1,137 @@
+{
+  "title": "Le traître",
+  "tagline": "Quelqu'un à bord écrit à l'ennemi. Douze lettres, un seul coupable.",
+  "mentor": {
+    "who": "Nami",
+    "face": "assets/portraits/op-nami.webp",
+    "start": "Douze lettres dans la sacoche. L'une d'elles a vendu notre cap.",
+    "progress": [
+      "Tu as fouillé le courrier d'un coup. Bien.",
+      "C'est lui. Écris son nom, on s'occupe du reste."
+    ],
+    "stuck": "Tu ne vas pas ouvrir douze lettres une par une. Cherche le mot, pas le fichier.",
+    "nudge": [
+      "Qu'est-ce qui trahirait un traître dans une lettre ? Un mot. Lequel ?",
+      "Une commande cherche un mot <b>à l'intérieur</b> des fichiers, pas dans leurs noms.",
+      "Et l'étoile <code>*</code> te permet de la lancer sur tout le dossier d'un coup."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "On nous attendait au cap. Ils connaissaient notre heure de départ."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "J'ai récupéré la sacoche du courrier. Douze lettres. L'une d'elles est de trop."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Tu ne vas pas les lire une par une : grep cherche un mot À L'INTÉRIEUR des fichiers.\n\ngrep mot fichier"
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Et avec une étoile, tu fouilles tout le dossier en une commande. Trouve-le, puis écris son nom dans le rapport.",
+      "choices": [
+        {
+          "label": "Je m'en occupe."
+        }
+      ]
+    }
+  ],
+  "brief": "<p>Douze lettres dans <code>~/courrier</code>. <b>Une seule</b> a vendu notre cap à l'ennemi.</p><p>Trouve-la, puis écris le <b>nom de son auteur</b> dans <code>~/rapport.txt</code> — les lettres sont signées.</p><p>Les ouvrir une par une prendrait la matinée. <code>grep</code> cherche un mot <b>dans le contenu</b> des fichiers, et l'étoile <code>*</code> désigne tout un dossier.</p>",
+  "hint": [
+    "Quel mot ne devrait apparaître dans aucune lettre d'un équipage honnête ?",
+    "<code>grep Marine courrier/*</code> fouille les douze d'un coup.",
+    "La lettre est signée <code>Kuro</code>. Écris ce nom dans <code>~/rapport.txt</code>."
+  ],
+  "world": {
+    "fs": {
+      "courrier": {
+        "lettre_01.txt": "Cher frere,\nla peche a ete bonne cette semaine.\n-- Yosaku",
+        "lettre_02.txt": "Le tonnelier reclame son du.\nRegle ca avant Loguetown.\n-- Johnny",
+        "lettre_03.txt": "J'ai vu un oiseau geant au-dessus du cap.\nRien d'autre a signaler.\n-- Yosaku",
+        "lettre_04.txt": "Les voiles sont reparees.\nIl manque encore du fil.\n-- Johnny",
+        "lettre_05.txt": "Tante Rika embrasse tout l'equipage.\n-- Yosaku",
+        "lettre_06.txt": "Le vent tourne au nord-est.\nPrudence en sortant de la baie.\n-- Johnny",
+        "lettre_07.txt": "Le navire quitte le port a l'aube.\nJ'ai transmis le cap a la Marine comme convenu.\nLe reste de ma part au prochain rendez-vous.\n-- Kuro",
+        "lettre_08.txt": "Deux tonneaux d'eau ont fui.\nA remplacer.\n-- Johnny",
+        "lettre_09.txt": "Le cuisinier veut plus de sel.\n-- Yosaku",
+        "lettre_10.txt": "On m'a paye en fausse monnaie a Orange Town.\n-- Johnny",
+        "lettre_11.txt": "La lanterne de proue est cassee.\n-- Yosaku",
+        "lettre_12.txt": "Rendez-vous au phare, comme d'habitude.\n-- Johnny"
+      },
+      "cale": {
+        "inventaire.txt": "tonneaux ........ 3\nviande .......... 1"
+      },
+      "cabine": {
+        "cartes.txt": "Grand Line -- premiere ile au sud-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep"
+    ],
+    "new": [
+      "grep"
+    ],
+    "motd": "La sacoche du courrier est posee sur la table."
+  },
+  "criteria": [
+    {
+      "label": "Tu as fouillé le courrier (<code>grep</code>)",
+      "check": "ranCommand",
+      "args": [
+        "grep"
+      ]
+    },
+    {
+      "label": "Le rapport nomme le traître <code class=\"p\">~/rapport.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/rapport.txt",
+        "kuro"
+      ]
+    },
+    {
+      "label": "Et personne d'autre",
+      "check": "fileLacks",
+      "args": [
+        "~/rapport.txt",
+        "johnny"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 180,
+    "title": "Traître démasqué",
+    "unlock": "grep · *"
+  },
+  "solution": [
+    "grep Marine courrier/*",
+    "cat courrier/lettre_07.txt",
+    "echo \"Kuro\" > ~/rapport.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "grep <motif> <fichiers>",
+      "txt": "cherche un mot DANS le contenu, pas dans les noms"
+    },
+    {
+      "cmd": "*",
+      "txt": "désigne tout un dossier d'un coup : courrier/*"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "douze fichiers, une seule commande"
+    }
+  ]
+}

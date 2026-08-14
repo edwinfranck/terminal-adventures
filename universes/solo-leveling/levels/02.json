@@ -1,0 +1,108 @@
+{
+  "title": "Le long couloir",
+  "tagline": "Neuf cases. Tu ne vas pas écrire neuf lignes.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Neuf cases. Trois lignes. Pas neuf.",
+    "progress": [
+      "La faille est là.",
+      "La boucle est écrite.",
+      "Et en cinq lignes. Rang D en vue."
+    ],
+    "stuck": "Le nombre entre les parenthèses de repeat, c'est le nombre de cases.",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "nudge": [
+      "Compte les cases du couloir. Ce nombre va entre les parenthèses.",
+      "Cinq lignes maximum : recopier neuf fois la même ligne ne passera pas.",
+      "La forme de la boucle est écrite dans l'arsenal, à droite."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Couloir de 9 cases.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Tu peux écrire neuf fois la même ligne. Ça marchera.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Mais un chasseur de rang E écrit neuf lignes. Un chasseur de rang S en écrit trois.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "repeat (n) {\n  ...\n}\n\nRépète n fois ce qui est entre les accolades. À toi de trouver n.\nContrainte : 5 lignes maximum.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    }
+  ],
+  "brief": "<p>Un long couloir jusqu'à la faille ◎. Tu peux écrire une ligne par case — ça marchera.</p><p>Mais la contrainte est là : <b>5 lignes de code maximum</b>.</p><p>Une boucle s'écrit ainsi :</p><p><code>repeat (n) { … }</code></p><p>Tout ce qui est entre les accolades est répété <code>n</code> fois. À toi de trouver <b>combien</b>.</p>",
+  "hint": [
+    "Compte les cases entre ton chasseur et la faille. Ce nombre remplace le <code>n</code>.",
+    "Le bloc à répéter se met entre les accolades, sur sa propre ligne.",
+    "<code>repeat (9) {</code> · <code>moveRight()</code> · <code>}</code> — trois lignes."
+  ],
+  "world": {
+    "map": [
+      "############",
+      "############",
+      "#H........G#",
+      "############",
+      "############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "repeat (n) { }",
+        "desc": "Répète n fois le bloc entre accolades"
+      }
+    ],
+    "starter": "repeat (2) {\n  moveRight()\n}\n"
+  },
+  "criteria": [
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as utilisé une boucle (<code>repeat</code>)",
+      "check": "usedKeyword",
+      "args": [
+        "repeat"
+      ]
+    },
+    {
+      "label": "5 lignes de code maximum",
+      "check": "maxLines",
+      "args": [
+        5
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 100,
+    "title": "La boucle est à toi",
+    "unlock": "repeat"
+  },
+  "solution": "repeat (9) {\n  moveRight()\n}\n",
+  "recap": [
+    {
+      "cmd": "repeat (5) { … }",
+      "txt": "répète le bloc cinq fois"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "quand tu écris deux fois la même chose, c'est une boucle"
+    }
+  ]
+}

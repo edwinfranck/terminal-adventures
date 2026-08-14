@@ -1,0 +1,13 @@
+{
+  "tiles": {
+    "~": { "src": "assets/rpg/custom/eau.png", "blocks": true, "name": "Eau profonde" }
+  },
+  "actors": {
+    "hero": {
+      "src": "assets/rpg/perso/pj_0.png",
+      "frameW": 32, "frameH": 48, "cols": 4, "rows": 4,
+      "dirRows": { "down": 0, "left": 1, "right": 2, "up": 3 },
+      "name": "Chevalier noir"
+    }
+  }
+}

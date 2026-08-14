@@ -1,0 +1,133 @@
+{
+  "title": "Les derniers ordres",
+  "tagline": "Soixante jours de journal. Seules les trois dernières lignes comptent.",
+  "mentor": {
+    "who": "Franky",
+    "face": "assets/portraits/op-franky.webp",
+    "start": "SUPER long, ce journal. Les ordres sont à la fin.",
+    "progress": [
+      "Tu as pris juste ce qu'il fallait.",
+      "Trois lignes, pas soixante. SUPER."
+    ],
+    "stuck": "Tu n'as pas besoin de tout. Tu as besoin de la FIN.",
+    "nudge": [
+      "De combien de lignes as-tu besoin ? Et où sont-elles dans le fichier ?",
+      "Une commande donne les premières lignes, une autre les <b>dernières</b>.",
+      "Puis la flèche <code>&gt;</code> pour envoyer le résultat dans un fichier."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Le journal de bord du navire ennemi ! Récupéré dans une chaloupe !"
+    },
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Soixante jours de \"mer calme, cap tenu\". Personne ne va lire ça."
+    },
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Mais les ORDRES sont à la fin. Toujours à la fin.\n\ntail donne les dernières lignes. head donne les premières."
+    },
+    {
+      "who": "Franky",
+      "face": "assets/portraits/op-franky.webp",
+      "text": "Extrais les trois dernières dans un fichier à part. Rien de plus.",
+      "choices": [
+        {
+          "label": "Compris."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/journal.txt</code> fait soixante lignes. Les <b>trois dernières</b> sont les ordres ; tout le reste est du remplissage.</p><p>Mets <b>ces trois lignes seulement</b> dans <code>~/ordres.txt</code>.</p><p><code>tail</code> donne la fin d'un fichier, <code>head</code> le début. Le nombre de lignes se donne en option.</p>",
+  "hint": [
+    "Tu veux la fin du fichier, pas le début.",
+    "<code>tail -3 journal.txt</code> affiche les trois dernières lignes.",
+    "Ajoute <code>&gt; ~/ordres.txt</code> pour les y écrire au lieu de les afficher."
+  ],
+  "world": {
+    "fs": {
+      "journal.txt": "jour 01 : mer calme, cap tenu\njour 02 : mer calme, cap tenu\njour 03 : mer calme, cap tenu\njour 04 : mer calme, cap tenu\njour 05 : mer calme, cap tenu\njour 06 : mer calme, cap tenu\njour 07 : mer calme, cap tenu\njour 08 : mer calme, cap tenu\njour 09 : mer calme, cap tenu\njour 10 : mer calme, cap tenu\njour 11 : mer calme, cap tenu\njour 12 : mer calme, cap tenu\njour 13 : orage, deux voiles dechirees\njour 14 : mer calme, cap tenu\njour 15 : mer calme, cap tenu\njour 16 : mer calme, cap tenu\njour 17 : mer calme, cap tenu\njour 18 : mer calme, cap tenu\njour 19 : mer calme, cap tenu\njour 20 : mer calme, cap tenu\njour 21 : mer calme, cap tenu\njour 22 : mer calme, cap tenu\njour 23 : mer calme, cap tenu\njour 24 : mer calme, cap tenu\njour 25 : mer calme, cap tenu\njour 26 : mer calme, cap tenu\njour 27 : mer calme, cap tenu\njour 28 : mer calme, cap tenu\njour 29 : mer calme, cap tenu\njour 30 : mer calme, cap tenu\njour 31 : escale a Water Seven, reparations\njour 32 : mer calme, cap tenu\njour 33 : mer calme, cap tenu\njour 34 : mer calme, cap tenu\njour 35 : mer calme, cap tenu\njour 36 : mer calme, cap tenu\njour 37 : mer calme, cap tenu\njour 38 : mer calme, cap tenu\njour 39 : mer calme, cap tenu\njour 40 : mer calme, cap tenu\njour 41 : mer calme, cap tenu\njour 42 : mer calme, cap tenu\njour 43 : mer calme, cap tenu\njour 44 : mer calme, cap tenu\njour 45 : mer calme, cap tenu\njour 46 : mer calme, cap tenu\njour 47 : mer calme, cap tenu\njour 48 : mer calme, cap tenu\njour 49 : mer calme, cap tenu\njour 50 : mer calme, cap tenu\njour 51 : mer calme, cap tenu\njour 52 : mer calme, cap tenu\njour 53 : mer calme, cap tenu\njour 54 : mer calme, cap tenu\njour 55 : mer calme, cap tenu\njour 56 : mer calme, cap tenu\njour 57 : mer calme, cap tenu\nordre : cap au sud-sud-est\nordre : silence radio jusqu'a l'aube\nordre : aborder par le flanc babord",
+      "cabine": {
+        "cartes.txt": "Grand Line -- premiere ile au sud-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "wc",
+      "head",
+      "tail"
+    ],
+    "new": [
+      "head",
+      "tail"
+    ],
+    "motd": "Franky pose un journal trempe sur la table."
+  },
+  "criteria": [
+    {
+      "label": "Tu as pris la fin du fichier (<code>tail</code>)",
+      "check": "ranCommand",
+      "args": [
+        "tail"
+      ]
+    },
+    {
+      "label": "Le dernier ordre y est <code class=\"p\">~/ordres.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/ordres.txt",
+        "babord"
+      ]
+    },
+    {
+      "label": "Le premier ordre aussi",
+      "check": "fileContains",
+      "args": [
+        "~/ordres.txt",
+        "sud-sud-est"
+      ]
+    },
+    {
+      "label": "Et pas les soixante jours de remplissage",
+      "check": "fileLacks",
+      "args": [
+        "~/ordres.txt",
+        "mer calme"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 200,
+    "title": "Ordres interceptés",
+    "unlock": "head · tail"
+  },
+  "solution": [
+    "tail -3 journal.txt",
+    "tail -3 journal.txt > ~/ordres.txt",
+    "cat ~/ordres.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "head -3 <fichier>",
+      "txt": "les trois premières lignes"
+    },
+    {
+      "cmd": "tail -3 <fichier>",
+      "txt": "les trois dernières"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "dans un fichier long, ne lire que la partie utile"
+    }
+  ]
+}

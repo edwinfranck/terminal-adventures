@@ -1,0 +1,121 @@
+{
+  "title": "Trois sceaux",
+  "tagline": "Trois renfoncements. Exactement le même geste.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Trois dalles, trois ombres. Tu vas écrire le geste une fois.",
+    "progress": [
+      "Une.",
+      "Deux.",
+      "Trois. La porte cède."
+    ],
+    "stuck": "Le geste est rigoureusement identique dans les trois renfoncements. Nomme-le.",
+    "nudge": [
+      "Qu'est-ce qui change d'un renfoncement à l'autre ? Rien, sauf le chemin pour y arriver.",
+      "<code>function sceau() { … }</code> : descendre, frapper, relever, remonter.",
+      "Ensuite, il ne te reste qu'à te déplacer et appeler <code>sceau()</code> trois fois."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Trois dalles à poids. Trois ombres postées dessus."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Tu connais déjà le geste. Tu vas le refaire trois fois."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Ne l'écris pas trois fois. Donne-lui un nom."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "La porte ne cède que lorsque les trois dalles sont tenues EN MÊME TEMPS."
+    }
+  ],
+  "brief": "<p>Trois <b>dalles à poids</b>, chacune occupée par une ombre 👁, dans trois renfoncements.</p><p>La porte ▣ ne cède que lorsque les <b>trois</b> sont tenues en même temps.</p><p>Le geste est identique à chaque fois : <b>écris-le une seule fois</b> et appelle-le.</p>",
+  "hint": [
+    "Le geste : <code>moveDown()</code> · <code>attack()</code> · <code>summon()</code> · <code>moveUp()</code>.",
+    "<code>function sceau() { … }</code> le nomme une fois pour toutes.",
+    "Entre deux renfoncements il y a quatre cases."
+  ],
+  "world": {
+    "map": [
+      "################",
+      "#H..........D.G#",
+      "###.###.###.####",
+      "###Q###Q###Q####",
+      "################"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack",
+      "summon"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "function nom() { }",
+        "desc": "Nomme une suite d'ordres, réutilisable"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les trois ombres sont relevées",
+      "check": "armyIs",
+      "args": [
+        3
+      ]
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as défini une fonction (<code>function</code>)",
+      "check": "usedKeyword",
+      "args": [
+        "function"
+      ]
+    },
+    {
+      "label": "14 lignes de code maximum",
+      "check": "maxLines",
+      "args": [
+        14
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 380,
+    "title": "Trois sceaux",
+    "unlock": "une armée"
+  },
+  "solution": "function sceau() {\n  moveDown()\n  attack()\n  summon()\n  moveUp()\n}\nmoveRight(2)\nsceau()\nmoveRight(4)\nsceau()\nmoveRight(4)\nsceau()\nmoveRight(3)\n",
+  "recap": [
+    {
+      "cmd": "function sceau()",
+      "txt": "le même geste trois fois : on le nomme, on ne le recopie pas"
+    },
+    {
+      "cmd": "armée",
+      "txt": "les ombres relevées restent postées : elles tiennent les dalles ensemble"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "repérer ce qui ne change pas d'une répétition à l'autre"
+    }
+  ]
+}

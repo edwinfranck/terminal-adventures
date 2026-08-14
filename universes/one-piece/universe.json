@@ -1,0 +1,124 @@
+{
+  "title": "Grand Line",
+  "emoji": "🏴‍☠️",
+  "skill": "Terminal · Linux",
+  "pitch": "Ton navire est en morceaux et la Marine approche. Le terminal est ton seul équipage.",
+  "menu": {
+    "tag": "Grand Line · One Piece",
+    "kicker": "Opération Grand Line_",
+    "title": [
+      "Terminal",
+      "Quest"
+    ],
+    "cta": "Embarquer"
+  },
+  "plugin": "terminal",
+  "prompt": "mousse@sunny",
+  "hero": {
+    "name": "Luffy",
+    "face": "🏴‍☠️"
+  },
+  "art": {
+    "face": "assets/portraits/op-luffy.webp",
+    "portrait": "assets/portraits/one-piece.webp",
+    "bg": "assets/bg/one-piece.jpg",
+    "anim": "assets/portraits/one-piece-anim.webp",
+    "video": "assets/bg/one-piece.mp4"
+  },
+  "ranks": [
+    {
+      "name": "Mousse",
+      "xp": 0
+    },
+    {
+      "name": "Matelot",
+      "xp": 400
+    },
+    {
+      "name": "Timonier",
+      "xp": 950
+    },
+    {
+      "name": "Second",
+      "xp": 1600
+    },
+    {
+      "name": "Capitaine",
+      "xp": 2500
+    },
+    {
+      "name": "Corsaire",
+      "xp": 3600
+    },
+    {
+      "name": "Roi du Terminal",
+      "xp": 5000
+    }
+  ],
+  "chapters": [
+    {
+      "id": "east-blue",
+      "title": "Chapitre 1 · East Blue",
+      "levels": [
+        "01",
+        "02",
+        "03"
+      ],
+      "difficulty": 1,
+      "outro": "East Blue est derrière toi. Le Sunny tient encore. Ce qui vient sera plus dur."
+    },
+    {
+      "id": "grand-line",
+      "title": "Chapitre 2 · Grand Line",
+      "levels": [
+        "04",
+        "05"
+      ],
+      "difficulty": 2,
+      "outro": "Grand Line est ouverte. Mais on ne t'y attendait pas les mains vides."
+    },
+    {
+      "id": "enies-lobby",
+      "title": "Chapitre 3 · Enies Lobby",
+      "difficulty": 3,
+      "levels": [
+        "06",
+        "07",
+        "08",
+        "09",
+        "10"
+      ],
+      "outro": "Enies Lobby brûle derrière vous. Robin est à bord. Mais le prochain port n'est pas une île : c'est un piège en sucre."
+    },
+    {
+      "id": "whole-cake",
+      "title": "Chapitre 4 · Whole Cake Island",
+      "difficulty": 4,
+      "levels": [
+        "11",
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "outro": "Sanji est à bord, le gâteau est derrière vous. Cap sur un pays fermé depuis huit cents ans."
+    },
+    {
+      "id": "wano",
+      "title": "Chapitre 5 · Wano",
+      "difficulty": 5,
+      "levels": [
+        "16",
+        "17",
+        "18",
+        "19",
+        "20"
+      ],
+      "outro": "Onigashima est tombée. Wano rouvre ses frontières."
+    }
+  ],
+  "ending": {
+    "title": "Roi du Terminal",
+    "line": "Cinq mers, vingt escales. Tu n'ouvres plus un dossier au hasard : tu lis les droits, tu filtres, tu emballes, et tu laisses un raccourci derrière toi."
+  }
+}

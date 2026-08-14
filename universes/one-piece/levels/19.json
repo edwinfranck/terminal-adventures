@@ -1,0 +1,180 @@
+{
+  "title": "Les couloirs d'Onigashima",
+  "tagline": "Trois portes. Une seule monte. Et chaque étage se mérite.",
+  "mentor": {
+    "who": "Zoro",
+    "face": "assets/portraits/op-zoro.webp",
+    "start": "Je me perds dans un couloir droit. Alors dans ce château, c'est toi qui guides.",
+    "progress": [
+      "Bonne porte.",
+      "Un étage de gagné.",
+      "Le sommet est ouvert.",
+      "Et tu as ce qu'on est venus chercher."
+    ],
+    "stuck": "Regarder n'est pas entrer. Un dossier se lit avec r et se traverse avec x — ce n'est pas le même droit.",
+    "nudge": [
+      "Tu peux <b>lister</b> les trois portes sans y entrer. L'une d'elles contient une marque.",
+      "Pour entrer, il faut le droit <code>x</code>. Pour lister, le droit <code>r</code>. Un étage peut manquer des deux.",
+      "<code>ls -l</code> à chaque palier, puis <code>chmod</code> sur ce qui bloque. Monte jusqu'au bout."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Zoro",
+      "face": "assets/portraits/op-zoro.webp",
+      "text": "On est entrés. Le château d'Onigashima est un empilement de couloirs qui se ressemblent tous."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Pas tous. L'entrée le dit : la voie qui monte porte la marque du dragon."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Les deux autres sont des culs-de-sac. On peut y jeter un œil sans y entrer — ça ne coûte rien."
+    },
+    {
+      "who": "Zoro",
+      "face": "assets/portraits/op-zoro.webp",
+      "text": "Et au sommet, il y a le mot de passe du donjon. Sans lui, on ne libère personne.",
+      "choices": [
+        {
+          "label": "Je monte."
+        }
+      ]
+    }
+  ],
+  "brief": "<p>Tu es devant <code>~/onigashima</code>. Lis <code>entree.txt</code> : il dit à quoi reconnaître la bonne porte.</p><p>Les trois portes se <b>listent</b> mais ne se <b>traversent</b> pas. Ce ne sont pas les mêmes droits — et chaque étage a son propre blocage.</p><p>Monte jusqu'au sommet, trouve le <b>mot de passe du donjon</b>, et écris-le dans <code>~/mot_de_passe.txt</code>.</p>",
+  "hint": [
+    "<code>ls onigashima/porte_est</code>, <code>porte_ouest</code>, <code>porte_nord</code> : une seule contient une marque.",
+    "<code>chmod +x</code> sur la bonne porte, puis <code>cd</code> dedans. Recommence à chaque étage.",
+    "Un dossier sans <code>r</code> ne se liste même pas : <code>chmod 700</code> lui rend tout d'un coup."
+  ],
+  "world": {
+    "fs": {
+      "onigashima": {
+        "entree.txt": "TROIS PORTES.\nles deux basses ne menent nulle part.\ncelle qui monte porte la marque du dragon, gravee dans la pierre.",
+        "porte_est": {
+          "$dir": {
+            "salle.txt": "cul-de-sac : reserve de sake, quatre cents jarres et deux gardes ivres"
+          },
+          "$mode": "400"
+        },
+        "porte_ouest": {
+          "$dir": {
+            "salle.txt": "cul-de-sac : cuisines froides, personne depuis des heures"
+          },
+          "$mode": "400"
+        },
+        "porte_nord": {
+          "$dir": {
+            "marque.txt": "un dragon grave dans la pierre, la gueule tournee vers le haut",
+            "escalier": {
+              "$dir": {
+                "palier.txt": "il reste un etage. la rampe est brulante.",
+                "sommet": {
+                  "$dir": {
+                    "tresor.txt": {
+                      "$file": "MOT DE PASSE DU DONJON\n\nmomo\n\n(ne jamais l ecrire ailleurs qu ici)",
+                      "$mode": "000"
+                    },
+                    "tambour.txt": "un tambour de guerre, peau crevee"
+                  },
+                  "$mode": "200"
+                }
+              },
+              "$mode": "600"
+            }
+          },
+          "$mode": "400"
+        }
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "find",
+      "chmod"
+    ],
+    "new": [],
+    "motd": "Trois portes basses. Aucune ne bouge quand tu pousses."
+  },
+  "criteria": [
+    {
+      "label": "Tu as ouvert la bonne porte",
+      "check": "hasRight",
+      "args": [
+        "~/onigashima/porte_nord",
+        "x"
+      ]
+    },
+    {
+      "label": "L'escalier se traverse",
+      "check": "hasRight",
+      "args": [
+        "~/onigashima/porte_nord/escalier",
+        "x"
+      ]
+    },
+    {
+      "label": "Le sommet se lit et se traverse",
+      "check": "hasRight",
+      "args": [
+        "~/onigashima/porte_nord/escalier/sommet",
+        "rx"
+      ]
+    },
+    {
+      "label": "Le mot de passe est noté <code class=\"p\">~/mot_de_passe.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/mot_de_passe.txt",
+        "momo"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 450,
+    "title": "Sommet atteint",
+    "unlock": "r pour lister · x pour traverser"
+  },
+  "solution": [
+    "cat onigashima/entree.txt",
+    "ls -l onigashima",
+    "ls onigashima/porte_est",
+    "ls onigashima/porte_ouest",
+    "ls onigashima/porte_nord",
+    "chmod +x onigashima/porte_nord",
+    "cd onigashima/porte_nord",
+    "cat marque.txt",
+    "ls -l",
+    "chmod +x escalier",
+    "cd escalier",
+    "ls -l",
+    "chmod 700 sommet",
+    "cd sommet",
+    "ls -l",
+    "chmod +r tresor.txt",
+    "cat tresor.txt",
+    "echo \"momo\" > ~/mot_de_passe.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "ls -l à chaque palier",
+      "txt": "voir ce qui bloque avant de forcer quoi que ce soit"
+    },
+    {
+      "cmd": "r pour lister · x pour traverser",
+      "txt": "il en faut parfois les deux : chmod 700"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "on peut regarder derrière une porte sans l'ouvrir"
+    }
+  ]
+}

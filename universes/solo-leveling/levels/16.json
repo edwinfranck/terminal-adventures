@@ -1,0 +1,113 @@
+{
+  "title": "Le chasseur blessé",
+  "tagline": "Il ne bouge pas. Deux ombres le touchent. Compte à rebours.",
+  "mentor": {
+    "who": "Le Système",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "start": "Un autre chasseur, à terre. Deux ombres le serrent de près.",
+    "progress": [
+      "Une ombre de moins.",
+      "L'autre aussi. Il vivra.",
+      "Et tu sors."
+    ],
+    "stuck": "Tu ne peux pas frapper une ombre en te tournant vers elle : le mouvement te ferait entrer dedans. Approche par l'autre côté.",
+    "nudge": [
+      "Une ombre à côté du chasseur, et il meurt. Les deux doivent tomber.",
+      "Tu frappes toujours devant toi — donc tu dois ARRIVER face à ta cible.",
+      "Pour la seconde, fais le tour par la rangée du dessous et remonte de l'autre côté."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Rang S. Le portail ne se referme plus derrière toi."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Un chasseur est tombé là. Vivant, pour l'instant."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Deux ombres le touchent. Tant qu'il en reste une à côté de lui, il ne survivra pas à ton départ."
+    },
+    {
+      "who": "Le Système",
+      "face": "assets/portraits/solo-leveling-anim.webp",
+      "text": "Tu ne peux pas lui marcher dessus, et tu ne peux pas frapper de côté. Réfléchis à ton approche."
+    }
+  ],
+  "brief": "<p>Un <b>chasseur</b> est à terre, encadré par <b>deux ombres</b> 👁.</p><p>Tant qu'une ombre le touche, il est perdu. <b>Les deux doivent tomber</b> avant que tu n'atteignes la faille ◎.</p><p>Rappel : tu frappes la case <b>devant toi</b> — celle de ton dernier déplacement. Tu dois donc arriver face à ta cible.</p>",
+  "hint": [
+    "La première ombre est dans ton axe : avance jusqu'à la case juste avant, puis frappe.",
+    "Pour la seconde, descends d'une rangée, dépasse-la, remonte, et reviens vers elle.",
+    "Ensuite la faille est en bas à droite."
+  ],
+  "world": {
+    "map": [
+      "#############",
+      "#H...MNM....#",
+      "#...........#",
+      "#..........G#",
+      "#############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack"
+    ],
+    "new": [],
+    "syntax": [],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Le chasseur est sauf",
+      "check": "npcSafe",
+      "args": []
+    },
+    {
+      "label": "Les deux ombres sont dissipées",
+      "check": "allMonsters",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Ton chasseur est vivant",
+      "check": "survived",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 460,
+    "title": "Chasseur sauvé",
+    "unlock": "protéger"
+  },
+  "solution": "moveRight(3)\nattack()\nmoveDown()\nmoveRight(5)\nmoveUp()\nmoveLeft()\nattack()\nmoveRight(3)\nmoveDown(2)\n",
+  "recap": [
+    {
+      "cmd": "on frappe devant soi",
+      "txt": "l'orientation vient du dernier déplacement — l'approche fait partie du plan"
+    },
+    {
+      "cmd": "contourner",
+      "txt": "passer par une autre rangée pour attaquer de l'autre côté"
+    },
+    {
+      "cmd": "protéger",
+      "txt": "une ombre encore debout à côté du chasseur, et il ne s'en sort pas"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "un objectif à préserver change l'ordre des actions, pas seulement le chemin"
+    }
+  ]
+}

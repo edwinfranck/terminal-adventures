@@ -1,0 +1,147 @@
+{
+  "title": "Le gâteau empoisonné",
+  "tagline": "Six étapes, quatre produits bannis. Une seule correspondance.",
+  "mentor": {
+    "who": "Brook",
+    "face": "assets/portraits/op-brook.webp",
+    "start": "Quelqu'un a glissé quelque chose dans la recette. Yohohoho — et ce n'est pas du sucre.",
+    "progress": [
+      "Tu as la liste des produits bannis. Sers-t'en.",
+      "Trouvé. C'était bien là.",
+      "Et l'étape a disparu du plan de travail."
+    ],
+    "stuck": "Tu ne cherches pas au hasard : tu as une liste de suspects. Confronte-la aux étapes, un nom après l'autre.",
+    "nudge": [
+      "Combien de produits bannis y a-t-il ? Tu peux les chercher un par un.",
+      "<code>grep &lt;produit&gt; cuisine/etapes/*</code> fouille les six étapes d'un coup — et te dit dans <b>quel fichier</b> ça se trouve.",
+      "Une seule recherche donnera un résultat. Note le nom du fichier, puis supprime l'étape."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Brook",
+      "face": "assets/portraits/op-brook.webp",
+      "text": "Le gâteau est en six étapes. Elles sont dans cuisine/etapes."
+    },
+    {
+      "who": "Brook",
+      "face": "assets/portraits/op-brook.webp",
+      "text": "Chopper tient une liste des produits interdits à bord. Elle est courte — quatre noms."
+    },
+    {
+      "who": "Brook",
+      "face": "assets/portraits/op-brook.webp",
+      "text": "L'un de ces quatre s'est glissé dans une étape. Une seule. Trouve laquelle."
+    },
+    {
+      "who": "Brook",
+      "face": "assets/portraits/op-brook.webp",
+      "text": "Et méfie-toi : le registre des livraisons cite lui aussi des choses louches. Ce n'est pas là que ça se joue.",
+      "choices": [
+        {
+          "label": "Je croise les deux listes."
+        }
+      ]
+    }
+  ],
+  "brief": "<p><code>~/interdits.txt</code> liste les produits bannis du navire.</p><p>Les six étapes du gâteau sont dans <code>~/cuisine/etapes/</code>. <b>Une seule</b> contient un produit banni.</p><p>Deux choses à faire :</p><p>· écrire le <b>nom du fichier</b> coupable dans <code>~/sabotage.txt</code> — celui-là et pas les autres<br>· le <b>supprimer</b> de la cuisine</p>",
+  "hint": [
+    "Lis d'abord <code>interdits.txt</code> : quatre noms à confronter.",
+    "<code>grep mandragore cuisine/etapes/*</code> — si rien ne sort, passe au suivant.",
+    "Quand une ligne sort, le nom du fichier est écrit juste avant le <code>:</code>."
+  ],
+  "world": {
+    "fs": {
+      "interdits.txt": "PRODUITS BANNIS A BORD -- liste tenue par Chopper\n\nmandragore\nscarabee\nsomnifere\nlierre",
+      "cuisine": {
+        "etapes": {
+          "etape_1.txt": "ETAPE 1 -- la pate\nfarine, beurre pommade, une pincee de sel\nmonter les blancs en neige, incorporer sans casser",
+          "etape_2.txt": "ETAPE 2 -- le sirop\nsirop de kuri, zeste de citron vert\nreduire a feu doux pendant vingt minutes",
+          "etape_3.txt": "ETAPE 3 -- la creme\ncreme fouettee, gousse de vanille de Whole Cake\nreserver au froid",
+          "etape_4.txt": "ETAPE 4 -- le glacage\nsucre glace, colorant rose, poudre de somnifere\netaler a la spatule, lisser, ne pas gouter",
+          "etape_5.txt": "ETAPE 5 -- les fruits\nfraises du sud coupees en deux, sans la queue\ndisposer en couronne",
+          "etape_6.txt": "ETAPE 6 -- le montage\ntrois etages, quarante minutes de cuisson\nlaisser reposer avant de servir"
+        },
+        "livraisons.txt": "registre des livraisons\nlundi : 12 sacs de farine\nmardi : racine de mandragore (refusee au quai, jamais montee a bord)\nmercredi : 8 cageots de fraises",
+        "menu.txt": "the party : 200 invites. aucun retard tolere."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "rm",
+      "wc",
+      "chmod"
+    ],
+    "new": [],
+    "motd": "Brook pose la liste de Chopper à côté des six feuillets de recette."
+  },
+  "criteria": [
+    {
+      "label": "L'étape coupable est nommée <code class=\"p\">~/sabotage.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/sabotage.txt",
+        "etape_4"
+      ]
+    },
+    {
+      "label": "Une seule accusation, pas la liste entière",
+      "check": "fileLacks",
+      "args": [
+        "~/sabotage.txt",
+        "etape_2"
+      ]
+    },
+    {
+      "label": "…et pas non plus l'étape 6",
+      "check": "fileLacks",
+      "args": [
+        "~/sabotage.txt",
+        "etape_6"
+      ]
+    },
+    {
+      "label": "L'étape a quitté la cuisine",
+      "check": "pathMissing",
+      "args": [
+        "~/cuisine/etapes/etape_4.txt"
+      ]
+    },
+    {
+      "label": "Tu as cherché (<code>grep</code>), pas deviné",
+      "check": "ranCommand",
+      "args": [
+        "grep"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 320,
+    "title": "Sabotage déjoué",
+    "unlock": "grep fichier1 fichier2 …"
+  },
+  "solution": [
+    "cat interdits.txt",
+    "ls cuisine/etapes",
+    "grep mandragore cuisine/etapes/*",
+    "grep scarabee cuisine/etapes/*",
+    "grep somnifere cuisine/etapes/*",
+    "echo \"etape_4.txt\" > ~/sabotage.txt",
+    "rm cuisine/etapes/etape_4.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "grep <motif> dossier/*",
+      "txt": "sur plusieurs fichiers, grep annonce « fichier: » devant la ligne"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "croiser deux listes au lieu de tout lire : les interdits × les étapes"
+    }
+  ]
+}

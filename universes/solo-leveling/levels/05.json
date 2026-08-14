@@ -1,0 +1,115 @@
+{
+  "title": "La porte scellée",
+  "tagline": "La clé est dans la première salle. La faille est dans la seconde.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Une clé ⚿, une porte ▣. Et un couloir dont tu ignores la longueur.",
+    "progress": [
+      "Porte franchie. La boucle s'est arrêtée toute seule au bon endroit.",
+      "Faille atteinte. Tu n'as compté aucune case."
+    ],
+    "stuck": "Tu forces contre quelque chose. Demande-toi ce qui bloque, et teste-le.",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "nudge": [
+      "Tu as ramassé la clé avant d'arriver devant la porte ?",
+      "Tu ne connais pas la longueur du couloir : <code>repeat</code> ne peut pas t'aider.",
+      "<code>while</code> s'arrête tout seul quand la case devant n'est plus libre."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Une porte scellée barre le couloir. Il te faut la clé posée juste devant toi.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Combien de cases entre la clé et la porte ? Tu pourrais les compter. Un chasseur de rang C ne compte pas.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "while (clear) { moveRight() }\n\nTant que la case devant est libre, avance. Quand la porte bloque, la boucle s'arrête d'elle-même.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Puis open() — avec la clé en poche — et tu recommences.",
+      "choices": [
+        {
+          "label": "Compris."
+        }
+      ],
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    }
+  ],
+  "brief": "<p>Deux salles séparées par une <b>porte</b> ▣. La <b>clé</b> ⚿ est dans la première, la faille ◎ dans la seconde.</p><p><code>pickup()</code> ramasse ce qui est sous tes pieds · <code>open()</code> ouvre la porte devant toi, si tu as la clé.</p><p>Tu ne connais pas la longueur des salles. <code>while (clear) { … }</code> avance <b>tant que</b> la case devant est libre — et s'arrête toute seule devant la porte.</p><p>⚠ Une case piégée n'est pas « libre » : la boucle s'arrêtera aussi devant les piques.</p>",
+  "hint": [
+    "La clé est en haut à gauche de la première salle. Va la chercher avant tout.",
+    "<code>while (clear) { moveRight() }</code> t'amène pile devant la porte : elle n'est pas libre.",
+    "Après <code>open()</code>, refais la même boucle pour traverser la seconde salle, puis descends."
+  ],
+  "world": {
+    "map": [
+      "############",
+      "#H...#.....#",
+      "#.K..#..X..#",
+      "#....D.....#",
+      "#..X.#....G#",
+      "#....#.....#",
+      "############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "pickup",
+      "open"
+    ],
+    "new": [
+      "open"
+    ],
+    "syntax": [
+      {
+        "cmd": "while (clear) { }",
+        "desc": "Répète tant que la case devant est libre"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as utilisé <code>while</code>",
+      "check": "usedKeyword",
+      "args": [
+        "while"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 190,
+    "title": "Rang C atteint",
+    "unlock": "while · open"
+  },
+  "solution": "moveDown()\nmoveRight()\npickup()\nmoveDown()\nmoveRight()\nwhile (clear) {\n  moveRight()\n}\nopen()\nmoveRight(2)\nmoveDown()\nwhile (clear) {\n  moveRight()\n}\n",
+  "recap": [
+    {
+      "cmd": "while (…) { … }",
+      "txt": "répète TANT QUE la condition tient"
+    },
+    {
+      "cmd": "open()",
+      "txt": "ouvre une porte, la clé une fois ramassée"
+    },
+    {
+      "cmd": "while ou repeat ?",
+      "txt": "while = « je ne sais pas combien de fois » · repeat = « je sais »"
+    }
+  ]
+}

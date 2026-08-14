@@ -1,0 +1,132 @@
+{
+  "title": "Le carnet de bord",
+  "tagline": "Écrire, relire, mettre à l'abri. Un capitaine oublie ; un carnet, jamais.",
+  "mentor": {
+    "who": "Nami",
+    "face": "assets/portraits/op-nami.webp",
+    "start": "Le plan est vide. L'inventaire de la cale dit ce qui manque.",
+    "progress": [
+      "C'est noté. Il manque bien ça.",
+      "Bien, tu vérifies ce que tu écris.",
+      "La copie est à l'abri. La cale prendra l'eau, pas la cabine."
+    ],
+    "stuck": "La flèche `>` envoie le texte dans un fichier au lieu de l'écran.",
+    "nudge": [
+      "Tu as ouvert l'inventaire ? La réponse est écrite dedans.",
+      "Quelle ligne finit par 0 ?",
+      "Tu écris au bon endroit ? Ton invite te dit où tu te trouves."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Alors c’est toi, le nouveau charpentier improvisé."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Le plan que tu as posé dans l'atelier est vide. Un plan vide ne répare rien."
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "echo écrit une phrase à l’écran. Mais avec une flèche >, la phrase tombe dans un fichier au lieu de s’envoler.\n\necho \"texte\" > fichier"
+    },
+    {
+      "who": "Nami",
+      "face": "assets/portraits/op-nami.webp",
+      "text": "Regarde l'inventaire de la cale : une ligne est à zéro. C'est ce nom-là qu'il faut écrire dans le plan. Puis range une copie dans ma cabine — la cale sera la première inondée."
+    }
+  ],
+  "brief": "<p>Le plan est vide. Dans l'inventaire de la cale, <b>un seul article est à zéro</b> : c'est celui qui manque au navire.</p><p>Écris <b>son nom</b> dans le plan — recopie-le tel qu'il est écrit dans l'inventaire.</p><p>Puis mets une copie à l'abri dans <code>~/cabine</code> : la cale sera inondée la première.</p><p><code>echo</code> parle à l'écran. Pour qu'il écrive dans un fichier, il lui faut une <b>direction</b>.</p>",
+  "hint": [
+    "Ouvre <code>inventaire.txt</code> dans la cale et cherche la ligne qui finit par 0.",
+    "La direction, c'est le signe <code>&gt;</code> : <code>echo \"mot\" &gt; fichier</code>.",
+    "C'est <code>planches</code> qui manque. Puis <code>cp plan.txt ~/cabine</code>."
+  ],
+  "world": {
+    "fs": {
+      "pont": {
+        "vigie.txt": "Deux voiles. Elles se rapprochent."
+      },
+      "cale": {
+        "inventaire.txt": "INVENTAIRE DE LA CALE\n---------------------\ntonneaux ........ 3\nviande .......... 1\ncordages ........ 2\nplanches ........ 0\n",
+        "ship_repairs": {
+          "plan.txt": ""
+        }
+      },
+      "cabine": {
+        "cartes.txt": "East Blue — sortie au nord-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "mkdir",
+      "touch",
+      "echo",
+      "cat",
+      "cp",
+      "help"
+    ],
+    "new": [
+      "echo",
+      "cat",
+      "cp"
+    ],
+    "motd": "Nami t'attend, un crayon derrière l'oreille."
+  },
+  "criteria": [
+    {
+      "label": "Le plan nomme l'article à zéro dans l'inventaire <code class=\"p\">~/cale/ship_repairs/plan.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/cale/ship_repairs/plan.txt",
+        "planche"
+      ]
+    },
+    {
+      "label": "Tu as ouvert l'inventaire (<code>cat</code>)",
+      "check": "ranCommand",
+      "args": [
+        "cat"
+      ]
+    },
+    {
+      "label": "La copie est à l'abri <code class=\"p\">~/cabine/plan.txt</code>",
+      "check": "fileExists",
+      "args": [
+        "~/cabine/plan.txt"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 120,
+    "title": "Carnet de bord tenu",
+    "unlock": "echo · cat · cp"
+  },
+  "solution": [
+    "cd cale",
+    "cat inventaire.txt",
+    "cd ship_repairs",
+    "echo \"planches\" > plan.txt",
+    "cat plan.txt",
+    "cp plan.txt ~/cabine"
+  ],
+  "recap": [
+    {
+      "cmd": "echo \"texte\" > fichier",
+      "txt": "écrit dedans ; le > REMPLACE tout le contenu"
+    },
+    {
+      "cmd": "cp <source> <dest>",
+      "txt": "copie — l'original reste en place"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "la bonne réponse était dans l'inventaire, pas dans ta tête"
+    }
+  ]
+}

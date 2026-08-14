@@ -1,0 +1,115 @@
+{
+  "title": "Le couloir gardé",
+  "tagline": "Deux ombres quelque part, des piques de chaque côté. Un faux pas et c'est fini.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Rang D. Les ombres ne sont plus alignées comme à l'entraînement.",
+    "progress": [
+      "Les ombres sont dissipées. Continue.",
+      "Faille atteinte. Ton programme a décidé tout seul."
+    ],
+    "stuck": "Tu as avancé sans regarder. Fais tester la case AVANT de bouger.",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "nudge": [
+      "Tu ne peux pas savoir où sont les ombres à l'avance. Alors fais <b>tester</b> ton chasseur.",
+      "Dans ta boucle : tester d'abord, avancer ensuite.",
+      "Si <code>moveRight()</code> est DANS le bloc if, tu n'avances que devant une ombre."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Deux ombres dans le couloir. Elles ne sont pas côte à côte.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Tu pourrais compter les cases et frapper au bon moment. Ça marcherait — une fois. Sur cette carte-là.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Un vrai programme ne compte pas : il REGARDE.\n\nif (enemy) { attack() }\n\nSi une ombre est devant, frappe. Sinon, ne fais rien.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Mets ce test dans ta boucle, et le même code traversera n'importe quel couloir.",
+      "choices": [
+        {
+          "label": "Je vois."
+        }
+      ],
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    }
+  ],
+  "brief": "<p>Une galerie bordée de <b>piques</b> en haut et en bas : impossible de contourner. Et deux ombres 👁 <b>quelque part</b> devant.</p><p>Tu pourrais compter les cases et frapper au bon moment. Ça marcherait ici, et nulle part ailleurs.</p><p>Un test s'écrit ainsi :</p><p><code>if (cond) { … }</code></p><p><code>enemy</code> est vraie quand une ombre est <b>juste devant</b> toi. Écris un <b>pas prudent</b> — celui qui regarde avant d'avancer — et répète-le.</p>",
+  "hint": [
+    "Ne compte pas les ombres. Décris un seul pas, valable partout, et répète-le neuf fois.",
+    "Un pas prudent = tester <code>if (enemy)</code>, frapper si c'est vrai, puis avancer.",
+    "Le <code>moveRight()</code> va APRÈS le bloc <code>if</code>, pas dedans — sinon tu n'avances jamais."
+  ],
+  "world": {
+    "map": [
+      "#############",
+      "#XXXXXXXXXXX#",
+      "#H.M....M..G#",
+      "#XXXXXXXXXXX#",
+      "#############"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack"
+    ],
+    "new": [],
+    "syntax": [
+      {
+        "cmd": "repeat (n) { }",
+        "desc": "Répète n fois le bloc entre accolades"
+      },
+      {
+        "cmd": "if (enemy) { }",
+        "desc": "N'exécute le bloc que si une ombre est devant"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "Les deux ombres sont dissipées",
+      "check": "allMonsters",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    },
+    {
+      "label": "Tu as utilisé un test (<code>if</code>)",
+      "check": "usedKeyword",
+      "args": [
+        "if"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 170,
+    "title": "Ton code décide",
+    "unlock": "if"
+  },
+  "solution": "repeat (10) {\n  if (enemy) {\n    attack()\n  }\n  moveRight()\n}\n",
+  "recap": [
+    {
+      "cmd": "if (ennemi) { attack() }",
+      "txt": "n'agit que si la condition est vraie"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "tester la situation plutôt que compter les cases"
+    }
+  ]
+}

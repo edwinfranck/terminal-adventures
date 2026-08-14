@@ -1,0 +1,114 @@
+{
+  "title": "L'ombre et l'essence",
+  "tagline": "Une ombre te bloque, deux essences à ramasser, et des piques mal placées.",
+  "mentor": {
+    "who": "Le Système",
+    "start": "Frappe d'abord. Avance ensuite. Jamais l'inverse.",
+    "progress": [
+      "Ombre dissipée.",
+      "Essence récupérée.",
+      "Faille atteinte. Rang D."
+    ],
+    "stuck": "Tu es mort en marchant sur une ombre. Ta première instruction ne doit pas être un déplacement.",
+    "face": "assets/portraits/sl-jinwoo.webp",
+    "nudge": [
+      "Que se passe-t-il si tu avances sur l'ombre collée à toi ?",
+      "Les deux essences ne sont pas sur le même chemin : planifie l'ordre.",
+      "Regarde les piques : quelle rangée est infranchissable de bout en bout ?"
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Le Système",
+      "text": "Une ombre garde le couloir. Elle est juste devant toi.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "attack() frappe la case devant ton chasseur — devant, c’est la direction de son dernier déplacement.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Si tu avances sur l’ombre sans l’avoir frappée, tu meurs. L’ordre compte plus que le nombre d’ordres.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    },
+    {
+      "who": "Le Système",
+      "text": "Deux essences ◆ dans la salle, et des piques. pickup() ramasse ce qui est sous tes pieds — il faut être dessus, pas à côté.",
+      "face": "assets/portraits/solo-leveling-anim.webp"
+    }
+  ],
+  "brief": "<p>Trois choses, <b>dans le bon ordre</b> :</p><p>1. <code>attack()</code> l'ombre 👁 collée à toi<br>2. ramasse les <b>deux essences</b> ◆ avec <code>pickup()</code> — il faut être <b>dessus</b><br>3. rejoins la faille ◎</p><p>⚠ Les piques tuent. Regarde la carte avant d'écrire.</p>",
+  "hint": [
+    "L'ombre est collée à toi : ta première instruction ne peut pas être un déplacement.",
+    "Une essence est en bas à gauche, l'autre en haut à droite. Fais les deux avant la faille.",
+    "La rangée du bas est coupée par des piques : la faille ne s'atteint qu'en descendant par la droite."
+  ],
+  "world": {
+    "map": [
+      "###########",
+      "#HM....C..#",
+      "#..X###...#",
+      "#..X###...#",
+      "#.C....X.G#",
+      "###########"
+    ],
+    "commands": [
+      "moveRight",
+      "moveLeft",
+      "moveUp",
+      "moveDown",
+      "attack",
+      "pickup"
+    ],
+    "new": [
+      "attack",
+      "pickup"
+    ],
+    "syntax": [
+      {
+        "cmd": "repeat (n) { }",
+        "desc": "Répète n fois le bloc entre accolades"
+      }
+    ],
+    "starter": ""
+  },
+  "criteria": [
+    {
+      "label": "L'ombre est dissipée",
+      "check": "allMonsters",
+      "args": []
+    },
+    {
+      "label": "Les deux essences sont récupérées",
+      "check": "allChests",
+      "args": []
+    },
+    {
+      "label": "La faille est atteinte",
+      "check": "reachedGoal",
+      "args": []
+    }
+  ],
+  "reward": {
+    "xp": 140,
+    "title": "Rang D atteint",
+    "unlock": "attack · pickup"
+  },
+  "solution": "attack()\nmoveDown(3)\nmoveRight()\npickup()\nmoveUp(3)\nmoveRight(5)\npickup()\nmoveRight(2)\nmoveDown(3)\n",
+  "recap": [
+    {
+      "cmd": "attack()",
+      "txt": "frappe ce qui est juste devant"
+    },
+    {
+      "cmd": "pickup()",
+      "txt": "ramasse ce qui est SOUS tes pieds — il faut être dessus"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "l'ordre compte : on ne ramasse pas en marchant"
+    }
+  ]
+}

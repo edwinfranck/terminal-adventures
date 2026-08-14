@@ -1,0 +1,141 @@
+{
+  "title": "Le rapport du gouvernement",
+  "tagline": "Huit dossiers saisis. Ils cherchent Robin. Il faut le prouver, et le chiffrer.",
+  "mentor": {
+    "who": "Robin",
+    "face": "assets/portraits/op-robin.webp",
+    "start": "Ils ont huit dossiers. Je veux savoir combien parlent de moi.",
+    "progress": [
+      "Tu as isolé les lignes qui me concernent.",
+      "Et tu les as comptées. Trois. Je m'en souviendrai.",
+      "Le dossier est complet. Merci."
+    ],
+    "stuck": "Tu peux tout faire d'une traite : tout lire, filtrer, puis écrire.",
+    "nudge": [
+      "Comment lire les huit dossiers en une seule commande ?",
+      "Enchaîne : tout lire, puis <code>grep</code> ce qui te concerne, puis <code>&gt;</code> dans un fichier.",
+      "Pour le compte : <code>wc -l</code> sur ce que tu viens d'extraire."
+    ]
+  },
+  "dialogue": [
+    {
+      "who": "Kizaru",
+      "face": "assets/portraits/op-kizaru.webp",
+      "text": "Vous avez saisi nos dossiers. Ça n'a aucune importance… tout est déjà transmis."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Huit dossiers. Je veux savoir combien d'entre eux me nomment."
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Lis-les tous d'un coup avec l'étoile, filtre mon nom, écris le résultat.\n\ncat dossiers/* | grep Robin > preuve.txt"
+    },
+    {
+      "who": "Robin",
+      "face": "assets/portraits/op-robin.webp",
+      "text": "Puis compte les lignes obtenues et note ce nombre à part. C'est ce chiffre que Nami emportera.",
+      "choices": [
+        {
+          "label": "Je le fais."
+        }
+      ]
+    }
+  ],
+  "brief": "<p>Huit dossiers dans <code>~/dossiers</code>. Certains nomment Robin, la plupart non.</p><p>Deux fichiers à produire :</p><p>· <code>~/preuve.txt</code> — <b>uniquement</b> les lignes qui la nomment<br>· <code>~/compte.txt</code> — <b>le nombre</b> de ces lignes, seul</p><p>Tu sais tout lire d'un coup (<code>*</code>), filtrer (<code>grep</code>), enchaîner (<code>|</code>) et écrire (<code>&gt;</code>). Combine.</p>",
+  "hint": [
+    "<code>cat dossiers/*</code> lit les huit fichiers d'affilée.",
+    "Branche <code>grep Robin</code> derrière avec un tube, puis <code>&gt; ~/preuve.txt</code>.",
+    "Puis <code>wc -l ~/preuve.txt</code> te donne le nombre : écris-le dans <code>~/compte.txt</code>."
+  ],
+  "world": {
+    "fs": {
+      "dossiers": {
+        "dossier_01.txt": "Sujet : trafic de sucre a Alabasta\nAucune suite donnee.",
+        "dossier_02.txt": "Sujet : archeologue recherchee\nNico Robin, vue a Water Seven le 12.\nPrime maintenue.",
+        "dossier_03.txt": "Sujet : contrebande de poudre\nDossier clos.",
+        "dossier_04.txt": "Sujet : incident de Enies Lobby\nNico Robin identifiee parmi les fugitifs.\nRapport transmis au CP9.",
+        "dossier_05.txt": "Sujet : pot-de-vin au port\nSans importance.",
+        "dossier_06.txt": "Sujet : recensement des navires\n23 batiments engages.",
+        "dossier_07.txt": "Sujet : ordre de capture\nCible prioritaire : Nico Robin. Vivante.",
+        "dossier_08.txt": "Sujet : entretien des canons\nA planifier au printemps."
+      },
+      "cabine": {
+        "cartes.txt": "Grand Line -- premiere ile au sud-est."
+      }
+    },
+    "commands": [
+      "pwd",
+      "ls",
+      "cd",
+      "cat",
+      "echo",
+      "grep",
+      "wc",
+      "head",
+      "tail"
+    ],
+    "new": [],
+    "motd": "Huit chemises cartonnees, tamponnees du sceau du gouvernement mondial."
+  },
+  "criteria": [
+    {
+      "label": "La preuve ne contient que les lignes utiles <code class=\"p\">~/preuve.txt</code>",
+      "check": "fileContains",
+      "args": [
+        "~/preuve.txt",
+        "nico robin"
+      ]
+    },
+    {
+      "label": "Aucun dossier hors sujet dedans",
+      "check": "fileLacks",
+      "args": [
+        "~/preuve.txt",
+        "canons"
+      ]
+    },
+    {
+      "label": "Le compte est juste <code class=\"p\">~/compte.txt</code>",
+      "check": "fileEquals",
+      "args": [
+        "~/compte.txt",
+        "3"
+      ]
+    },
+    {
+      "label": "Tu as filtré (<code>grep</code>) et compté (<code>wc</code>)",
+      "check": "ranCommand",
+      "args": [
+        "wc"
+      ]
+    }
+  ],
+  "reward": {
+    "xp": 260,
+    "title": "Enies Lobby franchi",
+    "unlock": "cat * | grep > fichier"
+  },
+  "solution": [
+    "cat dossiers/* | grep Robin > ~/preuve.txt",
+    "cat ~/preuve.txt",
+    "wc -l ~/preuve.txt",
+    "echo \"3\" > ~/compte.txt"
+  ],
+  "recap": [
+    {
+      "cmd": "cat dossier/* | grep <motif> > <fichier>",
+      "txt": "tout lire, filtrer, écrire : trois gestes, une ligne"
+    },
+    {
+      "cmd": "wc -l",
+      "txt": "chiffrer ce qu'on vient d'extraire"
+    },
+    {
+      "cmd": "Le réflexe",
+      "txt": "enchaîner plutôt que répéter"
+    }
+  ]
+}
